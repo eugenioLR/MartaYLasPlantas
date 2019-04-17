@@ -7,7 +7,7 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author ACER
+ * @author EDGENP
  */
 public class Principal {
 
