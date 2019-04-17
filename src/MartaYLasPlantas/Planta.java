@@ -16,6 +16,6 @@ public abstract class Planta extends Casilla {
     public Planta(int salud, int ataque,int dificultad, int coste) {
         super(salud, ataque);
         this.coste = coste;
-    }
-    
+    }    
+
 }

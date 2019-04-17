@@ -15,7 +15,7 @@ public class Vegano extends Casilla {
     private int c;//contador
 
     public Vegano(int salud, int ataque, int dificultad, int velocidad) {
-        super(salud, ataque, dificultad);
+        super(salud, ataque);
         this.velocidad = velocidad;
     }
 
