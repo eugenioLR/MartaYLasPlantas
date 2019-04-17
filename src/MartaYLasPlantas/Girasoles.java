@@ -13,8 +13,8 @@ public class Girasoles extends Planta {
 
     private int magia;
 
-    public Girasoles(int salud, int ataque, int dificultad, int coste, int magia) {
-        super(salud, ataque, dificultad, coste);
+    public Girasoles(int salud, int ataque, int coste, int magia) {
+        super(salud, ataque, coste);
         this.magia = magia;
     }
 
