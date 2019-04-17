@@ -12,7 +12,7 @@ package MartaYLasPlantas;
 public abstract class Casilla {
 	//hhi darius, if you are reading this U SUCC.
     private int salud, ataque;
-    private static final int dificultad = 1; // pide que se inicialice 
+    private final int dificultad = 1;
 
     public Casilla(int salud, int ataque ) {
         this.salud = salud;
@@ -39,7 +39,7 @@ public abstract class Casilla {
         this.ataque = ataque;
     }
 
-    public static int getDificultad() {
+    public int getDificultad() {
         return dificultad;
     }
     
