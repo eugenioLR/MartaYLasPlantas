@@ -12,14 +12,12 @@ package MartaYLasPlantas;
 public abstract class Casilla {
 
     private int salud, ataque;
-    private final int dificultad;
+    private static final int dificultad = 1; // pide que se inicialice 
 
-    public Casilla(int salud, int ataque, int dificultad ) {
+    public Casilla(int salud, int ataque ) {
         this.salud = salud;
         this.ataque = ataque;
-        this.dificultad = dificultad;
     }
-    
     
     public int getSalud() {
         return salud;
@@ -40,8 +38,10 @@ public abstract class Casilla {
     public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
-    
-    // dificultad no necesita ni get ni set.
 
+    public static int getDificultad() {
+        return dificultad;
+    }
+    
     public abstract void actualizar();
 }
