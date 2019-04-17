@@ -10,7 +10,7 @@ package MartaYLasPlantas;
  * @author EDGENP
  */
 public abstract class Casilla {
-
+	//hhi darius, if you are reading this U SUCC.
     private int salud, ataque;
     private final int dificultad;
 
