@@ -11,14 +11,14 @@ package MartaYLasPlantas;
  */
 public class Dificultad {
 
-    public static int dificultad;
+    public int dificultad;
 
-    public static int getDificultad() {
+    public int getDificultad() {
         return dificultad;
     }
 
-    public static void setDificultad(int dificultad) {
-        Dificultad.dificultad = dificultad;
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
     }
     
     public static void func(int posib[], int diff){}

@@ -39,7 +39,7 @@ public abstract class Casilla {
         this.ataque = ataque;
     }
 
-    public static int getDificultad() {
+    public int getDificultad() {
         return dificultad;
     }
     
