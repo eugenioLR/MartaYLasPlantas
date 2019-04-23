@@ -13,9 +13,10 @@ public class Girasoles extends Planta {
 
     private int magia;
 
-    public Girasoles(int salud, int ataque, int coste, int magia) {
-        super(salud, ataque, coste);
+    public Girasoles(int salud, int ataque, int magia) {
+        super(salud, ataque);
         this.magia = magia;
+        setCoste(20);
     }
 
     @Override

@@ -13,9 +13,15 @@ public abstract class Planta extends Casilla {
     
     private int coste;
     
-    public Planta(int salud, int ataque, int coste) {
+    public Planta(int salud, int ataque) {
         super(salud, ataque);
-        this.coste = coste;
     }    
 
+    public int getCoste() {
+        return coste;
+    }
+
+    public void setCoste(int coste) {
+        this.coste = coste;
+    }
 }

@@ -11,8 +11,9 @@ package MartaYLasPlantas;
  */
 public class Lanzadora extends Planta{
     
-    public Lanzadora(int salud, int ataque,int dificultad , int coste) {
-        super(salud, ataque, dificultad, coste);
+    public Lanzadora(int salud, int ataque) {
+        super(salud, ataque);
+        setCoste(50);
     }
     
     @Override
