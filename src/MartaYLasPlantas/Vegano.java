@@ -39,6 +39,10 @@ public class Vegano extends Casilla {
 
     @Override
     public void actualizar() {
+        c++;
+        if(c % 2 == 0){
+            
+        }
 
     }
 }

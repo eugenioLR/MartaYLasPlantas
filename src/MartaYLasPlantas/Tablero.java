@@ -19,7 +19,10 @@ public class Tablero {
     public Tablero(int ancho, int alto) {
         terreno = new Casilla[alto][ancho];
     }
-
+    
+    public void colocarCasilla(Casilla casilla){
+        
+    }
     public Casilla[][] getTerreno() {
         return terreno;
     }
@@ -29,7 +32,7 @@ public class Tablero {
         int vegTablero = 0;
         int vegQuedan = 15;
         int danioCausado;
-
+        
         if (c > 5) {
             //aparecen zombies
             for (int i = 0; i < 0; i++) {
@@ -53,6 +56,7 @@ public class Tablero {
                 }
             }
         }
+        c++;
         return ((vegTablero == 0) && (vegQuedan == 0));
     }
 }

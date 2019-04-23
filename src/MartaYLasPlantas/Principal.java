@@ -18,9 +18,11 @@ public class Principal {
      * @param args the command line arguments
      */
     private static int alto, ancho;
+    private static Tablero tablero;
 
     public static void main(String[] args) {
-        boolean jugando = true, comprobando = true;
+        boolean jugando = true;
+        boolean comprobando = true;
         String comando, tokens[];
 
         Scanner scanner = new Scanner(System.in);
@@ -29,6 +31,9 @@ public class Principal {
                 comprobando = false;
                 comando = scanner.next();
                 tokens = comando.split(" ");
+                if (!tokens[0].equals("N")) {
+                    throw new NumberFormatException();
+                }
                 alto = Integer.parseInt(tokens[1]);
                 ancho = Integer.parseInt(tokens[2]);
                 throw new NumberFormatException();
@@ -42,15 +47,47 @@ public class Principal {
         Casilla mat[][] = terreno.getTerreno();
 
         while (jugando) {
-            comando = scanner.next();
-            tokens = comando.split(" ");
-
+            comprobando = true;
+            while (comprobando) {
+                try {
+                    comprobando = false;
+                    comando = scanner.next();
+                    tokens = comando.split(" ");
+                    switch (tokens[0].charAt(0)) {
+                        case 'G':
+                            break;
+                        case 'L':
+                            break;
+                        case 'S':
+                            break;
+                        case ' ':
+                            break;
+                        default:
+                            throw new EresMongolo("eres mongolo");
+                    }
+                    alto = Integer.parseInt(tokens[1]);
+                    ancho = Integer.parseInt(tokens[2]);
+                    throw new NumberFormatException();
+                } catch (NumberFormatException e) {
+                    System.out.println("jaja pringao, eres un inutil. ");
+                    comprobando = true;
+                } catch (EresMongolo em) {
+                }
+            }
         }
 
     }
 
-    public static void ararTerrenio(Tablero tb) {
+    public static void ararTerrenio() {
 
+    }
+
+}
+
+class EresMongolo extends Exception {
+
+    public EresMongolo(String message) {
+        super(message);
     }
 
 }
