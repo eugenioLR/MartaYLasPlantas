@@ -13,8 +13,8 @@ public abstract class Planta extends Casilla {
     
     private int coste;
     
-    public Planta(int salud, int ataque) {
-        super(salud, ataque);
+    public Planta(int salud, int ataque, int turno) {
+        super(salud, ataque, turno);
     }    
 
     public int getCoste() {

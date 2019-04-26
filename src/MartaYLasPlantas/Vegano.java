@@ -11,38 +11,35 @@ package MartaYLasPlantas;
  */
 public class Vegano extends Casilla {
 
-    private int velocidad;
-    private int c;//contador
+    private int turno;
 
-    public Vegano(int salud, int ataque, int velocidad) {
-        super(salud, ataque);
-        this.velocidad = velocidad;
+    public Vegano(int salud, int ataque, int turno) {
+        super(salud, ataque, turno);
     }
 
     /**
-     * Get the value of velocidad
+     * Get the value of turno
      *
-     * @return the value of velocidad
+     * @return the value of turno
      */
     public int getVelocidad() {
-        return velocidad;
+        return turno;
     }
 
     /**
-     * Set the value of velocidad
+     * Set the value of turno
      *
-     * @param velocidad new value of velocidad
+     * @param turno new value of turno
      */
-    public void setVelocidad(int velocidad) {
-        this.velocidad = velocidad;
+    public void setVelocidad(int turno) {
+        this.turno = turno;
     }
 
     @Override
     public void actualizar() {
-        c++;
-        if(c % 2 == 0){
+        turno++;
+        if(turno % 2 == 0){
             
         }
-
     }
 }

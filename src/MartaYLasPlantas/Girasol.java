@@ -9,12 +9,12 @@ package MartaYLasPlantas;
  *
  * @author EDGENP
  */
-public class Girasoles extends Planta {
+public class Girasol extends Planta {
 
     private int magia;
 
-    public Girasoles(int salud, int ataque, int magia) {
-        super(salud, ataque);
+    public Girasol(int salud, int ataque, int turno, int magia) {
+        super(salud, ataque, turno);
         this.magia = magia;
         setCoste(20);
     }

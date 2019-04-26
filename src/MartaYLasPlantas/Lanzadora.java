@@ -12,7 +12,7 @@ package MartaYLasPlantas;
 public class Lanzadora extends Planta{
    
     public Lanzadora(int salud, int ataque) {
-        super(salud, ataque);
+        super(salud, ataque, 1);
         setCoste(50);
     }
     
