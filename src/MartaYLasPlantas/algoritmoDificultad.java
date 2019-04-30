@@ -16,14 +16,14 @@ public class algoritmoDificultad {
     public static void main(String[] args) {
 
         int TURNOS = 30;
-        int vegRest = 5;
+        int vegRest = 9;
         int vegTablero = 0;
         double auxx;
         ArrayList<Double> prob = new ArrayList<>();
 
         for (int i = 0; TURNOS > i; TURNOS--) {
-            auxx = (double) vegRest / TURNOS;
-            System.out.println(auxx);
+            auxx = ((double) vegRest) / ((double) TURNOS);
+            System.out.println(auxx + "-" + vegRest + "-" + i);
         //    prob.add(auxx);
             if (auxx >= 0.5){
                 vegRest--;
