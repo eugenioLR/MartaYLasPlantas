@@ -14,7 +14,7 @@ public class algoritmoDificultad {
     public static void main(String[] args) {
 
         int turnos = 30;
-        int vegRest = 9;
+        int vegRest = 12;
         double auxx;
 
         for (int i = 0; turnos > i; turnos--) {

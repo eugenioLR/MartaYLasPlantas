@@ -1,2 +1,0 @@
-MartaYLasPlantas.EresMongolo
-MartaYLasPlantas.Principal

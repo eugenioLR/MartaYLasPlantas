@@ -115,36 +115,36 @@ public class Principal {
 
     public static void ararTerreno() {
         Casilla casilla, terreno[][] = tablero.getTerreno();
-    /*    for (int i = 0; i < alto; i++) {
-
+        tablero.colocarCasilla(new Lanzadora(2, 2), 0, 0);
+        tablero.colocarCasilla(new Vegano(6, 2, 3), 0, 1);
+        tablero.colocarCasilla(new Girasol(3, 2, 4, 4), 0, 2);
+        tablero.colocarCasilla(new Lanzadora(9, 2), 0, 3);
+        for (Casilla[] fila : terreno) {
             System.out.print("|------");
-            for (int j = 0; j < ancho - 1 ; j++) {
-                System.out.print("--------");
+            for (int i = 0; i < ancho - 1; i++) {
+                System.out.print("-------");
+                //                             "|V(4)  "
             }
             System.out.println("|");
-
-            for (int j = 0; j < ancho ; j++) {
-                casilla = terreno[j][i];
-                if (casilla == null) {
+            for (Casilla posicion : fila) {
+                if (posicion == null) {
                     System.out.print("|      ");
-                } else if (casilla.getClass().getSimpleName().equals("Vegano")) {
-                    System.out.print("|V(" + casilla.getSalud() + ")  ");
-                } else if (casilla.getClass().getSimpleName().equals("Lanzadora")) {
-                    System.out.print("|L(" + casilla.getSalud() + ")  ");
-                } else if (casilla.getClass().getSimpleName().equals("Girasoles")) {
-                    System.out.print("|G(" + casilla.getSalud() + ")  ");
+                } else if (posicion instanceof Vegano) {
+                    System.out.print("|V(" + posicion.getSalud() + ")  ");
+                } else if (posicion instanceof Lanzadora) {
+                    System.out.print("|L(" + posicion.getSalud() + ")  ");
+                } else if (posicion instanceof Girasol) {
+                    System.out.print("|G(" + posicion.getSalud() + ")  ");
                 }
             }
             System.out.println("|");
         }
         System.out.print("|------");
-        for (int j = 0; j < ancho - 1; j++) {
-            System.out.print("--------");
+        for (int i = 0; i < ancho - 1; i++) {
+            System.out.print("-------");
+            //               "|V(4)  "
         }
         System.out.println("|");
-    }   */
-
-    
     }
 }
 
