@@ -68,19 +68,45 @@ public class Tablero {
         int vegQuedan = 5;
         int danioCausado;
         int altoAleatorio;
+        int altoAleatorio1;
         Casilla vegAux;
+        double prioridad = 0.0;
+        int auxx = vegQuedan;
+        double prob;
         // anthony was here
 
         if (c > 5) {
             //aparecen zombies
-            if (vegQuedan > 0) {
-                //en que turnos aparecen los veganos
-                //if () {
-                altoAleatorio = (int) (Math.random() * alto);
-                terreno[altoAleatorio][ancho - 1] = new Vegano(5, 5, c);
-                vegQuedan--;
-                //}
 
+            for (int i = 0, k = 0, turnos = 30; turnos > i; turnos--, k++) {
+                if (auxx != vegQuedan) {
+                    k = 0;
+                    prioridad = 0.0;  //reset a la prioridad
+                }
+                if (k > 6) {
+                    prioridad = Math.random() / 2;
+                }
+                auxx = vegQuedan;
+                prob = ((double) vegQuedan) / ((double) turnos);
+
+                if (vegQuedan > 0) {
+                    //en que turnos aparecen los veganos
+                    if (prob + prioridad >= 1.00) {
+                        altoAleatorio = (int) (Math.random() * alto);
+                        altoAleatorio1 = (int) (Math.random()* alto);
+                        terreno[altoAleatorio][ancho - 1] = new Vegano(5, 5, c);
+                        //terreno[]
+                        //vegQuedan -= 3;
+                        
+                    } else if (prob + prioridad >= 0.85) {
+
+                    } else if (prob + prioridad >= 0.7) {
+                        
+                    } else if (prob + prioridad >= 0.5){
+                        
+                    }
+
+                }
             }
             vegTablero = 0;
             for (int i = 0; i < 0; i++) {
@@ -121,7 +147,7 @@ public class Tablero {
                 }
             }
             c++;
-            
+
         }
         return ((vegTablero == 0) && (vegQuedan == 0));
     }

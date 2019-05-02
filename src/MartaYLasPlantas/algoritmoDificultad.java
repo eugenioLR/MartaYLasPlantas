@@ -36,7 +36,7 @@ public class algoritmoDificultad {
             } else if (prob + prioridad >= 0.85) {
                 vegRest -= 3;
             } else if (prob + prioridad >= 0.7) {
-                vegRest -= 2;
+                vegRest -= 2;   
             } else if (prob + prioridad >= 0.5) {
                 vegRest--;
             }
