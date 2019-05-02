@@ -19,6 +19,15 @@ public class Girasol extends Planta {
         setCoste(20);
     }
 
+    public int getMagia() {
+        return magia;
+    }
+
+    public void setMagia(int magia) {
+        this.magia = magia;
+    }
+    
+
     @Override
     public void actualizar() {
         magia += 1;
