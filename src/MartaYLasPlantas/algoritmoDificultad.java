@@ -5,8 +5,6 @@
  */
 package MartaYLasPlantas;
 
-import java.util.Random;
-
 /**
  *
  * @author EDGENP
@@ -16,14 +14,15 @@ public class algoritmoDificultad {
     public static void main(String[] args) {
 
         int turnos = 30;
-        int vegRest = 50;
+        int vegRest = 5;
         double prioridad = 0.0;
-        double prob = 0;
+        double prob;
         int auxx = vegRest;
-        
+
         for (int i = 0, k = 0; turnos > i; turnos--, k++) {
             if (auxx != vegRest) {
                 k = 0;  // k representa los turnos sin que los zombies hayan aparecido
+                prioridad = 0.0;
             }
             if (k > 6) {
                 prioridad = Math.random() / 2; // de forma que sumaremos hasta +0.5 de probabilidad.
