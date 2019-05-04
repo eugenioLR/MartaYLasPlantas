@@ -41,6 +41,7 @@ OBSERVACIONES:
 1. (línea 21): pudimos crear un algorítmo mediante el cual, resolviendo un sistema de ecuaciones, podríamos crear diferentes parámetros 
    a modificar, ejemplo, dependiendo de la dificultad seleccionada, mediante una curva de dificultad (generada con una función polinómica)
    llegamos a crear diferentes ataques que los zombies tendrían, o diferente salud que éstos tendrían, dependiendo de la dificultad
+   
         PROS: - Mayor uso del parámetro "dificultad"
               - Mayor ajuste a la dificultad dependiendo de cada opción seleccionada, al tratarse de una curva de dificultad, es mucho
                 más justo para el usuario, y no nos encontramos con un juego desequilibrado ni ilógico.
