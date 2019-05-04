@@ -177,7 +177,7 @@ public class Principal {
             //               "|V(4)  "
         }
         System.out.println("|");
-        System.out.println("magia: "+magia+" turno: "+ tablero.getContador()N);
+        System.out.println("magia: "+magia+" turno: "+ tablero.getContador());
     }
 }
 
