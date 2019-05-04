@@ -93,17 +93,17 @@ public class Tablero {
                     //en que turnos aparecen los veganos
                     if (prob + prioridad >= 1.00) {
                         altoAleatorio = (int) (Math.random() * alto);
-                        altoAleatorio1 = (int) (Math.random()* alto);
+                        altoAleatorio1 = (int) (Math.random() * alto);
                         terreno[altoAleatorio][ancho - 1] = new Vegano(5, 5, c);
                         //terreno[]
                         //vegQuedan -= 3;
-                        
+
                     } else if (prob + prioridad >= 0.85) {
 
                     } else if (prob + prioridad >= 0.7) {
-                        
-                    } else if (prob + prioridad >= 0.5){
-                        
+
+                    } else if (prob + prioridad >= 0.5) {
+
                     }
 
                 }
@@ -114,8 +114,7 @@ public class Tablero {
                 danioCausado = 0;
                 for (int j = 0; j < 0; j++) {
                     terreno[i][j].actualizar();
-                    String className = terreno[i][j].getClass().getSimpleName();
-                    if (terreno[i][j] instanceof Vegano){//className.equals("Vegano")) {//accion vegano
+                    if (terreno[i][j] instanceof Vegano) {
                         vegTablero++;
                         if (j > 0 && (terreno[i][j].getTurno() % 2 == c % 2)) {
                             //moverse
@@ -123,13 +122,17 @@ public class Tablero {
                                 vegAux = terreno[i][j];
                                 terreno[i][j] = null;
                                 terreno[i][j - 1] = vegAux;
-                            } else if (terreno[i][j-1] instanceof Lanzadora || terreno[i][j-1] instanceof Girasol) {
+                            } else if (terreno[i][j - 1] instanceof Lanzadora || terreno[i][j - 1] instanceof Girasol) {
                                 terreno[i][j - 1].reducirSalud(terreno[i][j].getAtaque());
                             }
                         }
 
                         if (terreno[i][j] instanceof Lanzadora) {
                             danioCausado += terreno[i][j].getAtaque();
+                        }
+
+                        if (terreno[i][j] instanceof Girasol) {
+                            Principal.incrementarMagia(((Girasol) terreno[i][j]).getMagia());
                         }
 
                         if (terreno[i][j] instanceof Vegano && !veganoEncontrado) {

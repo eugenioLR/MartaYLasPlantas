@@ -11,14 +11,23 @@ package MartaYLasPlantas;
  */
 public class Girasol extends Planta {
 
-    private int magia;
+    private static int coste = 20;
+    int magia;
 
     public Girasol(int salud, int ataque, int turno, int magia) {
         super(salud, ataque, turno);
         this.magia = magia;
-        setCoste(20);
     }
 
+    public int getMagia() {
+        return magia;
+    }
+
+    public void setMagia(int magia) {
+        this.magia = magia;
+    }
+
+    
     @Override
     public void actualizar() {
         magia += 1;

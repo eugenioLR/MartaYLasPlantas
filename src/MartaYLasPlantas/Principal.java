@@ -17,7 +17,7 @@ public class Principal {
     /**
      * @param args the command line arguments
      */
-    private static int alto, ancho, dificultad;
+    private static int alto, ancho, dificultad, magia=0;
     private static Tablero tablero;
 
     public static void main(String[] args) {
@@ -108,7 +108,13 @@ public class Principal {
             tablero.actualiza();
         }
     }
-
+    public static void incrementarMagia(int cantidad){
+        magia += cantidad;
+    }
+    public static void disminuirMagia(int cantidad){
+        magia -= cantidad;
+    }
+    
     public static int getDificultad() {
         return dificultad;
     }

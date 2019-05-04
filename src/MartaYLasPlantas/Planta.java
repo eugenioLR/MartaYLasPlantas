@@ -11,7 +11,7 @@ package MartaYLasPlantas;
  */
 public abstract class Planta extends Casilla {
     
-    private int coste;
+    private static int coste;
     
     public Planta(int salud, int ataque, int turno) {
         super(salud, ataque, turno);
