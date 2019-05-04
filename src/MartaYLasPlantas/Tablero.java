@@ -115,7 +115,7 @@ public class Tablero {
                 for (int j = 0; j < 0; j++) {
                     terreno[i][j].actualizar();
                     String className = terreno[i][j].getClass().getSimpleName();
-                    if (className.equals("Vegano")) {//accion vegano
+                    if (terreno[i][j] instanceof Vegano){//className.equals("Vegano")) {//accion vegano
                         vegTablero++;
                         if (j > 0 && (terreno[i][j].getTurno() % 2 == c % 2)) {
                             //moverse
@@ -123,23 +123,22 @@ public class Tablero {
                                 vegAux = terreno[i][j];
                                 terreno[i][j] = null;
                                 terreno[i][j - 1] = vegAux;
-                            } else if ((terreno[i][j - 1]).getClass().getSimpleName().equals("Lanzadora")
-                                    || (terreno[i][j - 1]).getClass().getSimpleName().equals("Girasol")) {
+                            } else if (terreno[i][j-1] instanceof Lanzadora || terreno[i][j-1] instanceof Girasol) {
                                 terreno[i][j - 1].reducirSalud(terreno[i][j].getAtaque());
                             }
                         }
 
-                        if (className.equals("Lanzadora")) {
+                        if (terreno[i][j] instanceof Lanzadora) {
                             danioCausado += terreno[i][j].getAtaque();
                         }
 
-                        if (className.equals("Vegano") && !veganoEncontrado) {
+                        if (terreno[i][j] instanceof Vegano && !veganoEncontrado) {
                             terreno[i][j].reducirSalud(danioCausado);
                             // si no se han encontrado plantas, se reduce en 0 la salud
                         }
                         if (terreno[i][j] != null && terreno[i][j].getSalud() <= 0) {
                             terreno[i][j] = null;
-                            if (className.equals("Vegano")) {
+                            if (terreno[i][j] instanceof Vegano) {
                                 vegTablero--;
                             }
                         }
