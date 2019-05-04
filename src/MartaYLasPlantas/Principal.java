@@ -55,11 +55,17 @@ public class Principal {
                 comprobando = false;
                 comando = scanner.nextLine();
                 tokens = comando.split(" ");
+                if (!(tokens.length == 4)) {
+                    throw new EresMongolo("numero incorrecto de argumentos");
+                }
                 if (!tokens[0].equals("N")) {
                     throw new EresMongolo("No es una n, primera advertencia");
                 }
                 alto = Integer.parseInt(tokens[1]);
                 ancho = Integer.parseInt(tokens[2]);
+                if(!hashDificultad.containsKey(tokens[3])){
+                    throw new EresMongolo("dificultad incorrecta");
+                }
                 dificultad = hashDificultad.get(tokens[3]);
             } catch (NumberFormatException e) {
                 System.out.println("jaja pringao, eres un inutil. " + e);
@@ -83,17 +89,28 @@ public class Principal {
                     tokens = comando.split(" ");
                     alto = Integer.parseInt(tokens[1]);
                     ancho = Integer.parseInt(tokens[2]);
+                    if (!(tokens.length == 4)) {
+                        throw new EresMongolo("numero incorrecto de argumentos");
+                    }
+                    if ((alto > tablero.getAlto() - 1 || alto < 0)
+                            || ancho > tablero.getAncho() - 1 || ancho < 0) {
+                        throw new EresMongolo("fuera del tablero");
+                    }
                     switch (tokens[0].charAt(0)) {
                         case 'G':
                             if (magia >= Girasol.getCoste()) {
                                 tablero.colocarCasilla(new Girasol(0, 2, 3, tablero.getContador()), alto, ancho);
                                 magia -= Girasol.getCoste();
+                            }else{
+                                throw new EresMongolo("magia insuficientes");
                             }
                             break;
                         case 'L':
                             if (magia >= Lanzadora.getCoste()) {
                                 tablero.colocarCasilla(new Lanzadora(0, 1), alto, ancho);
                                 magia -= Lanzadora.getCoste();
+                            }else{
+                                throw new EresMongolo("magia insuficientes");
                             }
                             break;
                         case 'S':
@@ -105,10 +122,10 @@ public class Principal {
                             throw new EresMongolo("eres mongolo");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("jaja pringao, eres un inutil. ");
+                    System.out.println("jaja pringao, eres un inutil. " + e);
                     comprobando = true;
                 } catch (EresMongolo em) {
-                    System.out.println("jaja pringao, eres un inutil. X2, no u won´t work u fool. ");
+                    System.out.println(em);
                     comprobando = true;
                 }
             }
@@ -160,6 +177,7 @@ public class Principal {
             //               "|V(4)  "
         }
         System.out.println("|");
+        System.out.println("magia: "+magia+" turno: "+ tablero.getContador()N);
     }
 }
 
