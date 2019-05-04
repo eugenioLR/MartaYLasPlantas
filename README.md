@@ -15,15 +15,16 @@ Finalidad: la finalidad de éste archivo README, que se encuentra ud. leyendo, e
   
   
 1 - Fallos encontrados en el proyecto/enunciado:
-# El primer fallo y, el más comentado probablemente, es el "error" que consigo trae el que el usuario pueda variar 
-  las longitudes del tablero, anotadas unas cuantas de ellas (no todas) a continuación.
+# El primer fallo y, el más comentado probablemente
+es el "error" que consigo trae el que el usuario pueda variar las longitudes del tablero, anotadas unas cuantas de ellas (no todas) a continuación.
     - Fallos: Al tener que aparecer n número de zombies, y poder restringir la altura a la que el usuario quiera, se puede llegar
               al caso en el cual los 30 turnos de spawn de zombies se agoten y queden zombies sin aparecer.
     - Posibles soluciones: - Eliminar los 30 turnos de spawn de zombies máximos estrictos.
                            - No permitir al usuario seleccionar el tamaño del tablero que éste quiera.
                            - Crear excepciones (nosotros optando por esta última)
                            
-# Segundo fallo: También relacionado con las longitudes del tablero, pero en este caso, también incorporando la dificultad.
+# Segundo fallo:
+También relacionado con las longitudes del tablero, pero en este caso, también incorporando la dificultad.
   La dificultad se convierte en algo relativo si permitimos al usuario controlar el tamaño del tablero, no es lo mismo controlar
   a 50 entidades en una mapa de 50x50 que en un mapa de 3x3, o simplemente en un mapa de 1x 500, evidentemente, la dificultad 
   es algo ilógico que acaba simplemente controlando, al final, la cantidad de zombies que quieres en el tablero.
