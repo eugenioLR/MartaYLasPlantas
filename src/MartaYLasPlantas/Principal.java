@@ -17,7 +17,7 @@ public class Principal {
     /**
      * @param args the command line arguments
      */
-    private static int alto, ancho, dificultad, magia=0;
+    private static int alto, ancho, dificultad, magia = 0;
     private static Tablero tablero;
 
     public static void main(String[] args) {
@@ -49,6 +49,7 @@ public class Principal {
         hashDificultad.put("MEDIA", 1);
         hashDificultad.put("ALTA", 2);
         hashDificultad.put("IMPOSIBLE", 3);
+        magia = 50;
         while (comprobando) {
             try {
                 comprobando = false;
@@ -84,10 +85,16 @@ public class Principal {
                     ancho = Integer.parseInt(tokens[2]);
                     switch (tokens[0].charAt(0)) {
                         case 'G':
-                            tablero.colocarCasilla(new Girasol(0, 2, 3, tablero.getContador()), alto, ancho);
+                            if (magia >= Girasol.getCoste()) {
+                                tablero.colocarCasilla(new Girasol(0, 2, 3, tablero.getContador()), alto, ancho);
+                                magia -= Girasol.getCoste();
+                            }
                             break;
                         case 'L':
-                            tablero.colocarCasilla(new Lanzadora(0, 1), alto, ancho);
+                            if (magia >= Lanzadora.getCoste()) {
+                                tablero.colocarCasilla(new Lanzadora(0, 1), alto, ancho);
+                                magia -= Lanzadora.getCoste();
+                            }
                             break;
                         case 'S':
                             jugando = false;
@@ -108,13 +115,15 @@ public class Principal {
             tablero.actualiza();
         }
     }
-    public static void incrementarMagia(int cantidad){
+
+    public static void incrementarMagia(int cantidad) {
         magia += cantidad;
     }
-    public static void disminuirMagia(int cantidad){
+
+    public static void disminuirMagia(int cantidad) {
         magia -= cantidad;
     }
-    
+
     public static int getDificultad() {
         return dificultad;
     }
