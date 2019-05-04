@@ -146,15 +146,16 @@ public class Principal {
     }
 
     public static void ararTerreno() {
-        Casilla casilla, terreno[][] = tablero.getTerreno();
-        for (Casilla[] fila : terreno) {
+        Entidad casilla;
+        Entidad[][] terreno = tablero.getTerreno();
+        for (Entidad[] fila : terreno) {
             System.out.print("|------");
             for (int i = 0; i < ancho - 1; i++) {
                 System.out.print("-------");
                 //                             "|V(4)  "
             }
             System.out.println("|");
-            for (Casilla posicion : fila) {
+            for (Entidad posicion : fila) {
                 if (posicion == null) {
                     System.out.print("|      ");
                 } else if (posicion instanceof Vegano) {

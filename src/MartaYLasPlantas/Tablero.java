@@ -13,13 +13,13 @@ public class Tablero {
 
     // NUESTRO METODO PINTARTABLERO(), SE VA A LLAMAR ArarTerreno()
     //MAGIA!!!! MAGIA!!!! MAGIA!!!!
-    private Casilla terreno[][];
+    private Entidad terreno[][];
     private int c, ancho, alto;//contador
 
     public Tablero(int ancho, int alto) {
         this.alto = alto;
         this.ancho = ancho;
-        terreno = new Casilla[alto][ancho];
+        terreno = new Entidad[alto][ancho];
         c = 0;
     }
 
@@ -51,13 +51,13 @@ public class Tablero {
         this.c++;
     }
 
-    public void colocarCasilla(Casilla casilla, int x, int y) {
+    public void colocarCasilla(Entidad casilla, int x, int y) {
         int posAux[] = {x, y};
         casilla.setPosicion(posAux);
         terreno[y][x] = casilla;
     }
 
-    public Casilla[][] getTerreno() {
+    public Entidad[][] getTerreno() {
         return terreno;
     }
 
@@ -69,7 +69,7 @@ public class Tablero {
         int danioCausado;
         int altoAleatorio;
         int altoAleatorio1;
-        Casilla vegAux;
+        Entidad vegAux;
         double prioridad = 0.0;
         int auxx = vegQuedan;
         double prob;

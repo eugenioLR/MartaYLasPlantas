@@ -9,7 +9,7 @@ package MartaYLasPlantas;
  *
  * @author EDGENP
  */
-public class Vegano extends Casilla {
+public class Vegano extends Entidad {
 
     private int turno;
 

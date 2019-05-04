@@ -9,7 +9,7 @@ package MartaYLasPlantas;
  *
  * @author EDGENP
  */
-public abstract class Planta extends Casilla {
+public abstract class Planta extends Entidad {
     
     private static int coste;
     

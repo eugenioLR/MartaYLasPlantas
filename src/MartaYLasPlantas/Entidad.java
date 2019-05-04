@@ -9,12 +9,12 @@ package MartaYLasPlantas;
  *
  * @author EDGENP
  */
-public abstract class Casilla {
+public abstract class Entidad {
 
     private int salud, ataque, posicion[] = new int[2], turno;
     private static int dificultad = 1; // pide que se inicialice 
 
-    public Casilla(int salud, int ataque, int turno) {
+    public Entidad(int salud, int ataque, int turno) {
         this.salud = salud;
         this.ataque = ataque;
         this.turno = turno;
