@@ -147,10 +147,6 @@ public class Principal {
 
     public static void ararTerreno() {
         Casilla casilla, terreno[][] = tablero.getTerreno();
-        tablero.colocarCasilla(new Lanzadora(2, 2), 0, 0);
-        tablero.colocarCasilla(new Vegano(6, 2, 3), 0, 1);
-        tablero.colocarCasilla(new Girasol(3, 2, 4, 4), 0, 2);
-        tablero.colocarCasilla(new Lanzadora(9, 2), 0, 3);
         for (Casilla[] fila : terreno) {
             System.out.print("|------");
             for (int i = 0; i < ancho - 1; i++) {
