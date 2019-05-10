@@ -142,8 +142,7 @@ public class Principal {
         return dificultad;
     }
 
-    
-    public static void ararCutre() {
+    /*public static void ararCutre() {
         Entidad entidad;
         Casilla[][] terreno = tablero.getTerreno();
         for (Casilla[] fila : terreno) {
@@ -160,10 +159,10 @@ public class Principal {
             System.out.println();
         }
         System.out.println(magia);
-    }
-     /*
+    }*/
     public static void ararTerreno() {
         Entidad entidad;
+        int veganos;
         Casilla[][] terreno = tablero.getTerreno();
         for (Casilla[] fila : terreno) {
             System.out.print("|------");
@@ -173,9 +172,22 @@ public class Principal {
             }
             System.out.println("|");
             for (Casilla posicion : fila) {
-                if (posicion == null) {
+                if (posicion.getEntidades().isEmpty()) {
                     System.out.print("|      ");
-                    /*    
+                } else if (posicion.getEntidades().contains("Vegano")&&
+                    (posicion.getEntidades().contains("Girasol")) || 
+                    (posicion.getEntidades().contains("Lanzadora"))){
+                    while (posicion.getEntidades().iterator().hasNext()) {
+                        
+                        System.out.println("|V()");
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+/*
                 } else if (posicion instanceof Vegano) {
                     System.out.print("|V(" + posicion.getSalud() + ")  ");
                 } else if (posicion instanceof Lanzadora) {
@@ -194,18 +206,21 @@ public class Principal {
             System.out.println("|");
             System.out.println("magia: " + magia + " turno: " + tablero.getContador());
         }*/
+
+
+
+
+        class ExcepcionPlanta extends Exception {
+
+    public ExcepcionPlanta(String message) {
+        super(message);
+    }
+}
+
+class ExcepcionJuego extends Exception {
+
+    public ExcepcionJuego(String message) {
+        super(message);
     }
 
-    class ExcepcionPlanta extends Exception {
-
-        public ExcepcionPlanta(String message) {
-            super(message);
-        }
-    }
-
-    class ExcepcionJuego extends Exception {
-
-        public ExcepcionJuego(String message) {
-            super(message);
-        }
-    }
+}
