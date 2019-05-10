@@ -32,7 +32,6 @@ public class Principal {
         hashDificultad.put("MEDIA", 1);
         hashDificultad.put("ALTA", 2);
         hashDificultad.put("IMPOSIBLE", 3);
-        //magia = 50;
         magia = Integer.MAX_VALUE;
         while (comprobando) {
             try {
@@ -63,6 +62,7 @@ public class Principal {
 
         //programa principal
         while (jugando) {
+            ararTerreno();
             tablero.incrementarContador();
             comprobando = true;
             while (comprobando) {
@@ -172,14 +172,17 @@ public class Principal {
         dasdas.put("V", new ArrayList<>());
 
         for (Casilla[] fila : terreno) {
-            System.out.print("|-------------");
+            System.out.print("|--------------");
             for (int i = 0; i < ancho - 1; i++) {
-                System.out.print("--------------");
-                //               "|V(4)  "
+                System.out.print("---------------");
             }
             System.out.println("|");
 
             for (Casilla posicion : fila) {
+                dasdas.get("V").clear();
+                dasdas.get("L").clear();
+                dasdas.get("G").clear();
+                System.out.print("|");
                 for (Entidad ent : posicion.getEntidades()) {
 
                     if (ent instanceof Vegano) {
@@ -191,30 +194,28 @@ public class Principal {
                     }
                 }
                 if (!dasdas.get("L").isEmpty()) {
-                    strCasilla += "L(" + dasdas.get("V").get(0) + ")";
+                    strCasilla += "L(" + dasdas.get("L").get(0) + ")";
                 } else if (!dasdas.get("G").isEmpty()) {
-                    strCasilla += "G(" + dasdas.get("V").get(0) + ")";
+                    strCasilla += "G(" + dasdas.get("G").get(0) + ")";
                 } else if (!dasdas.get("V").isEmpty()) {
                     strCasilla += "V(";
                     for (int i = 0; i < dasdas.get("V").size(); i++) {
                         if (i < 4) {
-                            vidas = "" + dasdas.get("V").get(i) + ",";
+                            vidas = dasdas.get("V").get(i) + ",";
                         } else {
-                            if (i >= 4) {
-                                sumaVida += dasdas.get("V").get(i);
-                            }
+                            sumaVida += dasdas.get("V").get(i);
                         }
                     }
-                    strCasilla += "" + vidas + "" + sumaVida + ")";
-
-                    while (strCasilla.length() < espacios) {
-                        strCasilla += " ";
-                    }
-                    System.out.print(strCasilla);
+                    strCasilla += vidas + "" + sumaVida + ")";
                 }
-                System.out.println("|");
+                while (strCasilla.length() < espacios) {
+                    strCasilla += " ";
+                }
+                System.out.print(strCasilla);
+            }
 
-                /*
+
+            /*
                 if (posicion.getEntidades().isEmpty()) {
                     System.out.print("|      ");
                 } else if (dasdas.)
@@ -227,11 +228,14 @@ public class Principal {
                         
                     }
                 }
-                 */
-            }
+             */
+            System.out.println("|");
         }
+        System.out.println("magia:" + magia);
+
     }
 }
+
 
 /*
                 } else if (posicion instanceof Vegano) {
