@@ -32,7 +32,7 @@ public class Principal {
         hashDificultad.put("MEDIA", 1);
         hashDificultad.put("ALTA", 2);
         hashDificultad.put("IMPOSIBLE", 3);
-        magia = Integer.MAX_VALUE;
+        magia = Integer.MAX_VALUE / 2;
         while (comprobando) {
             try {
                 comprobando = false;
@@ -164,7 +164,7 @@ public class Principal {
         int sumaVida = 0;
         String vidas = "";
         String strCasilla = "";
-        int espacios = 14;
+        int espacios = 17;
         Casilla[][] terreno = tablero.getTerreno();
         HashMap<String, ArrayList<Integer>> dasdas = new HashMap<>();
         dasdas.put("G", new ArrayList<>());
@@ -179,10 +179,14 @@ public class Principal {
             System.out.println("|");
 
             for (Casilla posicion : fila) {
+                strCasilla = "";
+                vidas = "";
+                sumaVida = 0;
                 dasdas.get("V").clear();
                 dasdas.get("L").clear();
                 dasdas.get("G").clear();
                 System.out.print("|");
+
                 for (Entidad ent : posicion.getEntidades()) {
 
                     if (ent instanceof Vegano) {
@@ -193,21 +197,32 @@ public class Principal {
                         dasdas.get("G").add(ent.getSalud());
                     }
                 }
+
                 if (!dasdas.get("L").isEmpty()) {
                     strCasilla += "L(" + dasdas.get("L").get(0) + ")";
-                } else if (!dasdas.get("G").isEmpty()) {
+                }
+                if (!dasdas.get("G").isEmpty()) {
                     strCasilla += "G(" + dasdas.get("G").get(0) + ")";
-                } else if (!dasdas.get("V").isEmpty()) {
+                }
+                if (!dasdas.get("V").isEmpty()) {
                     strCasilla += "V(";
                     for (int i = 0; i < dasdas.get("V").size(); i++) {
                         if (i < 4) {
-                            vidas = dasdas.get("V").get(i) + ",";
+                            vidas += dasdas.get("V").get(i);
+                            if(dasdas.get("V").size() > 4){
+                                vidas += ",";
+                            }
                         } else {
                             sumaVida += dasdas.get("V").get(i);
                         }
                     }
-                    strCasilla += vidas + "" + sumaVida + ")";
+                    if (sumaVida > 0) {
+                        strCasilla += vidas + "" + sumaVida + ")";
+                    }else{
+                        strCasilla += vidas + ")";
+                    }
                 }
+
                 while (strCasilla.length() < espacios) {
                     strCasilla += " ";
                 }
@@ -231,6 +246,11 @@ public class Principal {
              */
             System.out.println("|");
         }
+        System.out.print("|--------------");
+        for (int i = 0; i < ancho - 1; i++) {
+            System.out.print("---------------");
+        }
+        System.out.println("|");
         System.out.println("magia:" + magia);
 
     }

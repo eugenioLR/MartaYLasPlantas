@@ -73,7 +73,7 @@ public class Tablero {
         int vegQuedan = 5;
         Entidad entidad;
         double prob, prioridad = 0.0;
-        int auxx = vegQuedan, vegAux;
+        int auxx = vegQuedan, vegAux = 0;
 
         if (c > 5) {
             for (int i = 0, k = 0, turnos = 30; turnos > i; turnos--, k++) {
@@ -98,7 +98,7 @@ public class Tablero {
                      * y cuantos veganos aparecen dependiendo de la probabilidad
                      */
                     if (prob + prioridad >= 1.00) {
-                        vegAux = 3 + (int) prob / 1;
+                        vegAux = 3 + (int) (prob + prioridad);
                         spawnVeganos(vegAux);
                     } else if (prob + prioridad >= 0.85) {
                         vegAux = 3;
@@ -110,6 +110,7 @@ public class Tablero {
                         vegAux = 1;
                         spawnVeganos(vegAux);
                     }
+                    vegQuedan -= vegAux;
                 }
             }
             vegTablero = 0;
@@ -167,6 +168,7 @@ public class Tablero {
             }
         }
         c++;
+        System.out.println(vegQuedan + "-" + vegTablero);
         return ((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
 
@@ -180,10 +182,13 @@ public class Tablero {
         }
     }
 
-    public void spawnVeganos(int entidades) {
-        int altoAleatorio = 0;
+    public void spawnVeganos(int cantidad) {
+        int altoAleatorio;
+        /*
         while (entidades > 0) {
             entidades--;
+*/
+        for(int i = 0; i<cantidad; i++){
             altoAleatorio = (int) (Math.random() * alto);
             terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, c));
         }
