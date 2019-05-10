@@ -164,12 +164,13 @@ public class Principal {
         Integer[] vidas;
         Entidad entidad;
         int veganos;
+        String cont1, cont2;
         Casilla[][] terreno = tablero.getTerreno();
         HashMap<String, ArrayList<Integer>> dasdas = new HashMap<>();
-        dasdas.put("G",new ArrayList<>());
-        dasdas.put("L",new ArrayList<>());
-        dasdas.put("V",new ArrayList<>());
-        
+        dasdas.put("G", new ArrayList<>());
+        dasdas.put("L", new ArrayList<>());
+        dasdas.put("V", new ArrayList<>());
+
         for (Casilla[] fila : terreno) {
             System.out.print("|-------------");
             for (int i = 0; i < ancho - 1; i++) {
@@ -177,9 +178,35 @@ public class Principal {
                 //               "|V(4)  "
             }
             System.out.println("|");
-            
+
             for (Casilla posicion : fila) {
-                /*
+                for (Entidad ent : posicion.getEntidades()) {
+
+                    if (ent instanceof Vegano) {
+                        dasdas.get("V").add(ent.getSalud());
+                    } else if (ent instanceof Lanzadora) {
+                        dasdas.get("L").add(ent.getSalud());
+                    } else if (ent instanceof Girasol) {
+                        dasdas.get("G").add(ent.getSalud());
+                    }
+                }
+                if (!dasdas.get("L").isEmpty()) {
+                    cont1 = "L(" + (dasdas.get("L").indexOf(0)) + "";
+                } else if (!dasdas.get("G").isEmpty()) {
+                    cont1 = "G(" + dasdas.get("G").indexOf(0) + "";
+                } else if (!dasdas.get("V").isEmpty()) {
+                    for (int i = 0; i < dasdas.size(); i++) {
+                        cont2 = "V(" + dasdas.get("V").indexOf(i) + ")"; // se complica un poco la cosa, ver el index i+1? i+2? i+3? controlado por ifs.
+                    }
+                }
+
+                //                  |-------------
+                System.out.println("              ");
+
+            }
+            System.out.println("|");
+
+            /*
                 if (posicion.getEntidades().isEmpty()) {
                     System.out.print("|      ");
                 } else if (dasdas.)
@@ -192,12 +219,11 @@ public class Principal {
                         
                     }
                 }
-                */
-                
-            }
+             */
         }
     }
 }
+
 /*
                 } else if (posicion instanceof Vegano) {
                     System.out.print("|V(" + posicion.getSalud() + ")  ");
@@ -217,11 +243,7 @@ public class Principal {
             System.out.println("|");
             System.out.println("magia: " + magia + " turno: " + tablero.getContador());
         }*/
-
-
-
-
-        class ExcepcionPlanta extends Exception {
+class ExcepcionPlanta extends Exception {
 
     public ExcepcionPlanta(String message) {
         super(message);
