@@ -14,14 +14,19 @@ public class Tablero {
     // NUESTRO METODO PINTARTABLERO(), SE VA A LLAMAR ArarTerreno()
     //MAGIA!!!! MAGIA!!!! MAGIA!!!!
     private Casilla terreno[][];
+    private boolean cortacesped[];
     private int c, ancho, alto, k;//contador
     private int turnos = 30;
-    private int vegQuedan = 5;
+    private int vegQuedan = 0;
 
     public Tablero(int ancho, int alto) {
         this.alto = alto;
         this.ancho = ancho;
         terreno = new Casilla[alto][ancho];
+        cortacesped = new boolean[alto];
+        for (int i = 0; i<alto;i++) {
+            cortacesped[i] = true;
+        }
 
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
@@ -54,6 +59,18 @@ public class Tablero {
 
     public void setContador(int c) {
         this.c = c;
+    }
+
+    public boolean[] getCortacesped() {
+        return cortacesped;
+    }
+
+    public boolean hayCortacesped(int pos) {
+        return cortacesped[pos];
+    }
+    
+    public void quitarCortacesped(int pos) {
+        this.cortacesped[pos] = false;
     }
 
     public void incrementarContador() {
@@ -136,9 +153,19 @@ public class Tablero {
                                 }
                             }
 
-                            if (!hayPlantas && j > 0) {
-                                terreno[i][j].getEntidades().remove(entidad);
-                                terreno[i][j - 1].getEntidades().add(entidad);
+                            if (!hayPlantas) {
+                                if (j > 0) {
+                                    terreno[i][j].getEntidades().remove(entidad);
+                                    terreno[i][j - 1].getEntidades().add(entidad);
+                                } else if (hayCortacesped(i)) {
+                                    for(int l = 0; l<ancho;l++){
+                                        destruirCasilla(terreno[i][l]);
+                                    }
+                                    quitarCortacesped(i);
+                                } else {
+                                    //System.exit(0);
+                                    return false;
+                                }
                             }
                         }
                     }
@@ -174,18 +201,21 @@ public class Tablero {
         if (turnos > 0) {
             turnos--;
         }
-        System.out.println(vegQuedan + "-" + vegTablero);
-        return ((vegTablero == 0) && (vegQuedan == 0));//ganar
+        return !((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
 
     public void limpiarCasilla(Casilla casilla) {
         Entidad entidad;
-        for (int k = 0; k < casilla.getEntidades().size(); k++) {
-            entidad = casilla.getEntidades().get(k);
+        for (int i = 0; i < casilla.getEntidades().size(); i++) {
+            entidad = casilla.getEntidades().get(i);
             if (entidad.getSalud() < 1) {
-                System.out.println(casilla.getEntidades().remove(entidad));
+                casilla.getEntidades().remove(entidad);
             }
         }
+    }
+    public void destruirCasilla(Casilla casilla){
+        Entidad entidad;
+        casilla.getEntidades().clear();
     }
 
     public void spawnVeganos(int cantidad) {

@@ -10,8 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +24,7 @@ public class MostrarImagenes extends JPanel{
     
     public MostrarImagenes(){
         super();
-        setSize(100,100);        
+        this.setSize(100,100);        
     }
     
     @Override

@@ -35,6 +35,5 @@ public class Girasol extends Planta {
     
     @Override
     public void actualizar() {
-        magia += 1;
     }
 }

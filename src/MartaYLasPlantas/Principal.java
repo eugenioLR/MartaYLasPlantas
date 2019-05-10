@@ -136,7 +136,22 @@ public class Principal {
                     comprobando = true;
                 }
             }
-            tablero.actualiza();
+            jugando = tablero.actualiza();
+        }
+        boolean pierdes = false;
+        for (Casilla[] fila : tablero.getTerreno()) {
+            for (Casilla casilla : fila) {
+                for (Entidad entidad : casilla.getEntidades()) {
+                    if (pierdes = entidad instanceof Vegano) {
+                        break;
+                    }
+                }
+            }
+        }
+        if(pierdes){
+            System.out.println("Pero que pringao.");
+        }else{
+            System.out.println("OK.");
         }
     }
 
@@ -156,13 +171,12 @@ public class Principal {
         int sumaVida;
         String vidas;
         String strCasilla;
-        int espacios = 17;
+        int espacios = 17, k = 0;
         Casilla[][] terreno = tablero.getTerreno();
         HashMap<String, ArrayList<Integer>> dasdas = new HashMap<>();
         dasdas.put("G", new ArrayList<>());
         dasdas.put("L", new ArrayList<>());
         dasdas.put("V", new ArrayList<>());
-
         for (Casilla[] fila : terreno) {
             System.out.print(" |");
             for (int i = 0; i < espacios - 1; i++) {
@@ -175,7 +189,12 @@ public class Principal {
                 }
             }
             System.out.println("|");
-            System.out.print("C");
+            if (tablero.hayCortacesped(k)) {
+                System.out.print("C");
+            } else {
+                System.out.print("_");
+            }
+            k++;
             for (Casilla posicion : fila) {
                 strCasilla = "";
                 vidas = "";
@@ -204,14 +223,14 @@ public class Principal {
                 }
                 if (!dasdas.get("V").isEmpty()) {
                     strCasilla += "V(";
-                    for (int k = 0; k < dasdas.get("V").size(); k++) {
-                        if (k < 4) {
-                            vidas += dasdas.get("V").get(k);
-                            if (dasdas.get("V").size() > 1 && k < dasdas.get("V").size() - 1) {
+                    for (int i = 0; i < dasdas.get("V").size(); i++) {
+                        if (i < 4) {
+                            vidas += dasdas.get("V").get(i);
+                            if (dasdas.get("V").size() > 1 && i < dasdas.get("V").size() - 1) {
                                 vidas += ",";
                             }
                         } else {
-                            sumaVida += dasdas.get("V").get(k);
+                            sumaVida += dasdas.get("V").get(i);
                         }
                     }
                     if (sumaVida > 0) {

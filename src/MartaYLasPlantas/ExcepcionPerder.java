@@ -7,9 +7,11 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author ACER
+ * @author EDGENP
  */
-public class ExcepcionPerder extends Exception{
+
+public class ExcepcionPerder extends Exception {
+
     public ExcepcionPerder(String message) {
         super(message);
     }

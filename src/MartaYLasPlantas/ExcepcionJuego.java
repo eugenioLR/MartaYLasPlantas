@@ -7,8 +7,9 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author ACER
+ * @author EDGENP
  */
+
 public class ExcepcionJuego extends Exception {
 
     public ExcepcionJuego(String message) {
