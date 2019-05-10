@@ -111,7 +111,6 @@ public class Principal {
                             }
                             break;
                         case 'S':
-                            jugando = false;
                             System.exit(0);
                         default:
                             throw new ExcepcionPlanta("No existe ese comando, pruebe con L o G, para salir introduzca S");
