@@ -14,7 +14,8 @@ public class Tablero {
     // NUESTRO METODO PINTARTABLERO(), SE VA A LLAMAR ArarTerreno()
     //MAGIA!!!! MAGIA!!!! MAGIA!!!!
     private Casilla terreno[][];
-    private int c, ancho, alto;//contador
+    private int c, ancho, alto, k;//contador
+    private int turnos = 30;
 
     public Tablero(int ancho, int alto) {
         this.alto = alto;
@@ -76,98 +77,103 @@ public class Tablero {
         int auxx = vegQuedan, vegAux = 0;
 
         if (c > 5) {
-            for (int i = 0, k = 0, turnos = 30; turnos > i; turnos--, k++) {
-                //comprobando si han aparecido veganos
-                if (auxx != vegQuedan) {
-                    k = 0;
-                    prioridad = 0.0;
-                }
-                /* mecanismo de preemption, 
+            if (auxx != vegQuedan) {
+                k = 0;
+                prioridad = 0.0;
+            }
+            //for (int i = 0, k = 0, turnos = 30; turnos > i; turnos--, k++) {
+            //comprobando si han aparecido veganos
+
+            /* mecanismo de preemption, 
                  * si han pasado mas de 6 turnos sin que aparezcan veganos 
                  * la probabilidad de que aparezcan es mayor por una cantidad aleatoria
-                 */
-                if (k > 6) {
-                    prioridad = Math.random() / 2;
-                }
-                auxx = vegQuedan;
-                // Calculando la probabilidad de que un vegano aparezca
-                prob = ((double) vegQuedan) / ((double) turnos);
-
-                if (vegQuedan > 0) {
-                    /* Turnos en los que los veganos aparecen 
-                     * y cuantos veganos aparecen dependiendo de la probabilidad
-                     */
-                    if (prob + prioridad >= 1.00) {
-                        vegAux = 3 + (int) (prob + prioridad);
-                        spawnVeganos(vegAux);
-                    } else if (prob + prioridad >= 0.85) {
-                        vegAux = 3;
-                        spawnVeganos(vegAux);
-                    } else if (prob + prioridad >= 0.7) {
-                        vegAux = 2;
-                        spawnVeganos(vegAux);
-                    } else if (prob + prioridad >= 0.5) {
-                        vegAux = 1;
-                        spawnVeganos(vegAux);
-                    }
-                    vegQuedan -= vegAux;
-                }
+             */
+            if (k > 6) {
+                prioridad = Math.random() / 2;
             }
-            vegTablero = 0;
+            auxx = vegQuedan;
+            // Calculando la probabilidad de que un vegano aparezca
+            prob = ((double) vegQuedan) / ((double) turnos);
 
-            for (int i = 0; i < alto; i++) {
-                for (int j = 0; j < ancho; j++) {
-
-                    for (int k = 0; k < terreno[i][j].getEntidades().size(); k++) {
-                        entidad = terreno[i][j].getEntidades().get(k);
-                        hayPlantas = false;
-                        hayVeganos = false;
-
-                        if (entidad instanceof Vegano) {
-                            entidad.actualizar();
-                            vegTablero++;
-                            if ((entidad.getTurno() % 2) == (c % 2)) {
-                                for (Entidad ent : terreno[i][j].getEntidades()) {
-                                    if (ent instanceof Planta) {
-                                        ent.reducirSalud(ent.getAtaque());
-                                        hayPlantas = true;
-                                    }
-                                }
-
-                                if (!hayPlantas && j > 0) {
-                                    terreno[i][j].getEntidades().remove(entidad);
-                                    terreno[i][j - 1].getEntidades().add(entidad);
-                                }
-                            }
-                        }
-
-                        if (entidad instanceof Lanzadora) {
-                            for (int l = j; l < terreno.length; l++) {
-                                for (Entidad ent : terreno[i][l].getEntidades()) {
-                                    if ((veganoEncontrado = ent instanceof Vegano)) {
-                                        ent.reducirSalud(entidad.getAtaque());
-                                        break;
-                                    }
-                                }
-
-                                if (veganoEncontrado) {
-                                    break;
-                                }
-
-                            }
-                        }
-
-                        if (entidad instanceof Girasol) {
-                            Principal.incrementarMagia(((Girasol) entidad).getMagia());
-                        }
-
-                    }
-
-                    limpiarCasilla(terreno[i][j]);
+            if (vegQuedan > 0) {
+                /* Turnos en los que los veganos aparecen 
+                     * y cuantos veganos aparecen dependiendo de la probabilidad
+                 */
+                if (prob + prioridad >= 1.00) {
+                    vegAux = 3 + (int) (prob + prioridad);
+                    spawnVeganos(vegAux);
+                } else if (prob + prioridad >= 0.85) {
+                    vegAux = 3;
+                    spawnVeganos(vegAux);
+                } else if (prob + prioridad >= 0.7) {
+                    vegAux = 2;
+                    spawnVeganos(vegAux);
+                } else if (prob + prioridad >= 0.5) {
+                    vegAux = 1;
+                    spawnVeganos(vegAux);
                 }
+                vegQuedan -= vegAux;
             }
         }
+        vegTablero = 0;
+
+        for (int i = 0; i < alto; i++) {
+            for (int j = 0; j < ancho; j++) {
+
+                for (int k = 0; k < terreno[i][j].getEntidades().size(); k++) {
+                    entidad = terreno[i][j].getEntidades().get(k);
+                    hayPlantas = false;
+                    hayVeganos = false;
+
+                    if (entidad instanceof Vegano) {
+                        entidad.actualizar();
+                        vegTablero++;
+                        if ((entidad.getTurno() % 2) == (c % 2)) {
+                            for (Entidad ent : terreno[i][j].getEntidades()) {
+                                if (ent instanceof Planta) {
+                                    ent.reducirSalud(ent.getAtaque());
+                                    hayPlantas = true;
+                                }
+                            }
+
+                            if (!hayPlantas && j > 0) {
+                                terreno[i][j].getEntidades().remove(entidad);
+                                terreno[i][j - 1].getEntidades().add(entidad);
+                            }
+                        }
+                    }
+
+                    if (entidad instanceof Lanzadora) {
+                        for (int l = j; l < terreno.length; l++) {
+                            for (Entidad ent : terreno[i][l].getEntidades()) {
+                                if ((veganoEncontrado = ent instanceof Vegano)) {
+                                    ent.reducirSalud(entidad.getAtaque());
+                                    break;
+                                }
+                            }
+
+                            if (veganoEncontrado) {
+                                break;
+                            }
+
+                        }
+                    }
+
+                    if (entidad instanceof Girasol) {
+                        Principal.incrementarMagia(((Girasol) entidad).getMagia());
+                    }
+
+                }
+
+                limpiarCasilla(terreno[i][j]);
+            }
+        }
+
         c++;
+        k++;
+        if (turnos > 0) {
+            turnos--;
+        }
         System.out.println(vegQuedan + "-" + vegTablero);
         return ((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
@@ -187,8 +193,8 @@ public class Tablero {
         /*
         while (entidades > 0) {
             entidades--;
-*/
-        for(int i = 0; i<cantidad; i++){
+         */
+        for (int i = 0; i < cantidad; i++) {
             altoAleatorio = (int) (Math.random() * alto);
             terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, c));
         }
