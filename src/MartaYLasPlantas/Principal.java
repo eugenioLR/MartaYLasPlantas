@@ -80,7 +80,7 @@ public class Principal {
                     } else {
                         alto = Integer.parseInt(tokens[1]) - 1;
                         ancho = Integer.parseInt(tokens[2]) - 1;
-                        if ((alto > tablero.getAlto() || alto < 0) || ancho > tablero.getAncho() || ancho < 0) {
+                        if ((alto >= tablero.getAlto() || alto < 0) || (ancho >= tablero.getAncho() || ancho < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
                         for (Entidad entidad : tablero.getTerreno()[alto][ancho].getEntidades()) {
