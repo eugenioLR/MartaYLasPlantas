@@ -161,10 +161,10 @@ public class Principal {
         System.out.println(magia);
     }*/
     public static void ararTerreno() {
-        Integer[] vidas;
-        Entidad entidad;
-        int veganos;
-        String cont1, cont2;
+        int sumaVida = 0;
+        String vidas = "";
+        String strCasilla = "";
+        int espacios = 14;
         Casilla[][] terreno = tablero.getTerreno();
         HashMap<String, ArrayList<Integer>> dasdas = new HashMap<>();
         dasdas.put("G", new ArrayList<>());
@@ -191,22 +191,30 @@ public class Principal {
                     }
                 }
                 if (!dasdas.get("L").isEmpty()) {
-                    cont1 = "L(" + (dasdas.get("L").indexOf(0)) + "";
+                    strCasilla += "L(" + dasdas.get("V").get(0) + ")";
                 } else if (!dasdas.get("G").isEmpty()) {
-                    cont1 = "G(" + dasdas.get("G").indexOf(0) + "";
+                    strCasilla += "G(" + dasdas.get("V").get(0) + ")";
                 } else if (!dasdas.get("V").isEmpty()) {
-                    for (int i = 0; i < dasdas.size(); i++) {
-                        cont2 = "V(" + dasdas.get("V").indexOf(i) + ")"; // se complica un poco la cosa, ver el index i+1? i+2? i+3? controlado por ifs.
+                    strCasilla += "V(";
+                    for (int i = 0; i < dasdas.get("V").size(); i++) {
+                        if (i < 4) {
+                            vidas = "" + dasdas.get("V").get(i) + ",";
+                        } else {
+                            if (i >= 4) {
+                                sumaVida += dasdas.get("V").get(i);
+                            }
+                        }
                     }
+                    strCasilla += "" + vidas + "" + sumaVida + ")";
+
+                    while (strCasilla.length() < espacios) {
+                        strCasilla += " ";
+                    }
+                    System.out.print(strCasilla);
                 }
+                System.out.println("|");
 
-                //                  |-------------
-                System.out.println("              ");
-
-            }
-            System.out.println("|");
-
-            /*
+                /*
                 if (posicion.getEntidades().isEmpty()) {
                     System.out.print("|      ");
                 } else if (dasdas.)
@@ -219,7 +227,8 @@ public class Principal {
                         
                     }
                 }
-             */
+                 */
+            }
         }
     }
 }
