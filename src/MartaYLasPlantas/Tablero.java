@@ -86,61 +86,17 @@ public class Tablero {
     }
 
     public boolean actualiza() {
-        boolean hayPlantas, hayVeganos, veganoEncontrado = false;
+        boolean hayPlantas, veganoEncontrado = false;
         int vegTablero = 0;
-        int dificultad = Principal.getDificultad();
         Entidad entidad;
-        double prob, prioridad = 0.0;
-        int auxx = vegQuedan, vegAux = 0;
-
-        if (c > 5) {
-            if (auxx != vegQuedan) {
-                k = 0;
-                prioridad = 0.0;
-            }
-            //for (int i = 0, k = 0, turnos = 30; turnos > i; turnos--, k++) {
-            //comprobando si han aparecido veganos
-
-            /* mecanismo de preemption, 
-                 * si han pasado mas de 6 turnos sin que aparezcan veganos 
-                 * la probabilidad de que aparezcan es mayor por una cantidad aleatoria
-             */
-            if (k > 6) {
-                prioridad = Math.random() / 2;
-            }
-            auxx = vegQuedan;
-            // Calculando la probabilidad de que un vegano aparezca
-            prob = ((double) vegQuedan) / ((double) turnos);
-
-            if (vegQuedan > 0 && c < 30) {
-                /* Turnos en los que los veganos aparecen 
-                     * y cuantos veganos aparecen dependiendo de la probabilidad
-                 */
-                if (prob + prioridad >= 1.00) {
-                    vegAux = 3 + (int) (prob + prioridad);
-                    spawnVeganos(vegAux);
-                } else if (prob + prioridad >= 0.85) {
-                    vegAux = 3;
-                    spawnVeganos(vegAux);
-                } else if (prob + prioridad >= 0.7) {
-                    vegAux = 2;
-                    spawnVeganos(vegAux);
-                } else if (prob + prioridad >= 0.5) {
-                    vegAux = 1;
-                    spawnVeganos(vegAux);
-                }
-                vegQuedan -= vegAux;
-            }
-        }
+        
         vegTablero = 0;
-
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
 
                 for (int k = 0; k < terreno[i][j].getEntidades().size(); k++) {
                     entidad = terreno[i][j].getEntidades().get(k);
                     hayPlantas = false;
-                    hayVeganos = false;
 
                     if (entidad instanceof Vegano) {
                         entidad.actualizar();

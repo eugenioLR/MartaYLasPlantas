@@ -136,6 +136,7 @@ public class Principal {
                     comprobando = true;
                 }
             }
+            generarVeganos();
             jugando = tablero.actualiza();
         }
         boolean pierdes = false;
@@ -167,6 +168,10 @@ public class Principal {
         return dificultad;
     }
 
+    public static void generarVeganos(){
+        //todas esas vainas
+    }
+    
     public static void ararTerreno() {
         int sumaVida;
         String vidas;
