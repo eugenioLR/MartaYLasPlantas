@@ -163,32 +163,38 @@ public class Principal {
     }*/
     public static void ararTerreno() {
         Integer[] vidas;
-        HashMap<String, Integer[]> dasdas = new HashMap<>();
         Entidad entidad;
         int veganos;
         Casilla[][] terreno = tablero.getTerreno();
+        HashMap<String, ArrayList<Integer>> dasdas = new HashMap<>();
+        dasdas.put("G",new ArrayList<>());
+        dasdas.put("L",new ArrayList<>());
+        dasdas.put("V",new ArrayList<>());
+        
         for (Casilla[] fila : terreno) {
-            System.out.print("|------");
+            System.out.print("|-------------");
             for (int i = 0; i < ancho - 1; i++) {
-                System.out.print("-------");
-                //                             "|V(4)  "
+                System.out.print("--------------");
+                //               "|V(4)  "
             }
             System.out.println("|");
-
             
             for (Casilla posicion : fila) {
+                /*
                 if (posicion.getEntidades().isEmpty()) {
                     System.out.print("|      ");
                 } else if (dasdas.)
-                        /*(posicion.getEntidades().contains("Vegano")&&
+                        (posicion.getEntidades().contains("Vegano")&&
                     (posicion.getEntidades().contains("Girasol")) || 
-                    (posicion.getEntidades().contains("Lanzadora")))*/{
+                    (posicion.getEntidades().contains("Lanzadora"))){
                     while (posicion.getEntidades().iterator().hasNext()) {
                         
                         System.out.println("|V()");
                         
                     }
                 }
+                */
+                
             }
         }
     }
