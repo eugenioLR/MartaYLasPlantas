@@ -77,7 +77,7 @@ public class Principal {
                         if (comando.equals("")) {
                             break;
                         } else if (comando.equals("ayuda")) {
-                            throw new ExcepcionJuego("<enter> -> Saltar un turno.\n"
+                            System.out.println("<enter> -> Saltar un turno.\n"
                                     + "S -> Salir.\n"
                                     + "L <x> <y> -> Lanzaguisantes en x y, ataca al primer zombie de la linea en la que esté.\n"
                                     + "G <x> <y> -> Girasól en x y, genera magia.");
@@ -119,8 +119,11 @@ public class Principal {
                             break;
                         case 'S':
                             System.exit(0);
+                        case 'a':
+                            comprobando = true;
+                            break;
                         default:
-                            throw new ExcepcionPlanta("No existe ese comando, pruebe con L o G, para salir introduzca S");
+                            throw new ExcepcionPlanta("No existe ese comando, escriba \"ayuda\" para obtener la lista de comandos.");
                     }
                 } catch (NumberFormatException nfe) {
                     System.out.println("Error al procesar los argumentos: " + nfe);
@@ -239,19 +242,4 @@ public class Principal {
         System.out.println("magia:" + magia);
 
     }
-}
-
-class ExcepcionPlanta extends Exception {
-
-    public ExcepcionPlanta(String message) {
-        super(message);
-    }
-}
-
-class ExcepcionJuego extends Exception {
-
-    public ExcepcionJuego(String message) {
-        super(message);
-    }
-
 }
