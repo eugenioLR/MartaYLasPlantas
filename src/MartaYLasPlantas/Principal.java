@@ -18,7 +18,7 @@ public class Principal {
     /**
      * @param args the command line arguments
      */
-    private static int alto, ancho, dificultad, magia = 0;
+    private static int alto, ancho, x, y, dificultad, magia = 0;
     private static Tablero tablero;
 
     public static void main(String[] args) {
@@ -59,31 +59,38 @@ public class Principal {
             }
         }
         tablero = new Tablero(alto, ancho);
-
+        System.out.println("Comienza la partida.");
         //programa principal
         while (jugando) {
             ararTerreno();
             tablero.incrementarContador();
             comprobando = true;
+
             while (comprobando) {
                 try {
                     puedePlantar = true;
                     comprobando = false;
+                    System.out.print(">");
                     comando = scanner.nextLine();
                     tokens = comando.split(" ");
                     if (tokens.length != 3) {
                         if (comando.equals("")) {
                             break;
+                        } else if (comando.equals("ayuda")) {
+                            throw new ExcepcionJuego("<enter> -> Saltar un turno.\n"
+                                    + "S -> Salir.\n"
+                                    + "L <x> <y> -> Lanzaguisantes en x y, ataca al primer zombie de la linea en la que esté.\n"
+                                    + "G <x> <y> -> Girasól en x y, genera magia.");
                         } else if (tokens[0].charAt(0) != 'S') {
                             throw new ExcepcionJuego("Numero incorrecto de argumentos.");
                         }
                     } else {
-                        alto = Integer.parseInt(tokens[1]) - 1;
-                        ancho = Integer.parseInt(tokens[2]) - 1;
-                        if ((alto >= tablero.getAlto() || alto < 0) || (ancho >= tablero.getAncho() || ancho < 0)) {
+                        y = Integer.parseInt(tokens[1]) - 1;
+                        x = Integer.parseInt(tokens[2]) - 1;
+                        if ((y >= tablero.getAlto() || y < 0) || (x >= tablero.getAncho() || x < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
-                        for (Entidad entidad : tablero.getTerreno()[alto][ancho].getEntidades()) {
+                        for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
                             if (puedePlantar) {
                                 puedePlantar = !(entidad instanceof Planta);
                             }
@@ -96,7 +103,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Girasol(5, 2, 8, tablero.getContador()), ancho, alto);
+                                tablero.colocarEntidad(new Girasol(5, 2, 8, tablero.getContador()), x, y);
                                 magia -= Girasol.getCoste();
                             }
                             break;
@@ -106,7 +113,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Lanzadora(5, 1), ancho, alto);
+                                tablero.colocarEntidad(new Lanzadora(5, 1), x, y);
                                 magia -= Lanzadora.getCoste();
                             }
                             break;
@@ -142,28 +149,10 @@ public class Principal {
         return dificultad;
     }
 
-    /*public static void ararCutre() {
-        Entidad entidad;
-        Casilla[][] terreno = tablero.getTerreno();
-        for (Casilla[] fila : terreno) {
-            for (Casilla casilla : fila) {
-                System.out.print("|");
-                casilla.getEntidades().forEach((ent) -> {
-                    if (ent == null) {
-                        System.out.print("N");
-                    } else {
-                        System.out.print(((String) (ent.getClass().getSimpleName())).charAt(0) + "" + ent.getSalud());
-                    }
-                });
-            }
-            System.out.println();
-        }
-        System.out.println(magia);
-    }*/
     public static void ararTerreno() {
-        int sumaVida = 0;
-        String vidas = "";
-        String strCasilla = "";
+        int sumaVida;
+        String vidas;
+        String strCasilla;
         int espacios = 17;
         Casilla[][] terreno = tablero.getTerreno();
         HashMap<String, ArrayList<Integer>> dasdas = new HashMap<>();
@@ -172,12 +161,18 @@ public class Principal {
         dasdas.put("V", new ArrayList<>());
 
         for (Casilla[] fila : terreno) {
-            System.out.print("|--------------");
+            System.out.print(" |");
+            for (int i = 0; i < espacios - 1; i++) {
+                System.out.print("-");
+            }
+
             for (int i = 0; i < ancho - 1; i++) {
-                System.out.print("---------------");
+                for (int j = 0; j < espacios; j++) {
+                    System.out.print("-");
+                }
             }
             System.out.println("|");
-
+            System.out.print("C");
             for (Casilla posicion : fila) {
                 strCasilla = "";
                 vidas = "";
@@ -206,49 +201,39 @@ public class Principal {
                 }
                 if (!dasdas.get("V").isEmpty()) {
                     strCasilla += "V(";
-                    for (int i = 0; i < dasdas.get("V").size(); i++) {
-                        if (i < 4) {
-                            vidas += dasdas.get("V").get(i);
-                            if(dasdas.get("V").size() > 4){
+                    for (int k = 0; k < dasdas.get("V").size(); k++) {
+                        if (k < 4) {
+                            vidas += dasdas.get("V").get(k);
+                            if (dasdas.get("V").size() > 1 && k < dasdas.get("V").size() - 1) {
                                 vidas += ",";
                             }
                         } else {
-                            sumaVida += dasdas.get("V").get(i);
+                            sumaVida += dasdas.get("V").get(k);
                         }
                     }
                     if (sumaVida > 0) {
                         strCasilla += vidas + "" + sumaVida + ")";
-                    }else{
+                    } else {
                         strCasilla += vidas + ")";
                     }
                 }
 
-                while (strCasilla.length() < espacios) {
+                while (strCasilla.length() < espacios - 1) {
                     strCasilla += " ";
                 }
                 System.out.print(strCasilla);
             }
 
-
-            /*
-                if (posicion.getEntidades().isEmpty()) {
-                    System.out.print("|      ");
-                } else if (dasdas.)
-                        (posicion.getEntidades().contains("Vegano")&&
-                    (posicion.getEntidades().contains("Girasol")) || 
-                    (posicion.getEntidades().contains("Lanzadora"))){
-                    while (posicion.getEntidades().iterator().hasNext()) {
-                        
-                        System.out.println("|V()");
-                        
-                    }
-                }
-             */
             System.out.println("|");
         }
-        System.out.print("|--------------");
+        System.out.print(" |");
+        for (int i = 0; i < espacios - 1; i++) {
+            System.out.print("-");
+        }
         for (int i = 0; i < ancho - 1; i++) {
-            System.out.print("---------------");
+            for (int j = 0; j < espacios; j++) {
+                System.out.print("-");
+            }
         }
         System.out.println("|");
         System.out.println("magia:" + magia);
@@ -256,26 +241,6 @@ public class Principal {
     }
 }
 
-
-/*
-                } else if (posicion instanceof Vegano) {
-                    System.out.print("|V(" + posicion.getSalud() + ")  ");
-                } else if (posicion instanceof Lanzadora) {
-                    System.out.print("|L(" + posicion.getSalud() + ")  ");
-                } else if (posicion instanceof Girasol) {
-                    System.out.print("|G(" + posicion.getSalud() + ")  ");
-                }
-                }
-                System.out.println("|");
-            }
-            System.out.print("|------");
-            for (int i = 0; i < ancho - 1; i++) {
-                System.out.print("-------");
-                //               "|V(4)  "
-            }
-            System.out.println("|");
-            System.out.println("magia: " + magia + " turno: " + tablero.getContador());
-        }*/
 class ExcepcionPlanta extends Exception {
 
     public ExcepcionPlanta(String message) {
