@@ -16,6 +16,7 @@ public class Tablero {
     private Casilla terreno[][];
     private int c, ancho, alto, k;//contador
     private int turnos = 30;
+    private int vegQuedan = 5;
 
     public Tablero(int ancho, int alto) {
         this.alto = alto;
@@ -71,7 +72,6 @@ public class Tablero {
         boolean hayPlantas, hayVeganos, veganoEncontrado = false;
         int vegTablero = 0;
         int dificultad = Principal.getDificultad();
-        int vegQuedan = 5;
         Entidad entidad;
         double prob, prioridad = 0.0;
         int auxx = vegQuedan, vegAux = 0;
@@ -95,7 +95,7 @@ public class Tablero {
             // Calculando la probabilidad de que un vegano aparezca
             prob = ((double) vegQuedan) / ((double) turnos);
 
-            if (vegQuedan > 0) {
+            if (vegQuedan > 0 && c < 30) {
                 /* Turnos en los que los veganos aparecen 
                      * y cuantos veganos aparecen dependiendo de la probabilidad
                  */
