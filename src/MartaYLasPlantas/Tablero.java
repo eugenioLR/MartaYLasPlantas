@@ -128,7 +128,7 @@ public class Tablero {
                     }
 
                     if (entidad instanceof Lanzadora) {
-                        for (int l = j; l < terreno.length; l++) {
+                        for (int l = j; l < terreno[0].length; l++) {
                             for (Entidad ent : terreno[i][l].getEntidades()) {
                                 if ((veganoEncontrado = ent instanceof Vegano)) {
                                     ent.reducirSalud(entidad.getAtaque());
