@@ -32,24 +32,35 @@ public class Principal {
         hashDificultad.put("MEDIA", 2);
         hashDificultad.put("ALTA", 3);
         hashDificultad.put("IMPOSIBLE", 4);
-        magia = Integer.MAX_VALUE / 2;
+        
+        magia = 50;
+        
+        System.out.println("Si no sabes como comenzar escribe \"ayuda\".");
         while (comprobando) {
             try {
                 comprobando = false;
                 comando = scanner.nextLine();
                 tokens = comando.split(" ");
+                
                 if (!(tokens.length == 4)) {
-                    throw new ExcepcionJuego("Número incorrecto de argumentos.");
+                    if (comando.equals("ayuda")) {
+                        System.out.println("Para inicializar el tablero introduce: N (alto) (ancho) (dificultad)."
+                                + "\nDificultades: BAJA, MEDIA, ALTA O IMPOSIBLE.");
+                        comprobando = true;
+                    } else {
+                        throw new ExcepcionJuego("Número incorrecto de argumentos.");
+                    }
+                } else {
+                    if (!tokens[0].equals("N")) {
+                        throw new ExcepcionJuego("Comando incorrecto.");
+                    }
+                    alto = Integer.parseInt(tokens[1]);
+                    ancho = Integer.parseInt(tokens[2]);
+                    if (!hashDificultad.containsKey(tokens[3])) {
+                        throw new ExcepcionJuego("Dificultad incorrecta: prueba con BAJA, MEDIA, ALTA O IMPOSIBLE.");
+                    }
+                    dificultad = hashDificultad.get(tokens[3]);
                 }
-                if (!tokens[0].equals("N")) {
-                    throw new ExcepcionJuego("Para inicializar el tablero introduce: N (alto) (ancho) (dificultad).");
-                }
-                alto = Integer.parseInt(tokens[1]);
-                ancho = Integer.parseInt(tokens[2]);
-                if (!hashDificultad.containsKey(tokens[3])) {
-                    throw new ExcepcionJuego("Dificultad incorrecta: prueba con BAJA, MEDIA, ALTA O IMPOSIBLE.");
-                }
-                dificultad = hashDificultad.get(tokens[3]);
             } catch (NumberFormatException nfe) {
                 System.out.println("Error al procesar los argumentos: " + nfe);
                 comprobando = true;
@@ -76,7 +87,7 @@ public class Principal {
         }
         vegFinal = vegQuedan / 5;
         vegQuedan -= vegFinal;
-        tablero = new Tablero(alto, ancho);
+        tablero = new Tablero(ancho, alto);
         System.out.println("Comienza la partida.");
         //programa principal
         while (jugando) {
@@ -84,6 +95,7 @@ public class Principal {
             comprobando = true;
 
             while (comprobando) {
+                magia += 5;
                 try {
                     puedePlantar = true;
                     comprobando = false;
@@ -120,7 +132,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Girasol(5, 2, 8, tablero.getContador()), x, y);
+                                tablero.colocarEntidad(new Girasol(5, 2, tablero.getContador(), 10), x, y);
                                 magia -= Girasol.getCoste();
                             }
                             break;
@@ -170,7 +182,7 @@ public class Principal {
         if (pierdes) {
             System.out.println("Pero que pringao.");
         } else {
-            System.out.println("OK.");
+            System.out.println("Has ganado. \n¡¡Enhorabuena!!");
         }
     }
 
@@ -192,9 +204,9 @@ public class Principal {
         int descanso;
         int turnoBoost = 0;
         double probabilidad = 0;
-        double prob = 0;
+        double prob;
         double ajuste;
-        double pfinal = 0.0;
+        double pfinal;
 
         switch (dificultad) {
             case 1:
@@ -221,7 +233,6 @@ public class Principal {
                 ajuste = 1;
                 descanso = 5;
         }
-        System.out.println("contador:" + contador + "descanso:" + descanso + "dificultad:" + dificultad);
         if (contador > 0) {
             //reset al boost y al contador.
             if (turnosSinVeganos >= turnoBoost) {
@@ -248,7 +259,6 @@ public class Principal {
                         turnosSinVeganos = 0;
                     } else {
                         turnosSinVeganos++;
-                        probabilidad = 0;
                     }
                 } else if (contador == 7) {
                     System.out.println(" FINAL WAVE !!! ");

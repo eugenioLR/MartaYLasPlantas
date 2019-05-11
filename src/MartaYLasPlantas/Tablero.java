@@ -23,7 +23,7 @@ public class Tablero {
         this.ancho = ancho;
         terreno = new Casilla[alto][ancho];
         cortacesped = new boolean[alto];
-        for (int i = 0; i<alto;i++) {
+        for (int i = 0; i < alto; i++) {
             cortacesped[i] = true;
         }
 
@@ -67,7 +67,7 @@ public class Tablero {
     public boolean hayCortacesped(int pos) {
         return cortacesped[pos];
     }
-    
+
     public void quitarCortacesped(int pos) {
         this.cortacesped[pos] = false;
     }
@@ -87,13 +87,12 @@ public class Tablero {
     public void setVegQuedan(int vegQuedan) {
         this.vegQuedan = vegQuedan;
     }
-    
 
     public boolean actualiza() {
         boolean hayPlantas, veganoEncontrado = false;
         int vegTablero;
         Entidad entidad;
-        
+
         vegTablero = 0;
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
@@ -104,7 +103,7 @@ public class Tablero {
 
                     if (entidad instanceof Vegano) {
                         vegTablero++;
-                        if ((entidad.getTurno() % 2) == (contador % 2) && (entidad.getTurno() != 0)) {
+                        if ((entidad.getTurno() % 2) == (contador % 2) && (entidad.getTurno() != contador)) {
                             for (Entidad ent : terreno[i][j].getEntidades()) {
                                 if (ent instanceof Planta) {
                                     ent.reducirSalud(ent.getAtaque());
@@ -115,20 +114,16 @@ public class Tablero {
                             if (!hayPlantas) {
                                 if (j > 0) {
                                     terreno[i][j].quitarEntidad(entidad);
-                                    terreno[i][j-1].insertarEntidad(entidad);
+                                    terreno[i][j - 1].insertarEntidad(entidad);
                                 } else if (hayCortacesped(i)) {
-                                    for(int l = 0; l<ancho;l++){
+                                    for (int l = 0; l < ancho; l++) {
                                         terreno[i][l].vaciar();
                                     }
                                     quitarCortacesped(i);
                                 } else {
-                                    //System.exit(0);
                                     return false;
                                 }
                             }
-                        }
-                        if(entidad.getTurno() == 0){
-                            entidad.incrementarTurno();
                         }
                     }
 
@@ -140,35 +135,35 @@ public class Tablero {
                                     break;
                                 }
                             }
-
                             if (veganoEncontrado) {
                                 break;
                             }
-
                         }
                     }
 
                     if (entidad instanceof Girasol) {
-                        Principal.incrementarMagia(((Girasol) entidad).getMagia());
+                        if ((entidad.getTurno() % 2) == (contador % 2)) {
+                            Principal.incrementarMagia(((Girasol) entidad).getMagia());
+                        }
                     }
 
                 }
             }
         }
-        for(Casilla[] fila:this.getTerreno()){
-            for(Casilla casilla:fila){
+        for (Casilla[] fila : this.getTerreno()) {
+            for (Casilla casilla : fila) {
                 casilla.actualizar();
             }
         }
         contador++;
         return !((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
-    
+
     public void spawnVeganos(int cantidad) {
         int altoAleatorio;
         for (int i = 0; i < cantidad; i++) {
             altoAleatorio = (int) (Math.random() * (alto));
-            terreno[altoAleatorio][ancho-1].getEntidades().add(new Vegano(5, 1, 0));
+            terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, contador));
         }
         vegQuedan -= cantidad;
     }

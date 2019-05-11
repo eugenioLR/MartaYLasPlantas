@@ -36,9 +36,17 @@ public class Casilla {
     }
 
     public void actualizar() {
-        Entidad entidad;
-        for (int i = 0; i < entidades.size(); i++) {
-            entidad = entidades.get(i);
+        Object[] arrObjetos = entidades.toArray();
+        Entidad arrEntidades[] = new Entidad[entidades.size()], entidadAux;
+        
+        int i = 0;
+        for(Object elemento:arrObjetos){
+            entidadAux = (Entidad) elemento;
+            arrEntidades[i] = entidadAux;
+            i++;
+        }
+        
+        for (Entidad entidad:arrEntidades) {
             if (entidad.getSalud() < 1) {
                 entidades.remove(entidad);
             }
