@@ -15,9 +15,8 @@ public class Tablero {
     //MAGIA!!!! MAGIA!!!! MAGIA!!!!
     private Casilla terreno[][];
     private boolean cortacesped[];
-    private int c, ancho, alto, k;//contador
-    private int turnos = 30;
-    private int vegQuedan = 30;
+    private int contador, ancho, alto;
+    private int vegQuedan = -1;
 
     public Tablero(int ancho, int alto) {
         this.alto = alto;
@@ -34,7 +33,7 @@ public class Tablero {
             }
         }
 
-        c = 0;
+        contador = 0;
     }
 
     public int getAncho() {
@@ -54,11 +53,11 @@ public class Tablero {
     }
 
     public int getContador() {
-        return c;
+        return contador;
     }
 
-    public void setContador(int c) {
-        this.c = c;
+    public void setContador(int contador) {
+        this.contador = contador;
     }
 
     public boolean[] getCortacesped() {
@@ -74,7 +73,7 @@ public class Tablero {
     }
 
     public void incrementarContador() {
-        this.c++;
+        this.contador++;
     }
 
     public void colocarEntidad(Entidad entidad, int x, int y) {
@@ -85,9 +84,14 @@ public class Tablero {
         return terreno;
     }
 
+    public void setVegQuedan(int vegQuedan) {
+        this.vegQuedan = vegQuedan;
+    }
+    
+
     public boolean actualiza() {
         boolean hayPlantas, veganoEncontrado = false;
-        int vegTablero = 0;
+        int vegTablero;
         Entidad entidad;
         
         vegTablero = 0;
@@ -101,7 +105,7 @@ public class Tablero {
                     if (entidad instanceof Vegano) {
                         entidad.actualizar();
                         vegTablero++;
-                        if ((entidad.getTurno() % 2) == (c % 2)) {
+                        if ((entidad.getTurno() % 2) == (contador % 2)) {
                             for (Entidad ent : terreno[i][j].getEntidades()) {
                                 if (ent instanceof Planta) {
                                     ent.reducirSalud(ent.getAtaque());
@@ -111,11 +115,11 @@ public class Tablero {
 
                             if (!hayPlantas) {
                                 if (j > 0) {
-                                    terreno[i][j].getEntidades().remove(entidad);
-                                    terreno[i][j - 1].getEntidades().add(entidad);
+                                    terreno[i][j].quitarEntidad(entidad);
+                                    terreno[i][j-1].insertarEntidad(entidad);
                                 } else if (hayCortacesped(i)) {
                                     for(int l = 0; l<ancho;l++){
-                                        destruirCasilla(terreno[i][l]);
+                                        terreno[i][l].vaciar();
                                     }
                                     quitarCortacesped(i);
                                 } else {
@@ -147,42 +151,24 @@ public class Tablero {
                     }
 
                 }
-
-                limpiarCasilla(terreno[i][j]);
             }
         }
-
-        c++;
-        k++;
-        if (turnos > 0) {
-            turnos--;
+        for(Casilla[] fila:this.getTerreno()){
+            for(Casilla casilla:fila){
+                casilla.actualizar();
+            }
         }
+        
+        contador++;
         return !((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
-
-    public void limpiarCasilla(Casilla casilla) {
-        Entidad entidad;
-        for (int i = 0; i < casilla.getEntidades().size(); i++) {
-            entidad = casilla.getEntidades().get(i);
-            if (entidad.getSalud() < 1) {
-                casilla.getEntidades().remove(entidad);
-            }
-        }
-    }
-    public void destruirCasilla(Casilla casilla){
-        Entidad entidad;
-        casilla.getEntidades().clear();
-    }
-
+    
     public void spawnVeganos(int cantidad) {
         int altoAleatorio;
-        /*
-        while (entidades > 0) {
-            entidades--;
-         */
         for (int i = 0; i < cantidad; i++) {
             altoAleatorio = (int) (Math.random() * alto);
-            terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, c));
+            terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, contador));
         }
+        vegQuedan -= cantidad;
     }
 }

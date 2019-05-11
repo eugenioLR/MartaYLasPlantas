@@ -59,7 +59,7 @@ public class algoritmoDificultad {
         vegRest -= vegFinal;
         auxx = vegRest;
 
-        for (int i = 0, k = 0; turnos > i; turnos--, k++) {
+        for (int k = 0; turnos > 0; turnos--, k++) {
             if (auxx != vegRest) {
                 k = 0;  // k representa los turnos sin que los zombies hayan aparecido
                 probabilidad = 0;

@@ -18,7 +18,7 @@ public class Principal {
     /**
      * @param args the command line arguments
      */
-    private static int alto, ancho, x, y, dificultad, magia = 0;
+    private static int alto, ancho, x, y, dificultad, magia = 0, vegQuedan, vegFinal = 0, turnosSinVeganos;
     private static Tablero tablero;
 
     public static void main(String[] args) {
@@ -58,6 +58,23 @@ public class Principal {
                 comprobando = true;
             }
         }
+        switch (dificultad) {
+            case 1:
+                vegQuedan = 5;
+                break;
+            case 2:
+                vegQuedan = 15;
+                break;
+            case 3:
+                vegQuedan = 25;
+                break;
+            case 4:
+                vegQuedan = 50;
+                break;
+            default:
+                vegQuedan = Integer.MAX_VALUE;
+        }
+        vegFinal = vegQuedan / 5;
         tablero = new Tablero(alto, ancho);
         System.out.println("Comienza la partida.");
         //programa principal
@@ -137,6 +154,7 @@ public class Principal {
                 }
             }
             generarVeganos();
+            tablero.setVegQuedan(vegQuedan);
             jugando = tablero.actualiza();
         }
         boolean pierdes = false;
@@ -170,13 +188,9 @@ public class Principal {
 
     public static void generarVeganos() {
         // contadores
-        int c = tablero.getContador();
-        int k = 0;
-
+        int contador = 30 - tablero.getContador();
         int descanso = 0; // turno 
-        int vegRest = 0;
         int turnoBoost = 0;
-        int vegFinal;
         int auxx = 0;
         double probabilidad;
         double ajuste;
@@ -186,57 +200,70 @@ public class Principal {
 
             case 1:
                 descanso = 10;
-                vegRest = 5;
                 ajuste = 1.5;
                 turnoBoost = 5;
                 break;
             case 2:
                 descanso = 7;
-                vegRest = 15;
                 ajuste = 2.5;
                 turnoBoost = 3;
                 break;
             case 3:
                 descanso = 5;
-                vegRest = 25;
                 ajuste = 3;
                 turnoBoost = 2;
                 break;
             case 4:
                 descanso = 5;
-                vegRest = 50;
                 ajuste = 1;
                 turnoBoost = 0;
                 break;
         }
-        vegFinal = vegRest / 5;
-        vegRest -= vegFinal;
-        auxx = vegRest;
 
-        //reset al boost y al contador.
-        if (k >= turnoBoost) {
-            k = 0;
-            probabilidad = 0;
-        }
-        // comienzan a aparecer los zombies.
-        if (c > descanso) {
-            if (pfinal > 1.00 && vegRest >= 3) {
-                vegRest -= 2 + (int) pfinal;
-            } else if (pfinal >= 0.75 && vegRest >= 2) {
-                vegRest -= 2;
-            } else if (pfinal >= 0.6 && vegRest >= 1) {
-                vegRest -= 1;
+        auxx = vegQuedan;
+        if (contador > 0) {
+            //reset al boost y al contador.
+            if (turnosSinVeganos >= turnoBoost) {
+                turnosSinVeganos = 0;
+                probabilidad = 0;
             }
-        } else if (c == 5) {
-            System.out.println(" FINAL WAVE !!! ");
-            vegRest += vegFinal;
-        } else {
-            if (pfinal >= 1.00 && vegRest >= 3) {
-                vegRest -= 2 + (int) pfinal;
-            } else if (pfinal >= 0.75 && vegRest >= 2) {
-                vegRest -= 2;
-            } else if (pfinal >= 0.6 && vegRest >= 1) {
-                vegRest -= 1;
+
+            // comienzan a aparecer los zombies.
+            if (contador > descanso) {
+                if (pfinal > 1.00 && vegQuedan >= 3) {
+                    vegQuedan -= 2 + (int) pfinal;
+                    tablero.spawnVeganos(2 + (int) pfinal);
+                    turnosSinVeganos = 0;
+                } else if (pfinal >= 0.75 && vegQuedan >= 2) {
+                    vegQuedan -= 2;
+                    tablero.spawnVeganos(2);
+                    turnosSinVeganos = 0;
+                } else if (pfinal >= 0.6 && vegQuedan >= 1) {
+                    vegQuedan -= 1;
+                    tablero.spawnVeganos(1);
+                    turnosSinVeganos = 0;
+                } else {
+                    turnosSinVeganos++;
+                }
+            } else if (contador == descanso) {
+                System.out.println(" FINAL WAVE !!! ");
+                vegQuedan += vegFinal;
+            } else {
+                if (pfinal >= 1.00 && vegQuedan >= 3) {
+                    vegQuedan -= 2 + (int) pfinal;
+                    tablero.spawnVeganos(2 + (int) pfinal);
+                    turnosSinVeganos = 0;
+                } else if (pfinal >= 0.75 && vegQuedan >= 2) {
+                    vegQuedan -= 2;
+                    tablero.spawnVeganos(2);
+                    turnosSinVeganos = 0;
+                } else if (pfinal >= 0.6 && vegQuedan >= 1) {
+                    vegQuedan -= 1;
+                    tablero.spawnVeganos(1);
+                    turnosSinVeganos = 0;
+                } else {
+                    turnosSinVeganos++;
+                }
             }
         }
     }

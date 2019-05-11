@@ -12,25 +12,37 @@ import java.util.ArrayList;
  * @author ACER
  */
 public class Casilla {
+
     private ArrayList<Entidad> entidades;
 
     public Casilla() {
         entidades = new ArrayList<>();
     }
-    
-    public void insertarEntidad(Entidad entidad){
+
+    public void insertarEntidad(Entidad entidad) {
         entidades.add(entidad);
+    }
+
+    public void quitarEntidad(Entidad entidad) {
+        entidades.remove(entidad);
     }
 
     public ArrayList<Entidad> getEntidades() {
         return entidades;
     }
-    
-    public void actualizar(){
-        for(int i = 0; i<entidades.size(); i++){
-            if(entidades.get(i).getSalud() <= 0){
-                entidades.remove(i);
+
+    public void vaciar() {
+        this.getEntidades().clear();
+    }
+
+    public void actualizar() {
+        Entidad entidad;
+        for (int i = 0; i < entidades.size(); i++) {
+            entidad = entidades.get(i);
+            if (entidad.getSalud() < 1) {
+                entidades.remove(entidad);
             }
         }
     }
+
 }
