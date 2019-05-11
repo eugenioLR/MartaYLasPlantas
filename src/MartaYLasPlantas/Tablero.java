@@ -158,8 +158,6 @@ public class Tablero {
                 casilla.actualizar();
             }
         }
-        
-        contador++;
         return !((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
     

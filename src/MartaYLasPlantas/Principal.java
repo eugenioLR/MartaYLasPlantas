@@ -191,7 +191,6 @@ public class Principal {
         int contador = 30 - tablero.getContador();
         int descanso = 0; // turno 
         int turnoBoost = 0;
-        int auxx = 0;
         double probabilidad;
         double ajuste;
         double pfinal = 0.0;
@@ -219,8 +218,6 @@ public class Principal {
                 turnoBoost = 0;
                 break;
         }
-
-        auxx = vegQuedan;
         if (contador > 0) {
             //reset al boost y al contador.
             if (turnosSinVeganos >= turnoBoost) {
@@ -359,7 +356,7 @@ public class Principal {
             }
         }
         System.out.println("|");
-        System.out.println("magia:" + magia);
+        System.out.println("Turno: "+ tablero.getContador() + "\nMagia: " + magia);
 
     }
 }
