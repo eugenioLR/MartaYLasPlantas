@@ -170,6 +170,7 @@ public class Principal {
 
     public static void generarVeganos(){
         //todas esas vainas
+        tablero.getContador();
     }
     
     public static void ararTerreno() {
@@ -265,5 +266,19 @@ public class Principal {
         System.out.println("|");
         System.out.println("magia:" + magia);
 
+    }
+}
+
+ class ExcepcionPlanta extends Exception {
+
+    public ExcepcionPlanta(String message) {
+        super(message);
+    }
+}
+
+ class ExcepcionJuego extends Exception {
+
+    public ExcepcionJuego(String message) {
+        super(message);
     }
 }
