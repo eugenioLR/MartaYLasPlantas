@@ -14,15 +14,15 @@ public class algoritmoDificultad {
     public static void main(String[] args) {
 
         int turnos = 30;
-        int vegRest = 5;
+        int vegRest;
         double prob, pfinal;
         int auxx;
         int vegFinal;
-        int dificultad = 2;
-        int descanso = 0;
-        int boost = 0;
-        double probabilidad = 0;;
-        double ajuste = 0.0; //ajuste controla el rango en el cual nusetra probabilidad random puede generarse
+        int dificultad = 1;
+        int descanso;
+        int boost;
+        double probabilidad = 0;
+        double ajuste; //ajuste controla el rango en el cual nusetra probabilidad random puede generarse
 
         switch (dificultad) {
             case 1:
@@ -49,6 +49,11 @@ public class algoritmoDificultad {
                 ajuste = 1;
                 boost = 0;
                 break;
+            default:
+                descanso = 0;
+                vegRest = Integer.MAX_VALUE;
+                ajuste = 1;
+                boost = 5;
         }
         vegFinal = vegRest / 5;
         vegRest -= vegFinal;
@@ -65,8 +70,7 @@ public class algoritmoDificultad {
             auxx = vegRest;
             prob = ((double) vegRest) / ((double) turnos) * 0.8;
             pfinal = prob + probabilidad;
-            System.out.println(prob + "-" + "vegRest " + vegRest + "-" + "prob final: " + pfinal + " turnos sin zombies " + k);
-
+            System.out.printf("%.2f-vegRest:%d-probFinal:%.2f-turnosSinZombies:%d\n",prob,vegRest,pfinal,k);
             if (turnos > descanso) {
                 // turnos iniciales.
                 if (pfinal >= 1.00 && vegRest >= 3) {
@@ -77,7 +81,7 @@ public class algoritmoDificultad {
                     vegRest -= 1;
                 }
 
-            } else if (turnos == 5) {
+            } else if (turnos == descanso) {
                 System.out.println("FINAL WAVE!!!");
                 vegRest += vegFinal;
                 if (pfinal >= 1.00 && vegRest >= 3) {
