@@ -70,7 +70,7 @@ public class algoritmoDificultad {
             auxx = vegRest;
             prob = ((double) vegRest) / ((double) turnos) * 0.8;
             pfinal = prob + probabilidad;
-            System.out.printf("%.2f-vegRest:%d-probFinal:%.2f-turnosSinZombies:%d\n",prob,vegRest,pfinal,k);
+            System.out.printf("%.2f-vegRest :%d - probFinal: %.2f - turnosSinZombies: %d \n",prob,vegRest,pfinal,k);
             if (turnos > descanso) {
                 // turnos iniciales.
                 if (pfinal >= 1.00 && vegRest >= 3) {

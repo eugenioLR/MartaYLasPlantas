@@ -28,10 +28,10 @@ public class Principal {
         String comando, tokens[];
         Scanner scanner = new Scanner(System.in);
         HashMap<String, Integer> hashDificultad = new HashMap<>();
-        hashDificultad.put("BAJA", 0);
-        hashDificultad.put("MEDIA", 1);
-        hashDificultad.put("ALTA", 2);
-        hashDificultad.put("IMPOSIBLE", 3);
+        hashDificultad.put("BAJA", 1);
+        hashDificultad.put("MEDIA", 2);
+        hashDificultad.put("ALTA", 3);
+        hashDificultad.put("IMPOSIBLE", 4);
         magia = Integer.MAX_VALUE / 2;
         while (comprobando) {
             try {
@@ -72,9 +72,10 @@ public class Principal {
                 vegQuedan = 50;
                 break;
             default:
-                vegQuedan = Integer.MAX_VALUE;
+                vegQuedan = 10;
         }
         vegFinal = vegQuedan / 5;
+        vegQuedan -= vegFinal;
         tablero = new Tablero(alto, ancho);
         System.out.println("Comienza la partida.");
         //programa principal
@@ -189,9 +190,10 @@ public class Principal {
     public static void generarVeganos() {
         // contadores
         int contador = 30 - tablero.getContador();
-        int descanso = 0; // turno 
+        int descanso;
         int turnoBoost = 0;
-        double probabilidad;
+        double probabilidad = 0;
+        double prob = 0;
         double ajuste;
         double pfinal = 0.0;
 
@@ -217,16 +219,21 @@ public class Principal {
                 ajuste = 1;
                 turnoBoost = 0;
                 break;
+            default:
+                ajuste = 1;
+                descanso = 5;
         }
         if (contador > 0) {
             //reset al boost y al contador.
             if (turnosSinVeganos >= turnoBoost) {
-                turnosSinVeganos = 0;
-                probabilidad = 0;
+                probabilidad = Math.random() / ajuste;
             }
-
+            
+            prob = ((double) vegQuedan) / ((double) contador) * 0.8;
+            pfinal = prob + probabilidad;
+            
             // comienzan a aparecer los zombies.
-            if (contador > descanso) {
+            if ( contador < descanso ) {
                 if (pfinal > 1.00 && vegQuedan >= 3) {
                     vegQuedan -= 2 + (int) pfinal;
                     tablero.spawnVeganos(2 + (int) pfinal);
@@ -241,6 +248,7 @@ public class Principal {
                     turnosSinVeganos = 0;
                 } else {
                     turnosSinVeganos++;
+                    probabilidad = 0;
                 }
             } else if (contador == descanso) {
                 System.out.println(" FINAL WAVE !!! ");

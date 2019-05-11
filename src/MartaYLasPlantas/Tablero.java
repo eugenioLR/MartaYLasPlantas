@@ -163,6 +163,7 @@ public class Tablero {
     
     public void spawnVeganos(int cantidad) {
         int altoAleatorio;
+        System.out.println(cantidad);
         for (int i = 0; i < cantidad; i++) {
             altoAleatorio = (int) (Math.random() * alto);
             terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, contador));
