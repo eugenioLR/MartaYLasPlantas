@@ -25,6 +25,7 @@ public class Principal {
         boolean jugando = true;
         boolean comprobando = true;
         boolean puedePlantar;
+        boolean pierdes = false;
         String comando, tokens[];
         Scanner scanner = new Scanner(System.in);
         HashMap<String, Integer> hashDificultad = new HashMap<>();
@@ -114,11 +115,15 @@ public class Principal {
                             throw new ExcepcionJuego("Numero incorrecto de argumentos.");
                         }
                     } else {
+                        //x:6-y:5 vs ancho:6-alto:7
                         y = Integer.parseInt(tokens[1]) - 1;
                         x = Integer.parseInt(tokens[2]) - 1;
-                        if ((y > alto || y < 0) || (x > ancho || x < 0)) {
+                        
+                        if ((y >= alto || y < 0) || (x >= ancho  || x < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
+                        
+                        System.out.printf("x:%d-y:%d vs ancho:%d-alto:%d",x,y,ancho,alto);
                         for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
                             if (puedePlantar) {
                                 puedePlantar = !(entidad instanceof Planta);
@@ -169,7 +174,6 @@ public class Principal {
             tablero.setVegQuedan(vegQuedan);
             jugando = tablero.actualiza();
         }
-        boolean pierdes = false;
         for (Casilla[] fila : tablero.getTerreno()) {
             for (Casilla casilla : fila) {
                 for (Entidad entidad : casilla.getEntidades()) {
