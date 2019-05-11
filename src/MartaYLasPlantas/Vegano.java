@@ -17,6 +17,5 @@ public class Vegano extends Entidad {
 
     @Override
     public void actualizar() {
-        this.incrementarTurno();
     }
 }

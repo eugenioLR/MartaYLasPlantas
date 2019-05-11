@@ -47,7 +47,7 @@ public class Principal {
                 alto = Integer.parseInt(tokens[1]);
                 ancho = Integer.parseInt(tokens[2]);
                 if (!hashDificultad.containsKey(tokens[3])) {
-                    throw new ExcepcionJuego("Dificultad incorrecta: prueba con BAJA, MEDIA, DIFICIL O IMPOSIBLE.");
+                    throw new ExcepcionJuego("Dificultad incorrecta: prueba con BAJA, MEDIA, ALTA O IMPOSIBLE.");
                 }
                 dificultad = hashDificultad.get(tokens[3]);
             } catch (NumberFormatException nfe) {
@@ -81,7 +81,6 @@ public class Principal {
         //programa principal
         while (jugando) {
             ararTerreno();
-            tablero.incrementarContador();
             comprobando = true;
 
             while (comprobando) {
@@ -198,7 +197,6 @@ public class Principal {
         double pfinal = 0.0;
 
         switch (dificultad) {
-
             case 1:
                 descanso = 10;
                 ajuste = 1.5;
@@ -223,51 +221,54 @@ public class Principal {
                 ajuste = 1;
                 descanso = 5;
         }
+        System.out.println("contador:" + contador + "descanso:" + descanso + "dificultad:" + dificultad);
         if (contador > 0) {
             //reset al boost y al contador.
             if (turnosSinVeganos >= turnoBoost) {
                 probabilidad = Math.random() / ajuste;
             }
-            
+
             prob = ((double) vegQuedan) / ((double) contador) * 0.8;
             pfinal = prob + probabilidad;
-            
+
             // comienzan a aparecer los zombies.
-            if ( contador < descanso ) {
-                if (pfinal > 1.00 && vegQuedan >= 3) {
-                    vegQuedan -= 2 + (int) pfinal;
-                    tablero.spawnVeganos(2 + (int) pfinal);
-                    turnosSinVeganos = 0;
-                } else if (pfinal >= 0.75 && vegQuedan >= 2) {
-                    vegQuedan -= 2;
-                    tablero.spawnVeganos(2);
-                    turnosSinVeganos = 0;
-                } else if (pfinal >= 0.6 && vegQuedan >= 1) {
-                    vegQuedan -= 1;
-                    tablero.spawnVeganos(1);
-                    turnosSinVeganos = 0;
+            if (contador < 30 - descanso) {
+                if (contador < 7) {
+                    if (pfinal > 1.00 && vegQuedan >= 3) {
+                        vegQuedan -= 2 + (int) pfinal;
+                        tablero.spawnVeganos(2 + (int) pfinal);
+                        turnosSinVeganos = 0;
+                    } else if (pfinal >= 0.75 && vegQuedan >= 2) {
+                        vegQuedan -= 2;
+                        tablero.spawnVeganos(2);
+                        turnosSinVeganos = 0;
+                    } else if (pfinal >= 0.6 && vegQuedan >= 1) {
+                        vegQuedan -= 1;
+                        tablero.spawnVeganos(1);
+                        turnosSinVeganos = 0;
+                    } else {
+                        turnosSinVeganos++;
+                        probabilidad = 0;
+                    }
+                } else if (contador == 7) {
+                    System.out.println(" FINAL WAVE !!! ");
+                    vegQuedan += vegFinal;
                 } else {
-                    turnosSinVeganos++;
-                    probabilidad = 0;
-                }
-            } else if (contador == descanso) {
-                System.out.println(" FINAL WAVE !!! ");
-                vegQuedan += vegFinal;
-            } else {
-                if (pfinal >= 1.00 && vegQuedan >= 3) {
-                    vegQuedan -= 2 + (int) pfinal;
-                    tablero.spawnVeganos(2 + (int) pfinal);
-                    turnosSinVeganos = 0;
-                } else if (pfinal >= 0.75 && vegQuedan >= 2) {
-                    vegQuedan -= 2;
-                    tablero.spawnVeganos(2);
-                    turnosSinVeganos = 0;
-                } else if (pfinal >= 0.6 && vegQuedan >= 1) {
-                    vegQuedan -= 1;
-                    tablero.spawnVeganos(1);
-                    turnosSinVeganos = 0;
-                } else {
-                    turnosSinVeganos++;
+                    if (pfinal >= 1.00 && vegQuedan >= 3) {
+                        vegQuedan -= 2 + (int) pfinal;
+                        tablero.spawnVeganos(2 + (int) pfinal);
+                        turnosSinVeganos = 0;
+                    } else if (pfinal >= 0.75 && vegQuedan >= 2) {
+                        vegQuedan -= 2;
+                        tablero.spawnVeganos(2);
+                        turnosSinVeganos = 0;
+                    } else if (pfinal >= 0.6 && vegQuedan >= 1) {
+                        vegQuedan -= 1;
+                        tablero.spawnVeganos(1);
+                        turnosSinVeganos = 0;
+                    } else {
+                        turnosSinVeganos++;
+                    }
                 }
             }
         }
@@ -364,7 +365,7 @@ public class Principal {
             }
         }
         System.out.println("|");
-        System.out.println("Turno: "+ tablero.getContador() + "\nMagia: " + magia);
+        System.out.println("Turno: " + tablero.getContador() + "\nMagia: " + magia);
 
     }
 }

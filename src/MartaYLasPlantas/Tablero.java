@@ -103,9 +103,8 @@ public class Tablero {
                     hayPlantas = false;
 
                     if (entidad instanceof Vegano) {
-                        entidad.actualizar();
                         vegTablero++;
-                        if ((entidad.getTurno() % 2) == (contador % 2)) {
+                        if ((entidad.getTurno() % 2) == (contador % 2) && (entidad.getTurno() != 0)) {
                             for (Entidad ent : terreno[i][j].getEntidades()) {
                                 if (ent instanceof Planta) {
                                     ent.reducirSalud(ent.getAtaque());
@@ -127,6 +126,9 @@ public class Tablero {
                                     return false;
                                 }
                             }
+                        }
+                        if(entidad.getTurno() == 0){
+                            entidad.incrementarTurno();
                         }
                     }
 
@@ -158,15 +160,15 @@ public class Tablero {
                 casilla.actualizar();
             }
         }
+        contador++;
         return !((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
     
     public void spawnVeganos(int cantidad) {
         int altoAleatorio;
-        System.out.println(cantidad);
         for (int i = 0; i < cantidad; i++) {
-            altoAleatorio = (int) (Math.random() * alto);
-            terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, contador));
+            altoAleatorio = (int) (Math.random() * (alto));
+            terreno[altoAleatorio][ancho-1].getEntidades().add(new Vegano(5, 1, 0));
         }
         vegQuedan -= cantidad;
     }
