@@ -17,7 +17,7 @@ public class Tablero {
     private boolean cortacesped[];
     private int c, ancho, alto, k;//contador
     private int turnos = 30;
-    private int vegQuedan = 0;
+    private int vegQuedan = 30;
 
     public Tablero(int ancho, int alto) {
         this.alto = alto;
