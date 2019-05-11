@@ -32,18 +32,18 @@ public class Principal {
         hashDificultad.put("MEDIA", 2);
         hashDificultad.put("ALTA", 3);
         hashDificultad.put("IMPOSIBLE", 4);
-        
+
         magia = 50;
-        
+
         System.out.println("Si no sabes como comenzar escribe \"ayuda\".");
         while (comprobando) {
             try {
                 comprobando = false;
-                comando = scanner.nextLine();
+                comando = scanner.nextLine().toUpperCase();
                 tokens = comando.split(" ");
-                
+
                 if (!(tokens.length == 4)) {
-                    if (comando.equals("ayuda")) {
+                    if (comando.equals("AYUDA")) {
                         System.out.println("Para inicializar el tablero introduce: N (alto) (ancho) (dificultad)."
                                 + "\nDificultades: BAJA, MEDIA, ALTA O IMPOSIBLE.");
                         comprobando = true;
@@ -87,7 +87,7 @@ public class Principal {
         }
         vegFinal = vegQuedan / 5;
         vegQuedan -= vegFinal;
-        tablero = new Tablero(ancho, alto);
+        tablero = new Tablero(alto, ancho);
         System.out.println("Comienza la partida.");
         //programa principal
         while (jugando) {
@@ -100,23 +100,23 @@ public class Principal {
                     puedePlantar = true;
                     comprobando = false;
                     System.out.print(">");
-                    comando = scanner.nextLine();
+                    comando = scanner.nextLine().toUpperCase();
                     tokens = comando.split(" ");
                     if (tokens.length != 3) {
                         if (comando.equals("")) {
                             break;
-                        } else if (comando.equals("ayuda")) {
+                        } else if (comando.equals("AYUDA")) {
                             System.out.println("<enter> -> Saltar un turno.\n"
                                     + "S -> Salir.\n"
-                                    + "L <x> <y> -> Lanzaguisantes en x y, ataca al primer zombie de la linea en la que esté.\n"
-                                    + "G <x> <y> -> Girasól en x y, genera magia.");
-                        } else if (tokens[0].charAt(0) != 'S') {
+                                    + "L <x> <y> -> Coste: 50. Lanzaguisantes en x y, ataca al primer zombie de la linea en la que esté.\n"
+                                    + "G <x> <y> -> Coste: 20. Girasól en x y, genera magia.");
+                        } else if (!comando.equals("S")) {
                             throw new ExcepcionJuego("Numero incorrecto de argumentos.");
                         }
                     } else {
                         y = Integer.parseInt(tokens[1]) - 1;
                         x = Integer.parseInt(tokens[2]) - 1;
-                        if ((y >= tablero.getAlto() || y < 0) || (x >= tablero.getAncho() || x < 0)) {
+                        if ((y > alto || y < 0) || (x > ancho || x < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
                         for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
@@ -132,7 +132,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Girasol(5, 2, tablero.getContador(), 10), x, y);
+                                tablero.colocarEntidad(new Girasol(5, 2, tablero.getContador(), 10), y, x);
                                 magia -= Girasol.getCoste();
                             }
                             break;
@@ -142,7 +142,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Lanzadora(5, 1), x, y);
+                                tablero.colocarEntidad(new Lanzadora(5, 1), y, x);
                                 magia -= Lanzadora.getCoste();
                             }
                             break;

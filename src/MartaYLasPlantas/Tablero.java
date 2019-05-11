@@ -18,7 +18,7 @@ public class Tablero {
     private int contador, ancho, alto;
     private int vegQuedan = -1;
 
-    public Tablero(int ancho, int alto) {
+    public Tablero(int alto, int ancho) {
         this.alto = alto;
         this.ancho = ancho;
         terreno = new Casilla[alto][ancho];
@@ -76,7 +76,7 @@ public class Tablero {
         this.contador++;
     }
 
-    public void colocarEntidad(Entidad entidad, int x, int y) {
+    public void colocarEntidad(Entidad entidad, int y, int x) {
         terreno[y][x].getEntidades().add(entidad);
     }
 
