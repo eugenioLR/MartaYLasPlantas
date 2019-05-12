@@ -14,7 +14,6 @@ package MartaYLasPlantas;
 public abstract class Entidad {
 
     private int salud, ataque, turno;
-    private static int dificultad;
 
     /**
      * Constructor de Entidades
@@ -35,15 +34,6 @@ public abstract class Entidad {
      */
     public int getTurno() {
         return turno;
-    }
-
-    /**
-     * Set the value of turno
-     *
-     * @param turno new value of turno
-     */
-    public void setTurno(int turno) {
-        this.turno = turno;
     }
 
     /**
@@ -88,23 +78,5 @@ public abstract class Entidad {
      */
     public int getAtaque() {
         return ataque;
-    }
-
-    /**
-     * Set the value of ataque
-     *
-     * @param ataque new value of ataque
-     */
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
-    }
-
-    /**
-     * Get the value of dificultad
-     *
-     * @return the value of dificultad
-     */
-    public int getDificultad() {
-        return dificultad;
     }
 }

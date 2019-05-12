@@ -15,7 +15,8 @@ public class Girasol extends Planta {
     private int magiaGenera;
 
     /**
-     *{@inheritDoc}
+     * Constructor de Girasol
+     * {@inheritDoc}
      * @param magiaGenera cantidad de magia a generar.
      * <br> el ataque será 0 ya que los girasoles no atacan <br>
      */
@@ -25,16 +26,18 @@ public class Girasol extends Planta {
     }
 
     /**
+     * Get the value of magiaGenera
      *
-     * @return cantidad de magia a generar una vez llamada la funcion
+     * @return the value of magiaGenera
      */
     public int getMagiaGenera() {
         return magiaGenera;
     }
 
     /**
+     * Get the value of coste
      *
-     * @return coste en magia de plantar esta planta 
+     * @return the value of coste
      */
     public static int getCoste() {
         return coste;

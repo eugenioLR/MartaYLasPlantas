@@ -7,9 +7,7 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author EDGENP
- *         Eugenio Lorente
- *         Darius Tamas
+ * @author EDGENP Eugenio Lorente Darius Tamas
  */
 public class Tablero {
 
@@ -20,6 +18,7 @@ public class Tablero {
 
     /**
      * Constructor de tablero.
+     *
      * @param alto
      * @param ancho
      */
@@ -42,55 +41,17 @@ public class Tablero {
     }
 
     /**
-     * 
-     * @return ancho
-     */
-    public int getAncho() {
-        return ancho;
-    }
-
-    /**
+     * Get the value of contador
      *
-     * @param ancho
-     */
-    public void setAncho(int ancho) {
-        this.ancho = ancho;
-    }
-
-    /**
-     *
-     * @return alto
-     */
-    public int getAlto() {
-        return alto;
-    }
-
-    /**
-     *
-     * @param alto
-     */
-    public void setAlto(int alto) {
-        this.alto = alto;
-    }
-
-    /**
-     *
-     * @return
+     * @return the value of contador
      */
     public int getContador() {
         return contador;
     }
 
     /**
+     * Devuelve el array de cortacesped
      *
-     * @param contador
-     */
-    public void setContador(int contador) {
-        this.contador = contador;
-    }
-
-    /**
-     * Comprueba si hay cortacesped
      * @return cortacesped
      */
     public boolean[] getCortacesped() {
@@ -100,13 +61,14 @@ public class Tablero {
     /**
      *
      * @param pos
-     * @return
+     * @return si hay cortacesped en la posicion pos
      */
     public boolean hayCortacesped(int pos) {
         return cortacesped[pos];
     }
 
     /**
+     * Quita una cortacesped en la posicion pos
      *
      * @param pos
      */
@@ -115,43 +77,37 @@ public class Tablero {
     }
 
     /**
-     *
-     */
-    public void incrementarContador() {
-        this.contador++;
-    }
-
-    /**
+     * Coloca una entidad en el tablero en la posicion x y
      *
      * @param entidad
      * @param y
      * @param x
      */
-    
     public void colocarEntidad(Entidad entidad, int y, int x) {
-        //toca explicar esta wea
         terreno[y][x].getEntidades().add(entidad);
     }
 
     /**
      *
-     * @return
+     * @return the value of Terreno
      */
     public Casilla[][] getTerreno() {
         return terreno;
     }
 
     /**
+     * Set the value of vegQuedan
      *
-     * @param vegQuedan
+     * @param vegQuedan new value of ataque
      */
     public void setVegQuedan(int vegQuedan) {
         this.vegQuedan = vegQuedan;
     }
 
     /**
+     * Se encarga de la intercaccion entre entidades.
      *
-     * @return
+     * @return si se sigue jugando
      */
     public boolean actualiza() {
         boolean hayPlantas, veganoEncontrado = false;
@@ -159,7 +115,7 @@ public class Tablero {
         Entidad entidad;
 
         vegTablero = 0;
-        
+
         //Recorriendo el tablero.
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
@@ -187,7 +143,7 @@ public class Tablero {
                                 if (j > 0) {
                                     terreno[i][j].quitarEntidad(entidad);
                                     terreno[i][j - 1].insertarEntidad(entidad);
-                                //Si encuentra una cortacésped
+                                    //Si encuentra una cortacésped
                                 } else if (hayCortacesped(i)) {
                                     for (int l = 0; l < ancho; l++) {
                                         terreno[i][l].vaciar();
@@ -199,7 +155,7 @@ public class Tablero {
                             }
                         }
                     }
-                    
+
                     // Movimientos posibles de la lanzadora.
                     if (entidad instanceof Lanzadora) {
                         for (int l = j; l < terreno[0].length; l++) {
@@ -226,7 +182,7 @@ public class Tablero {
                 }
             }
         }
-        
+
         for (Casilla[] fila : this.getTerreno()) {
             for (Casilla casilla : fila) {
                 casilla.actualizar();
@@ -237,6 +193,7 @@ public class Tablero {
     }
 
     /**
+     * Genera tantos veganos como se indique
      *
      * @param cantidad
      */

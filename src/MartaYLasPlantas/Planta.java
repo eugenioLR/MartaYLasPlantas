@@ -12,7 +12,8 @@ package MartaYLasPlantas;
 public class Planta extends Entidad {
 
     /**
-     *{@inheritDoc}
+     * Constructor de Planta
+     * {@inheritDoc}
      */
     public Planta(int salud, int ataque, int turno) {
         super(salud, ataque, turno);

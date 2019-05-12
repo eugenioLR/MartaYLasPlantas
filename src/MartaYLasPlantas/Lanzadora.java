@@ -22,8 +22,9 @@ public class Lanzadora extends Planta {
     }
     
     /**
+     * Get the value of coste
      *
-     * @return coste en magia de plantar esta planta 
+     * @return the value of coste
      */
     public static int getCoste() {
         return coste;

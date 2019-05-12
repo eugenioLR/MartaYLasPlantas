@@ -14,10 +14,8 @@ package MartaYLasPlantas;
 public class Vegano extends Entidad {
 
     /**
-     * Constructor de veganos.
-     * @param salud
-     * @param ataque
-     * @param turno
+     * Constructor de Vegano.
+     * {@inheritDoc}
      */
     public Vegano(int salud, int ataque, int turno) {
         super(salud, ataque, turno);
