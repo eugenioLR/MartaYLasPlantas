@@ -151,33 +151,41 @@ public class Tablero {
      *
      * @return
      */
-    public boolean actualiza() {    //comentar weas
+    public boolean actualiza() {
         boolean hayPlantas, veganoEncontrado = false;
         int vegTablero;
         Entidad entidad;
 
         vegTablero = 0;
+        
+        //Recorriendo el tablero.
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
 
+                // Recorriendo las entidades del tablero.
                 for (int k = 0; k < terreno[i][j].getEntidades().size(); k++) {
                     entidad = terreno[i][j].getEntidades().get(k);
                     hayPlantas = false;
 
+                    // ¿Qué sucede cuando se encuentre un vegano?
                     if (entidad instanceof Vegano) {
                         vegTablero++;
+                        //si se encuentra en su turno de moverse.
                         if ((entidad.getTurno() % 2) == (contador % 2) && (entidad.getTurno() != contador)) {
+                            // ¿Qué hace el vegano?
                             for (Entidad ent : terreno[i][j].getEntidades()) {
+                                // -> si encuentra una planta
                                 if (ent instanceof Planta) {
                                     ent.reducirSalud(ent.getAtaque());
                                     hayPlantas = true;
                                 }
                             }
-
+                                // -> Si no encuentra una planta
                             if (!hayPlantas) {
                                 if (j > 0) {
                                     terreno[i][j].quitarEntidad(entidad);
                                     terreno[i][j - 1].insertarEntidad(entidad);
+                                    // -> Si encuentra una cortacésped
                                 } else if (hayCortacesped(i)) {
                                     for (int l = 0; l < ancho; l++) {
                                         terreno[i][l].vaciar();
@@ -190,6 +198,7 @@ public class Tablero {
                         }
                     }
                     
+                    // Movimientos posibles de la lanzadora.
                     if (entidad instanceof Lanzadora) {
                         for (int l = j; l < terreno[0].length; l++) {
                             for (Entidad ent : terreno[i][l].getEntidades()) {
@@ -198,14 +207,16 @@ public class Tablero {
                                     break;
                                 }
                             }
+                            // solo va a disparar al primer vegano.
                             if (veganoEncontrado) {
                                 break;
                             }
                         }
                     }
-
+                    // Movimientos del girasol.
                     if (entidad instanceof Girasol) {
                         if ((entidad.getTurno() % 2) == (contador % 2)) {
+                            // generarMagia
                             Principal.incrementarMagia(((Girasol) entidad).getMagiaGenera());
                         }
                     }
@@ -213,6 +224,7 @@ public class Tablero {
                 }
             }
         }
+        
         for (Casilla[] fila : this.getTerreno()) {
             for (Casilla casilla : fila) {
                 casilla.actualizar();

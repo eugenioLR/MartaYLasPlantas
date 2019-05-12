@@ -54,20 +54,22 @@ public class Casilla {
     }
 
     /**
-     *
+     *  Método que se encarga de que no exista  
      */
     public void actualizar() {
         Object[] arrObjetos = entidades.toArray();
         Entidad arrEntidades[] = new Entidad[entidades.size()], entidadAux;
 
         int i = 0;
-        //hay que explicar esta wea
+        
         for (Object elemento : arrObjetos) {
+            // copiamos el contenido de un array a otro, haciendo un cast simultáneo a un tipo Entidad
             entidadAux = (Entidad) elemento;
             arrEntidades[i] = entidadAux;
             i++;
         }
 
+        // Con el cast creado, si tenemos una entidad con vida menor que 1, la eliminamos.
         for (Entidad entidad : arrEntidades) {
             if (entidad.getSalud() < 1) {
                 entidades.remove(entidad);
