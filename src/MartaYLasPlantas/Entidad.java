@@ -8,6 +8,8 @@ package MartaYLasPlantas;
 /**
  *
  * @author EDGENP
+ *         Eugenio Lorente
+ *         Darius Tamas
  */
 public abstract class Entidad {
 
@@ -15,7 +17,7 @@ public abstract class Entidad {
     private static int dificultad;
 
     /**
-     *
+     * Constructor de Entidades
      * @param salud
      * @param ataque
      * @param turno
@@ -45,7 +47,7 @@ public abstract class Entidad {
     }
 
     /**
-     * Set the value of turno
+     * Incrementa el contador propio de cada entidad
      *
      */
     public void incrementarTurno() {
@@ -53,7 +55,7 @@ public abstract class Entidad {
     }
 
     /**
-     * Get the value of turno
+     * Get the value of salud
      *
      * @return the value of salud
      */
@@ -62,17 +64,16 @@ public abstract class Entidad {
     }
 
     /**
-     * Set the value of turno
+     * Set the value of salud
      *
-     * @param salud new value of turno
+     * @param salud new value of salud
      */
     public void setSalud(int salud) {
         this.salud = salud;
     }
 
     /**
-     * Change the value of turno to
-     *
+     * Quita tanta salud como cantidad introducida
      *
      * @param cantidad
      */
@@ -81,7 +82,7 @@ public abstract class Entidad {
     }
 
     /**
-     * Get the value of turno
+     * Get the value of ataque
      *
      * @return the value of ataque
      */
@@ -90,16 +91,16 @@ public abstract class Entidad {
     }
 
     /**
-     * Set the value of turno
+     * Set the value of ataque
      *
-     * @param ataque new value of turno
+     * @param ataque new value of ataque
      */
     public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
 
     /**
-     * Get the value of turno
+     * Get the value of dificultad
      *
      * @return the value of dificultad
      */
