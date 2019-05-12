@@ -14,17 +14,16 @@ public class Lanzadora extends Planta {
     private static int coste = 50;
 
     /**
-     *
-     * @param salud
-     * @param ataque
+     *{@inheritDoc}
+     * turno será 1 ya que no se usa, ataca cada turno
      */
     public Lanzadora(int salud, int ataque) {
         super(salud, ataque, 1);
     }
-
+    
     /**
      *
-     * @return coste
+     * @return coste en magia de plantar esta planta 
      */
     public static int getCoste() {
         return coste;

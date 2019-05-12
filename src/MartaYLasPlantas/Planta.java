@@ -12,10 +12,7 @@ package MartaYLasPlantas;
 public class Planta extends Entidad {
 
     /**
-     *
-     * @param salud
-     * @param ataque
-     * @param turno
+     *{@inheritDoc}
      */
     public Planta(int salud, int ataque, int turno) {
         super(salud, ataque, turno);
