@@ -92,7 +92,7 @@ public class Principal {
         System.out.println("Comienza la partida.");
         //programa principal
         while (jugando) {
-            ararTerreno();
+            imprimirTablero_ATravesCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla();
             comprobando = true;
 
             while (comprobando) {
@@ -288,7 +288,7 @@ public class Principal {
         }
     }
 
-    public static void ararTerreno() {
+    public static void imprimirTablero_ATravesCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla() {
         int sumaVida;
         String vidas;
         String strCasilla;
