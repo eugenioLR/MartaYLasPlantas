@@ -7,22 +7,26 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author EDGENP
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class Lanzadora extends Planta{
-   
+public class Lanzadora extends Planta {
+
     private static int coste = 50;
-    
+
+    /**
+     *
+     * @param salud
+     * @param ataque
+     */
     public Lanzadora(int salud, int ataque) {
         super(salud, ataque, 1);
     }
 
+    /**
+     *
+     * @return coste
+     */
     public static int getCoste() {
         return coste;
-    }
-    
-    @Override
-    public void actualizar(){
-        //disparar
     }
 }

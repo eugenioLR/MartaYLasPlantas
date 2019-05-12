@@ -7,33 +7,38 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author EDGENP
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
 public class Girasol extends Planta {
 
     private static int coste = 20;
-    int magia;
+    private int magiaGenera;
 
-    public Girasol(int salud, int ataque, int turno, int magia) {
+    /**
+     *
+     * @param salud
+     * @param ataque
+     * @param turno
+     * @param magiaGenera
+     */
+    public Girasol(int salud, int ataque, int turno, int magiaGenera) {
         super(salud, ataque, turno);
-        this.magia = magia;
+        this.magiaGenera = magiaGenera;
     }
 
-    public int getMagia() {
-        return magia;
+    /**
+     *
+     * @return magiaGenera
+     */
+    public int getMagiaGenera() {
+        return magiaGenera;
     }
 
-    public void setMagia(int magia) {
-        this.magia = magia;
-    }
-
+    /**
+     *
+     * @return coste
+     */
     public static int getCoste() {
         return coste;
-    }
-    
-
-    
-    @Override
-    public void actualizar() {
     }
 }

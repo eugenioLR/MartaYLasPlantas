@@ -7,11 +7,17 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author EDGENP
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public abstract class Planta extends Entidad {
-    
+public class Planta extends Entidad {
+
+    /**
+     *
+     * @param salud
+     * @param ataque
+     * @param turno
+     */
     public Planta(int salud, int ataque, int turno) {
         super(salud, ataque, turno);
-    }    
+    }
 }
