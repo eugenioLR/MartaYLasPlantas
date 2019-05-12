@@ -92,7 +92,7 @@ public class Principal {
         System.out.println("Comienza la partida.");
         //programa principal
         while (jugando) {
-            imprimirTablero_ATravesCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla();
+            imprimirTablero_ATravesDeCaracteresASCII_RepresentandoPlantasYVeganos_PorPantalla();
             comprobando = true;
 
             while (comprobando) {
@@ -118,12 +118,12 @@ public class Principal {
                         //x:6-y:5 vs ancho:6-alto:7
                         y = Integer.parseInt(tokens[1]) - 1;
                         x = Integer.parseInt(tokens[2]) - 1;
-                        
-                        if ((y >= alto || y < 0) || (x >= ancho  || x < 0)) {
+
+                        if ((y >= alto || y < 0) || (x >= ancho || x < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
-                        
-                        System.out.printf("x:%d-y:%d vs ancho:%d-alto:%d",x,y,ancho,alto);
+
+                        System.out.printf("x:%d-y:%d vs ancho:%d-alto:%d", x, y, ancho, alto);
                         for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
                             if (puedePlantar) {
                                 puedePlantar = !(entidad instanceof Planta);
@@ -288,7 +288,7 @@ public class Principal {
         }
     }
 
-    public static void imprimirTablero_ATravesCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla() {
+    public static void imprimirTablero_ATravesDeCaracteresASCII_RepresentandoPlantasYVeganos_PorPantalla() {
         int sumaVida;
         String vidas;
         String strCasilla;
