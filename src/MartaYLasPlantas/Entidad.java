@@ -12,8 +12,14 @@ package MartaYLasPlantas;
 public abstract class Entidad {
 
     private int salud, ataque, turno;
-    private static int dificultad = 1; // pide que se inicialice 
+    private static int dificultad;
 
+    /**
+     *
+     * @param salud
+     * @param ataque
+     * @param turno
+     */
     public Entidad(int salud, int ataque, int turno) {
         this.salud = salud;
         this.ataque = ataque;
@@ -37,34 +43,67 @@ public abstract class Entidad {
     public void setTurno(int turno) {
         this.turno = turno;
     }
-    
-    public void incrementarTurno(){
+
+    /**
+     * Set the value of turno
+     *
+     */
+    public void incrementarTurno() {
         this.turno++;
     }
 
+    /**
+     * Get the value of turno
+     *
+     * @return the value of salud
+     */
     public int getSalud() {
         return salud;
     }
 
+    /**
+     * Set the value of turno
+     *
+     * @param salud new value of turno
+     */
     public void setSalud(int salud) {
         this.salud = salud;
     }
 
+    /**
+     * Change the value of turno to
+     *
+     *
+     * @param cantidad
+     */
     public void reducirSalud(int cantidad) {
         this.salud -= cantidad;
     }
 
+    /**
+     * Get the value of turno
+     *
+     * @return the value of ataque
+     */
     public int getAtaque() {
         return ataque;
     }
 
+    /**
+     * Set the value of turno
+     *
+     * @param ataque new value of turno
+     */
     public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
 
+    /**
+     * Get the value of turno
+     *
+     * @return the value of dificultad
+     */
     public int getDificultad() {
         return dificultad;
     }
-
-    public abstract void actualizar();
 }

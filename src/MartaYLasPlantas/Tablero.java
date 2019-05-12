@@ -11,13 +11,16 @@ package MartaYLasPlantas;
  */
 public class Tablero {
 
-    // NUESTRO METODO PINTARTABLERO(), SE VA A LLAMAR ArarTerreno()
-    //MAGIA!!!! MAGIA!!!! MAGIA!!!!
     private Casilla terreno[][];
     private boolean cortacesped[];
     private int contador, ancho, alto;
     private int vegQuedan = -1;
 
+    /**
+     *
+     * @param alto
+     * @param ancho
+     */
     public Tablero(int alto, int ancho) {
         this.alto = alto;
         this.ancho = ancho;
@@ -36,59 +39,119 @@ public class Tablero {
         contador = 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAncho() {
         return ancho;
     }
 
+    /**
+     *
+     * @param ancho
+     */
     public void setAncho(int ancho) {
         this.ancho = ancho;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAlto() {
         return alto;
     }
 
+    /**
+     *
+     * @param alto
+     */
     public void setAlto(int alto) {
         this.alto = alto;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getContador() {
         return contador;
     }
 
+    /**
+     *
+     * @param contador
+     */
     public void setContador(int contador) {
         this.contador = contador;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean[] getCortacesped() {
         return cortacesped;
     }
 
+    /**
+     *
+     * @param pos
+     * @return
+     */
     public boolean hayCortacesped(int pos) {
         return cortacesped[pos];
     }
 
+    /**
+     *
+     * @param pos
+     */
     public void quitarCortacesped(int pos) {
         this.cortacesped[pos] = false;
     }
 
+    /**
+     *
+     */
     public void incrementarContador() {
         this.contador++;
     }
 
+    /**
+     *
+     * @param entidad
+     * @param y
+     * @param x
+     */
+    
     public void colocarEntidad(Entidad entidad, int y, int x) {
+        //toca explicar esta wea
         terreno[y][x].getEntidades().add(entidad);
     }
 
+    /**
+     *
+     * @return
+     */
     public Casilla[][] getTerreno() {
         return terreno;
     }
 
+    /**
+     *
+     * @param vegQuedan
+     */
     public void setVegQuedan(int vegQuedan) {
         this.vegQuedan = vegQuedan;
     }
 
-    public boolean actualiza() {
+    /**
+     *
+     * @return
+     */
+    public boolean actualiza() {    //comentar weas
         boolean hayPlantas, veganoEncontrado = false;
         int vegTablero;
         Entidad entidad;
@@ -126,7 +189,7 @@ public class Tablero {
                             }
                         }
                     }
-
+                    
                     if (entidad instanceof Lanzadora) {
                         for (int l = j; l < terreno[0].length; l++) {
                             for (Entidad ent : terreno[i][l].getEntidades()) {
@@ -159,6 +222,10 @@ public class Tablero {
         return !((vegTablero == 0) && (vegQuedan == 0));//ganar
     }
 
+    /**
+     *
+     * @param cantidad
+     */
     public void spawnVeganos(int cantidad) {
         int altoAleatorio;
         for (int i = 0; i < cantidad; i++) {
