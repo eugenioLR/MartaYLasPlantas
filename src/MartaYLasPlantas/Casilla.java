@@ -9,21 +9,23 @@ import java.util.ArrayList;
 
 /**
  *
- * @author ACER
+ * @author EDGENP
+ *         Eugenio Lorente
+ *         Darius Tamas
  */
 public class Casilla {
 
     private ArrayList<Entidad> entidades;
 
     /**
-     *
+     * Constructor de Casilla
      */
     public Casilla() {
         entidades = new ArrayList<>();
     }
 
     /**
-     *
+     * Añadir entidad al ArrayList de entidades 
      * @param entidad
      */
     public void insertarEntidad(Entidad entidad) {
@@ -31,7 +33,7 @@ public class Casilla {
     }
 
     /**
-     *
+     * Eliminar una entidad del arrayList
      * @param entidad
      */
     public void quitarEntidad(Entidad entidad) {
@@ -39,22 +41,23 @@ public class Casilla {
     }
 
     /**
-     *
-     * @return
+     * Devuelve un ArrayList de Entidad
+     * @return entidades
      */
     public ArrayList<Entidad> getEntidades() {
         return entidades;
     }
 
     /**
-     *
+     *  .Clear al ArrayList de Entidad
      */
     public void vaciar() {
         this.getEntidades().clear();
     }
 
     /**
-     *  Método que se encarga de que no exista  
+     *  Método que se encarga de que no existan entidades con vida negativa
+     *  es decir, que se encargue de que los elementos mueran
      */
     public void actualizar() {
         Object[] arrObjetos = entidades.toArray();

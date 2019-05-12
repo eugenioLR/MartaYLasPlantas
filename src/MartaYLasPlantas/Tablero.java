@@ -8,6 +8,8 @@ package MartaYLasPlantas;
 /**
  *
  * @author EDGENP
+ *         Eugenio Lorente
+ *         Darius Tamas
  */
 public class Tablero {
 
@@ -17,7 +19,7 @@ public class Tablero {
     private int vegQuedan = -1;
 
     /**
-     *
+     * Constructor de tablero.
      * @param alto
      * @param ancho
      */
@@ -40,8 +42,8 @@ public class Tablero {
     }
 
     /**
-     *
-     * @return
+     * 
+     * @return ancho
      */
     public int getAncho() {
         return ancho;
@@ -57,7 +59,7 @@ public class Tablero {
 
     /**
      *
-     * @return
+     * @return alto
      */
     public int getAlto() {
         return alto;
@@ -88,8 +90,8 @@ public class Tablero {
     }
 
     /**
-     *
-     * @return
+     * Comprueba si hay cortacesped
+     * @return cortacesped
      */
     public boolean[] getCortacesped() {
         return cortacesped;

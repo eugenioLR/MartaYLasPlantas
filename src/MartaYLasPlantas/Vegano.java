@@ -8,11 +8,13 @@ package MartaYLasPlantas;
 /**
  *
  * @author EDGENP
+ *         Eugenio Lorente
+ *         Darius Tamas
  */
 public class Vegano extends Entidad {
 
     /**
-     *
+     * Constructor de veganos.
      * @param salud
      * @param ataque
      * @param turno
