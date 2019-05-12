@@ -11,11 +11,14 @@ package MartaYLasPlantas;
  */
 public class Vegano extends Entidad {
 
+    /**
+     *
+     * @param salud
+     * @param ataque
+     * @param turno
+     */
     public Vegano(int salud, int ataque, int turno) {
         super(salud, ataque, turno);
     }
 
-    @Override
-    public void actualizar() {
-    }
 }
