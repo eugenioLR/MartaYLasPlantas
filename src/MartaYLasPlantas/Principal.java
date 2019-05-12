@@ -163,7 +163,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Girasol(5, 2, tablero.getContador(), 10), y, x);
+                                tablero.colocarEntidad(new Girasol(5, tablero.getContador(), 10), y, x);
                                 magia -= Girasol.getCoste();
                             }
                             break;
@@ -222,7 +222,7 @@ public class Principal {
 
     /**
      *
-     * @param cantidad (Incrementa la magia global del juego).
+     * @param cantidad Incrementa la magia global del juego.
      */
     public static void incrementarMagia(int cantidad) {
         magia += cantidad;
@@ -230,7 +230,7 @@ public class Principal {
 
     /**
      *
-     * @param cantidad (Disminuye la magia global del juego).
+     * @param cantidad Disminuye la magia global del juego.
      */
     public static void disminuirMagia(int cantidad) {
         magia -= cantidad;
