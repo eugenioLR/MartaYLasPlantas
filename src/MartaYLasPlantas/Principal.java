@@ -11,23 +11,43 @@ import java.util.Scanner;
 
 /**
  *
- * @author EDGENP
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
 public class Principal {
 
     /**
-     * @param args the command line arguments
+     * @param alto (alto del tablero)
+     * @param ancho (ancho del tablero)
+     * @param dificultad
+     * @param magia (magia global)
+     * @param vegQuedan (veganos quedan por generar)
+     * @param vegFinal (veganos por generar en la ronda final)
+     * @param turnosSinVeganos
      */
-    private static int alto, ancho, x, y, dificultad, magia = 0, vegQuedan, vegFinal = 0, turnosSinVeganos;
+    private static int alto;
+    private static int ancho;
+    private static int dificultad;
+    private static int magia = 0;
+    private static int vegQuedan;
+    private static int vegFinal = 0;
+    private static int turnosSinVeganos;
+
     private static Tablero tablero;
 
+    /**
+     * @param args
+     *
+     */
     public static void main(String[] args) {
         boolean jugando = true;
         boolean comprobando = true;
         boolean puedePlantar;
         boolean pierdes = false;
-        String comando, tokens[];
+        int x = -1, y = -1;
+
         Scanner scanner = new Scanner(System.in);
+        String comando, tokens[];
+
         HashMap<String, Integer> hashDificultad = new HashMap<>();
         hashDificultad.put("BAJA", 1);
         hashDificultad.put("MEDIA", 2);
@@ -36,6 +56,7 @@ public class Principal {
 
         magia = 50;
 
+        //Comando inicial
         System.out.println("Si no sabes como comenzar escribe \"ayuda\".");
         while (comprobando) {
             try {
@@ -45,8 +66,8 @@ public class Principal {
 
                 if (!(tokens.length == 4)) {
                     if (comando.equals("AYUDA")) {
-                        System.out.println("Para inicializar el tablero introduce: N (alto) (ancho) (dificultad)."
-                                + "\nDificultades: BAJA, MEDIA, ALTA O IMPOSIBLE.");
+                        System.out.println("Para inicializar el tablero introduce: N (alto) (ancho) (dificultad).\n"
+                                + "Dificultades: BAJA, MEDIA, ALTA O IMPOSIBLE.");
                         comprobando = true;
                     } else {
                         throw new ExcepcionJuego("Número incorrecto de argumentos.");
@@ -86,15 +107,20 @@ public class Principal {
             default:
                 vegQuedan = 10;
         }
+
+        //reservar Veganos para la ronda final
         vegFinal = vegQuedan / 5;
         vegQuedan -= vegFinal;
-        tablero = new Tablero(alto, ancho);
-        System.out.println("Comienza la partida.");
-        //programa principal
-        while (jugando) {
-            imprimirTablero_ATravesDeCaracteresASCII_RepresentandoPlantasYVeganos_PorPantalla();
-            comprobando = true;
 
+        tablero = new Tablero(alto, ancho);
+
+        System.out.println("Comienza la partida.");
+
+        //bucle principal del juego
+        while (jugando) {
+            imprimirTablero_ATravesDeCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla();
+            comprobando = true;
+            //Plantar platas , avanzar o salir del juego
             while (comprobando) {
                 magia += 5;
                 try {
@@ -115,15 +141,15 @@ public class Principal {
                             throw new ExcepcionJuego("Numero incorrecto de argumentos.");
                         }
                     } else {
-                        //x:6-y:5 vs ancho:6-alto:7
                         y = Integer.parseInt(tokens[1]) - 1;
                         x = Integer.parseInt(tokens[2]) - 1;
 
+                        //si no esta dentro del tablero
                         if ((y >= alto || y < 0) || (x >= ancho || x < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
 
-                        System.out.printf("x:%d-y:%d vs ancho:%d-alto:%d", x, y, ancho, alto);
+                        //comprobar si hay una planta en la posicion x y
                         for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
                             if (puedePlantar) {
                                 puedePlantar = !(entidad instanceof Planta);
@@ -174,6 +200,8 @@ public class Principal {
             tablero.setVegQuedan(vegQuedan);
             jugando = tablero.actualiza();
         }
+
+        //comprobar si hay Veganos en el tablero
         for (Casilla[] fila : tablero.getTerreno()) {
             for (Casilla casilla : fila) {
                 for (Entidad entidad : casilla.getEntidades()) {
@@ -183,25 +211,35 @@ public class Principal {
                 }
             }
         }
+
         if (pierdes) {
             System.out.println("Pero que pringao.");
         } else {
-            System.out.println("Has ganado. \n¡¡Enhorabuena!!");
+            System.out.println("Has ganado.\n"
+                    + "¡¡Enhorabuena!!");
         }
     }
 
+    /**
+     *
+     * @param cantidad (Incrementa la magia global del juego).
+     */
     public static void incrementarMagia(int cantidad) {
         magia += cantidad;
     }
 
+    /**
+     *
+     * @param cantidad (Disminuye la magia global del juego).
+     */
     public static void disminuirMagia(int cantidad) {
         magia -= cantidad;
     }
 
-    public static int getDificultad() {
-        return dificultad;
-    }
-
+    /**
+     * Genera veganos en el tablero dependiendo del turno en el que estemos y la
+     * dificultad
+     */
     public static void generarVeganos() {
         // contadores
         int contador = 30 - tablero.getContador();
@@ -238,7 +276,6 @@ public class Principal {
                 descanso = 5;
         }
         if (contador > 0) {
-            //reset al boost y al contador.
             if (turnosSinVeganos >= turnoBoost) {
                 probabilidad = Math.random() / ajuste;
             }
@@ -288,7 +325,10 @@ public class Principal {
         }
     }
 
-    public static void imprimirTablero_ATravesDeCaracteresASCII_RepresentandoPlantasYVeganos_PorPantalla() {
+    /**
+     * imprime por pantalla el tablero del juego
+     */
+    public static void imprimirTablero_ATravesDeCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla() {
         int sumaVida;
         String vidas;
         String strCasilla;
