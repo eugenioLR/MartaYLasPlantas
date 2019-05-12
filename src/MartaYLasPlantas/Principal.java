@@ -61,6 +61,7 @@ public class Principal {
         while (comprobando) {
             try {
                 comprobando = false;
+                System.out.print(">");
                 comando = scanner.nextLine().toUpperCase();
                 tokens = comando.split(" ");
 
