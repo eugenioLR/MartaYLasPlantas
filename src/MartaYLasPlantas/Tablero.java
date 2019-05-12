@@ -167,25 +167,25 @@ public class Tablero {
                     entidad = terreno[i][j].getEntidades().get(k);
                     hayPlantas = false;
 
-                    // ¿Qué sucede cuando se encuentre un vegano?
+                    // Acciones del vegano
                     if (entidad instanceof Vegano) {
                         vegTablero++;
-                        //si se encuentra en su turno de moverse.
+                        //Si se encuentra en su turno de moverse.
                         if ((entidad.getTurno() % 2) == (contador % 2) && (entidad.getTurno() != contador)) {
-                            // ¿Qué hace el vegano?
+                            //Mirar en su casilla
                             for (Entidad ent : terreno[i][j].getEntidades()) {
-                                // -> si encuentra una planta
+                                //Si encuentra una planta
                                 if (ent instanceof Planta) {
-                                    ent.reducirSalud(ent.getAtaque());
+                                    ent.reducirSalud(entidad.getAtaque());
                                     hayPlantas = true;
                                 }
                             }
-                                // -> Si no encuentra una planta
+                            // Si no encuentra una planta
                             if (!hayPlantas) {
                                 if (j > 0) {
                                     terreno[i][j].quitarEntidad(entidad);
                                     terreno[i][j - 1].insertarEntidad(entidad);
-                                    // -> Si encuentra una cortacésped
+                                //Si encuentra una cortacésped
                                 } else if (hayCortacesped(i)) {
                                     for (int l = 0; l < ancho; l++) {
                                         terreno[i][l].vaciar();
