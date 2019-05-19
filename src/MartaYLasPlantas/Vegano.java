@@ -7,14 +7,15 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author this is portatil
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
 public class Vegano extends Entidad {
 
     private int espera;
 
     /**
-     * Constructor de Veganos. {@inheritDoc}
+     * Constructor de Veganos. 
+     * {@inheritDoc}
      */
     public Vegano(int salud, int ataque, int turno, int espera) {
         super(salud, ataque, turno);
