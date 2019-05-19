@@ -14,7 +14,7 @@ public class VeganoCasco extends Vegano{
      * Constructor de VeganoCasco
      * {@inheritDoc}
      */
-    public VeganoCasco(int salud, int ataque, int turno) {
+    public VeganoCasco(int turno) {
         super(8, 1, turno, 3);
     }
     

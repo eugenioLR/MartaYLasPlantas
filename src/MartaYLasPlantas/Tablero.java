@@ -202,20 +202,31 @@ public class Tablero {
      */
     public void spawnVeganos(int cantidad) {
         int altoAleatorio;
+        double probabilidad;
+        Vegano vegano;
         for (int i = 0; i < cantidad; i++) {
             altoAleatorio = (int) (Math.random() * (alto));
-            terreno[altoAleatorio][ancho - 1].getEntidades().add(new VeganoComun(contador));
-        }
-        vegQuedan -= cantidad;
+            probabilidad = Math.random();
+            if (probabilidad < (1.0 / 3) ) {
+                vegano = new VeganoComun(contador);
+            } else if (probabilidad < (2.0 / 3.0)) {
+                vegano = new VeganoProteico(contador);
+            } else {
+                vegano = new VeganoCasco(contador);
+            }
+        terreno[altoAleatorio][ancho - 1].getEntidades().add(new VeganoComun(contador));
     }
+    vegQuedan -= cantidad ;
+}
 
-    /**
-     * Funcion Bomba:
-     * Elimina todo el contenido de una casilla, pagando un coste de magia.
-     * @param x
-     * @param y 
-     */
-    public void Bomba(int x, int y) {
+/**
+ * Funcion Bomba: Elimina todo el contenido de una casilla, pagando un coste de
+ * magia.
+ *
+ * @param x
+ * @param y
+ */
+public void Bomba(int x, int y) {
         int veganos = 0;
         int plantas = 0;
 
