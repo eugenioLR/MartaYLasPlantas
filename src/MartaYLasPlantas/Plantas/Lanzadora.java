@@ -3,34 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MartaYLasPlantas;
+package MartaYLasPlantas.Plantas;
 
 /**
  *
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class Girasol extends Planta {
+public class Lanzadora extends Planta {
 
-    private static int coste = 20;
-    private int magiaGenera = 10;
-
-    /**
-     * Constructor de Girasol
-     * {@inheritDoc}
-     */
-    public Girasol(int turno) {
-        super(1, 0, turno);
-    }
+    private static int coste = 50;
 
     /**
-     * Get the value of magiaGenera
-     *
-     * @return the value of magiaGenera
+     *{@inheritDoc}
+     * turno será 1 ya que no se usa, ataca cada turno
      */
-    public int getMagiaGenera() {
-        return magiaGenera;
+    public Lanzadora() {
+        super(3, 1, 1);
     }
-
+    
     /**
      * Get the value of coste
      *

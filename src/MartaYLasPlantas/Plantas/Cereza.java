@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MartaYLasPlantas;
+package MartaYLasPlantas.Plantas;
 
 /**
  *
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class VeganoProteico extends Vegano {
+public class Cereza extends Planta{
 
+    
     /**
-     * Constructor de VeganosProteicos (Deportistas) {@inheritDoc}
+     * Constructor de Cereza
+     * {@inheritDoc}
      */
-    public VeganoProteico(int turno) {
-        super(2, 1, turno, 1);
+    public Cereza(int turno) {
+        super(2, 10, turno);
     }
-
+        
 }
