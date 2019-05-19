@@ -206,6 +206,12 @@ public class Tablero {
         vegQuedan -= cantidad;
     }
 
+    /**
+     * Funcion Bomba:
+     * Elimina todo el contenido de una casilla, pagando un coste de magia.
+     * @param x
+     * @param y 
+     */
     public void Bomba(int x, int y) {
         int veganos = 0;
         int plantas = 0;
