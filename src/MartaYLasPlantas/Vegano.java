@@ -7,20 +7,37 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author EDGENP
- *         Eugenio Lorente
- *         Darius Tamas
+ * @author this is portatil
  */
 public class Vegano extends Entidad {
 
+    private int espera;
+
     /**
-     * Constructor de Vegano.
-     * {@inheritDoc}
+     * Constructor de Veganos. {@inheritDoc}
      */
-    public Vegano(int turno) {
+    public Vegano(int salud, int ataque, int turno, int espera) {
+        super(salud, ataque, turno);
+        this.espera = espera;
         
-        //cambio.
-        super(5, 1, turno);
+    }
+
+    /**
+     * Get the value of espera
+     *
+     * @return the value of espera
+     */
+    public int getEspera() {
+        return espera;
+    }
+
+    /**
+     * Set the value of espera
+     *
+     * @param espera new value of espera
+     */
+    public void setEspera(int espera) {
+        this.espera = espera;
     }
 
 }
