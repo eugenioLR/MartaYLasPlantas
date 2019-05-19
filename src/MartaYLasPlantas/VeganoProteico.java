@@ -15,7 +15,7 @@ public class VeganoProteico extends Vegano {
      * Constructor de VeganosProteicos (Deportistas) {@inheritDoc}
      */
     public VeganoProteico(int turno) {
-        super(2, 1, turno);
+        super(2, 1, turno, 1);
     }
 
 }
