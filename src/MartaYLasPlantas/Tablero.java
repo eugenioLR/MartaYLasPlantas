@@ -5,11 +5,8 @@
  */
 package MartaYLasPlantas;
 
-import MartaYLasPlantas.Veganos.VeganoComun;
-import MartaYLasPlantas.Veganos.Vegano;
-import MartaYLasPlantas.Plantas.Girasol;
-import MartaYLasPlantas.Plantas.Lanzadora;
-import MartaYLasPlantas.Plantas.Planta;
+import MartaYLasPlantas.Veganos.*;
+import MartaYLasPlantas.Plantas.*;
 
 /**
  *
