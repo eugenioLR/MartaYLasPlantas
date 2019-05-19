@@ -7,8 +7,17 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author ACER
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class Cereza {
+public class Cereza extends Planta{
+
     
+    /**
+     * Constructor de Cereza
+     * {@inheritDoc}
+     */
+    public Cereza(int turno) {
+        super(2, 10, turno);
+    }
+        
 }
