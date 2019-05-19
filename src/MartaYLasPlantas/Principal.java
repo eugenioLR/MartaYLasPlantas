@@ -137,7 +137,8 @@ public class Principal {
                             System.out.println("<enter> -> Saltar un turno.\n"
                                     + "S -> Salir.\n"
                                     + "L <x> <y> -> Coste: 50. Lanzaguisantes en x y, ataca al primer zombie de la linea en la que esté.\n"
-                                    + "G <x> <y> -> Coste: 20. Girasól en x y, genera magia.");
+                                    + "G <x> <y> -> Coste: 20. Girasól en x y, genera magia.\n"
+                                    + "B <x> <y> -> Coste: 200. Pone una bomba eliminando todo lo que se encuentre en dicha casilla.");
                         } else if (!comando.equals("S")) {
                             throw new ExcepcionJuego("Numero incorrecto de argumentos.");
                         }
@@ -178,9 +179,18 @@ public class Principal {
                                 magia -= Lanzadora.getCoste();
                             }
                             break;
+                        case 'B':
+                            if (magia < 200) {
+                                throw new ExcepcionPlanta("Magia insuficiente.");                                
+                            } else {
+                                tablero.Bomba(x, y);
+                                magia-= 200;
+                                break;
+                            }
+                            
                         case 'S':
                             System.exit(0);
-                        case 'a':
+                        case 'A':
                             comprobando = true;
                             break;
                         default:
@@ -335,10 +345,10 @@ public class Principal {
         String strCasilla;
         int espacios = 17, k = 0;
         Casilla[][] terreno = tablero.getTerreno();
-        HashMap<String, ArrayList<Integer>> dasdas = new HashMap<>();
-        dasdas.put("G", new ArrayList<>());
-        dasdas.put("L", new ArrayList<>());
-        dasdas.put("V", new ArrayList<>());
+        HashMap<String, ArrayList<Integer>> hashAux = new HashMap<>();
+        hashAux.put("G", new ArrayList<>());
+        hashAux.put("L", new ArrayList<>());
+        hashAux.put("V", new ArrayList<>());
         for (Casilla[] fila : terreno) {
             System.out.print(" |");
             for (int i = 0; i < espacios - 1; i++) {
@@ -361,38 +371,38 @@ public class Principal {
                 strCasilla = "";
                 vidas = "";
                 sumaVida = 0;
-                dasdas.get("V").clear();
-                dasdas.get("L").clear();
-                dasdas.get("G").clear();
+                hashAux.get("V").clear();
+                hashAux.get("L").clear();
+                hashAux.get("G").clear();
                 System.out.print("|");
 
                 for (Entidad ent : posicion.getEntidades()) {
 
                     if (ent instanceof Vegano) {
-                        dasdas.get("V").add(ent.getSalud());
+                        hashAux.get("V").add(ent.getSalud());
                     } else if (ent instanceof Lanzadora) {
-                        dasdas.get("L").add(ent.getSalud());
+                        hashAux.get("L").add(ent.getSalud());
                     } else if (ent instanceof Girasol) {
-                        dasdas.get("G").add(ent.getSalud());
+                        hashAux.get("G").add(ent.getSalud());
                     }
                 }
 
-                if (!dasdas.get("L").isEmpty()) {
-                    strCasilla += "L(" + dasdas.get("L").get(0) + ")";
+                if (!hashAux.get("L").isEmpty()) {
+                    strCasilla += "L(" + hashAux.get("L").get(0) + ")";
                 }
-                if (!dasdas.get("G").isEmpty()) {
-                    strCasilla += "G(" + dasdas.get("G").get(0) + ")";
+                if (!hashAux.get("G").isEmpty()) {
+                    strCasilla += "G(" + hashAux.get("G").get(0) + ")";
                 }
-                if (!dasdas.get("V").isEmpty()) {
+                if (!hashAux.get("V").isEmpty()) {
                     strCasilla += "V(";
-                    for (int i = 0; i < dasdas.get("V").size(); i++) {
+                    for (int i = 0; i < hashAux.get("V").size(); i++) {
                         if (i < 4) {
-                            vidas += dasdas.get("V").get(i);
-                            if (dasdas.get("V").size() > 1 && i < dasdas.get("V").size() - 1) {
+                            vidas += hashAux.get("V").get(i);
+                            if (hashAux.get("V").size() > 1 && i < hashAux.get("V").size() - 1) {
                                 vidas += ",";
                             }
                         } else {
-                            sumaVida += dasdas.get("V").get(i);
+                            sumaVida += hashAux.get("V").get(i);
                         }
                     }
                     if (sumaVida > 0) {
