@@ -12,17 +12,14 @@ package MartaYLasPlantas;
 public class Girasol extends Planta {
 
     private static int coste = 20;
-    private int magiaGenera;
+    private int magiaGenera = 10;
 
     /**
      * Constructor de Girasol
      * {@inheritDoc}
-     * @param magiaGenera cantidad de magia a generar.
-     * <br> el ataque será 0 ya que los girasoles no atacan <br>
      */
-    public Girasol(int salud, int turno, int magiaGenera) {
-        super(salud, 0, turno);
-        this.magiaGenera = magiaGenera;
+    public Girasol(int turno) {
+        super(1, 0, turno);
     }
 
     /**

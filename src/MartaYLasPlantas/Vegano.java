@@ -17,8 +17,10 @@ public class Vegano extends Entidad {
      * Constructor de Vegano.
      * {@inheritDoc}
      */
-    public Vegano(int salud, int ataque, int turno) {
-        super(salud, ataque, turno);
+    public Vegano(int turno) {
+        
+        //cambio.
+        super(5, 1, turno);
     }
 
 }

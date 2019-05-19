@@ -17,8 +17,8 @@ public class Lanzadora extends Planta {
      *{@inheritDoc}
      * turno será 1 ya que no se usa, ataca cada turno
      */
-    public Lanzadora(int salud, int ataque) {
-        super(salud, ataque, 1);
+    public Lanzadora() {
+        super(3, 1, 1);
     }
     
     /**

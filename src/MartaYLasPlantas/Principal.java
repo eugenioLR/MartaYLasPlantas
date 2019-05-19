@@ -165,7 +165,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Girasol(5, tablero.getContador(), 10), y, x);
+                                tablero.colocarEntidad(new Girasol(tablero.getContador()), y, x);
                                 magia -= Girasol.getCoste();
                             }
                             break;
@@ -175,7 +175,7 @@ public class Principal {
                             } else if (!puedePlantar) {
                                 throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
                             } else {
-                                tablero.colocarEntidad(new Lanzadora(5, 1), y, x);
+                                tablero.colocarEntidad(new Lanzadora(), y, x);
                                 magia -= Lanzadora.getCoste();
                             }
                             break;

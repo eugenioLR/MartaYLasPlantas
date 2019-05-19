@@ -201,7 +201,7 @@ public class Tablero {
         int altoAleatorio;
         for (int i = 0; i < cantidad; i++) {
             altoAleatorio = (int) (Math.random() * (alto));
-            terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(5, 1, contador));
+            terreno[altoAleatorio][ancho - 1].getEntidades().add(new Vegano(contador));
         }
         vegQuedan -= cantidad;
     }
