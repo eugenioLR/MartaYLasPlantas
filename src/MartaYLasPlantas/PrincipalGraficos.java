@@ -19,7 +19,7 @@ import javax.swing.JFrame;
  *
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class PrincipalGraficos{
+public class PrincipalGraficos {
 
     /**
      * @param alto (alto del tablero)
@@ -53,7 +53,6 @@ public class PrincipalGraficos{
         boolean pierdes = false;
         int x = -1, y = -1;
 
-        
         Scanner scanner = new Scanner(System.in);
         String comando, tokens[];
 
@@ -91,9 +90,9 @@ public class PrincipalGraficos{
 
         System.out.println("Comienza la partida.");
 
-        panelJuego = new GraficosUwU(false, tablero);
-        frame.add(panelJuego);
-        frame.setSize(new Dimension(32*10,32*5));
+        panelJuego = new GraficosUwU(true, tablero);
+        frame.setSize(panelJuego.getSize());//new Dimension(32 * 10 + 16, 32 * 6 + 7));
+        frame.getContentPane().add(panelJuego);
         frame.setVisible(true);
         panelJuego.setVisible(true);
         //bucle principal del juego
@@ -236,5 +235,4 @@ public class PrincipalGraficos{
     /**
      * imprime por pantalla el tablero del juego
      */
-
 }
