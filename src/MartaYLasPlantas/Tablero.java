@@ -214,7 +214,7 @@ public class Tablero {
             } else {
                 vegano = new VeganoCasco(contador);
             }
-        terreno[altoAleatorio][ancho - 1].getEntidades().add(new VeganoComun(contador));
+        terreno[altoAleatorio][ancho - 1].getEntidades().add(vegano);
     }
     vegQuedan -= cantidad ;
 }

@@ -14,8 +14,7 @@ import MartaYLasPlantas.Veganos.*;
 import MartaYLasPlantas.Plantas.*;
 
 /**
- *
- * @author ACER
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
 public class GraficosUwU extends JPanel {
 
@@ -36,6 +35,7 @@ public class GraficosUwU extends JPanel {
         super();
         this.secret = secret;
         this.tablero = tablero;
+        // * 32 es por que las imagenes son 32 x 32 p
         alto = tablero.getTerreno().length * 32;
         //+32 para imprimir los cortacesped
         ancho = 32 + tablero.getTerreno()[0].length * 32;
@@ -49,6 +49,7 @@ public class GraficosUwU extends JPanel {
 
     public final void CargarSprites() {
         try {
+            // habrá que explicarlo de algún modo :D
             hierba1 = read(getClass().getClassLoader().getResource("res/Hierba.png"));
             hierba2 = read(getClass().getClassLoader().getResource("res/Hierba2.png"));
             cereza = read(getClass().getClassLoader().getResource("res/Cereza.png"));
