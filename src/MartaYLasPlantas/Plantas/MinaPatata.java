@@ -15,7 +15,7 @@ public class MinaPatata extends Planta {
     /**
      * Constructor de MinaPatatas {@inheritDoc}
      */
-    public MinaPatata(int salud, int ataque, int turno) {
+    public MinaPatata(int turno) {
         super(1, 90, turno);
         this.Enterrado = true;
         //1800 de daño es el oficial que la wikia proporciona, haciendo una 

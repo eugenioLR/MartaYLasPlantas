@@ -19,9 +19,10 @@ import MartaYLasPlantas.Plantas.*;
 public class GraficosUwU extends JPanel {
 
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, minaPatata,
-            minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2;
+            minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2
+            ,cemento ;
     private boolean secret;
-    private int alto, ancho;
+    private int alto, ancho, ajusteCubo = 8;
     private Tablero tablero;
 
     /**
@@ -62,6 +63,7 @@ public class GraficosUwU extends JPanel {
             veganoCubo = read(getClass().getClassLoader().getResource("res/ZombieCubo.png"));
             cortacesped = read(getClass().getClassLoader().getResource("res/cortacesped.png"));
             cortacesped2 = read(getClass().getClassLoader().getResource("res/cortacespedOjos.png"));
+            cemento = read(getClass().getClassLoader().getResource("res/cemento.png"));
         } catch (IOException ex) {
             System.out.println("Error al cargar las imagenes" + ex);
         }
@@ -77,7 +79,7 @@ public class GraficosUwU extends JPanel {
         i = 0;
         for (Casilla[] fila : tablero.getTerreno()) {
             j = 0;
-            hierbaAlternada(g2D, j, i);
+            g2D.drawImage(cemento, j, i, this);
             if (tablero.getCortacesped()[i / 32]) {
                 if (secret) {
                     g2D.drawImage(cortacesped2, j, i, this);
@@ -112,7 +114,7 @@ public class GraficosUwU extends JPanel {
                         if (entidad instanceof VeganoComun) {
                             g2D.drawImage(veganoComun, j, i, this);
                         } else if (entidad instanceof VeganoCasco) {
-                            g2D.drawImage(veganoCubo, j, i, this);
+                            g2D.drawImage(veganoCubo, j, i-ajusteCubo, this);
                         } else if (entidad instanceof VeganoProteico) {
                             g2D.drawImage(veganoComun, j, i, this);
                         }

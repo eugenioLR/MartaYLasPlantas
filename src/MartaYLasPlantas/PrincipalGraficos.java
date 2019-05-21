@@ -86,12 +86,16 @@ public class PrincipalGraficos {
         vegFinal = vegQuedan / 5;
         vegQuedan -= vegFinal;
 
-        tablero = new Tablero(5, 9);
-
+        tablero = new Tablero(5, 7);
+        tablero.colocarEntidad(new Lanzadora(), 0, 0);
+        tablero.colocarEntidad(new Girasol(0), 1, 0);
+        tablero.colocarEntidad(new Nuez(), 2, 0);
+        tablero.colocarEntidad(new Cereza(0), 3, 0);
+        tablero.colocarEntidad(new MinaPatata(0), 4, 0);
         System.out.println("Comienza la partida.");
 
         panelJuego = new GraficosUwU(true, tablero);
-        frame.setSize(panelJuego.getSize());//new Dimension(32 * 10 + 16, 32 * 6 + 7));
+        frame.setSize(new Dimension(32 * 10 + 16, 32 * 6 + 7));
         frame.getContentPane().add(panelJuego);
         frame.setVisible(true);
         panelJuego.setVisible(true);

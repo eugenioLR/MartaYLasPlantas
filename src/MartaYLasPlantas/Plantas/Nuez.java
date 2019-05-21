@@ -17,8 +17,8 @@ public class Nuez extends Planta{
      * Constructor de Nueces
      * {@inheritDoc}
      */
-    public Nuez(int turno) {
-        super(10, 0, turno);
+    public Nuez() {
+        super(10, 0, 0);
     }
     
 }

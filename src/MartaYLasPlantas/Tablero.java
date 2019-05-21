@@ -182,6 +182,28 @@ public class Tablero {
                         }
                     }
 
+                    if (entidad instanceof Cereza) {
+                        if ((entidad.getTurno() % 2) <= (contador + 2)) {
+                            for (int vert = -1; vert <= 1; vert++) {
+                                for (int horz = -1; horz <= 1; horz++) {
+                                    for (Entidad ent : terreno[i + vert][j + horz].getEntidades()) {
+                                        ent.reducirSalud(entidad.getAtaque());
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (entidad instanceof MinaPatata) {
+                        if ((entidad.getTurno() % 2) <= (contador + 2)) {
+                            ((MinaPatata) entidad).setEnterrado(false);
+                        }
+                        if (!((MinaPatata) entidad).isEnterrado()) {
+                            for (Entidad ent : terreno[i][j].getEntidades()) {
+                                ent.reducirSalud(entidad.getAtaque());
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -207,26 +229,26 @@ public class Tablero {
         for (int i = 0; i < cantidad; i++) {
             altoAleatorio = (int) (Math.random() * (alto));
             probabilidad = Math.random();
-            if (probabilidad < (1.0 / 3) ) {
+            if (probabilidad < (1.0 / 3)) {
                 vegano = new VeganoComun(contador);
             } else if (probabilidad < (2.0 / 3.0)) {
                 vegano = new VeganoProteico(contador);
             } else {
                 vegano = new VeganoCasco(contador);
             }
-        terreno[altoAleatorio][ancho - 1].getEntidades().add(vegano);
+            terreno[altoAleatorio][ancho - 1].getEntidades().add(vegano);
+        }
+        vegQuedan -= cantidad;
     }
-    vegQuedan -= cantidad ;
-}
 
-/**
- * Funcion Bomba: Elimina todo el contenido de una casilla, pagando un coste de
- * magia.
- *
- * @param x
- * @param y
- */
-public void Bomba(int x, int y) {
+    /**
+     * Funcion Bomba: Elimina todo el contenido de una casilla, pagando un coste
+     * de magia.
+     *
+     * @param x
+     * @param y
+     */
+    public void Bomba(int x, int y) {
         int veganos = 0;
         int plantas = 0;
 
@@ -241,7 +263,7 @@ public void Bomba(int x, int y) {
         if (veganos == 0 && plantas == 0) {
             System.out.println("Nada ha sido eliminado con esa bomba.");
         } else {
-            System.out.println("Se han eliminado " + veganos + " veganos y " + plantas +" plantas");
+            System.out.println("Se han eliminado " + veganos + " veganos y " + plantas + " plantas");
         }
         terreno[y][x].getEntidades().clear();
     }
