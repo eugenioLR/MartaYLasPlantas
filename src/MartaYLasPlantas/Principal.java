@@ -7,9 +7,11 @@ package MartaYLasPlantas;
 
 import MartaYLasPlantas.Veganos.*;
 import MartaYLasPlantas.Plantas.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import javax.swing.*;
 
 /**
  *
@@ -33,6 +35,7 @@ public class Principal {
     private static int vegQuedan;
     private static int vegFinal = 0;
     private static int turnosSinVeganos;
+    private static GraficosUwU panelJuego;
 
     private static Tablero tablero;
 
@@ -117,6 +120,12 @@ public class Principal {
 
         tablero = new Tablero(alto, ancho);
 
+        JFrame frame = new JFrame();
+        panelJuego = new GraficosUwU(true, tablero);
+        frame.setSize(new Dimension(32 * 10 + 16, 32 * 6 + 7));
+        frame.getContentPane().add(panelJuego);
+        frame.setVisible(true);
+        panelJuego.setVisible(true);
         System.out.println("Comienza la partida.");
 
         //bucle principal del juego
@@ -212,6 +221,7 @@ public class Principal {
             generarVeganos();
             tablero.setVegQuedan(vegQuedan);
             jugando = tablero.actualiza();
+            panelJuego.repaint();
         }
 
         //comprobar si hay Veganos en el tablero

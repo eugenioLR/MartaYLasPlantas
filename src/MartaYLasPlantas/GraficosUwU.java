@@ -20,9 +20,9 @@ public class GraficosUwU extends JPanel {
 
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2
-            ,cemento ;
+            ,cemento , veganosMultiples;
     private boolean secret;
-    private int alto, ancho, ajusteCubo = 8;
+    private int alto, ancho, ajusteVegano = 8, ajusteVert = 8, ajusteHorz = 8;
     private Tablero tablero;
 
     /**
@@ -61,6 +61,7 @@ public class GraficosUwU extends JPanel {
             nuez = read(getClass().getClassLoader().getResource("res/Nuez.png"));
             veganoComun = read(getClass().getClassLoader().getResource("res/Zombie.png"));
             veganoCubo = read(getClass().getClassLoader().getResource("res/ZombieCubo.png"));
+            veganosMultiples = read(getClass().getClassLoader().getResource("res/Zombie++.png"));
             cortacesped = read(getClass().getClassLoader().getResource("res/cortacesped.png"));
             cortacesped2 = read(getClass().getClassLoader().getResource("res/cortacespedOjos.png"));
             cemento = read(getClass().getClassLoader().getResource("res/cemento.png"));
@@ -76,9 +77,9 @@ public class GraficosUwU extends JPanel {
         Graphics2D g2D = (Graphics2D) g;
         int i, j, veganos;
         Entidad ent;
-        i = 0;
+        i = ajusteVert;
         for (Casilla[] fila : tablero.getTerreno()) {
-            j = 0;
+            j = ajusteHorz;
             g2D.drawImage(cemento, j, i, this);
             if (tablero.getCortacesped()[i / 32]) {
                 if (secret) {
@@ -112,17 +113,17 @@ public class GraficosUwU extends JPanel {
                     }
                     if (veganos == 1) {
                         if (entidad instanceof VeganoComun) {
-                            g2D.drawImage(veganoComun, j, i, this);
+                            g2D.drawImage(veganoComun, j, i-ajusteVegano, this);
                         } else if (entidad instanceof VeganoCasco) {
-                            g2D.drawImage(veganoCubo, j, i-ajusteCubo, this);
+                            g2D.drawImage(veganoCubo, j, i-ajusteVegano, this);
                         } else if (entidad instanceof VeganoProteico) {
-                            g2D.drawImage(veganoComun, j, i, this);
+                            g2D.drawImage(veganoComun, j, i-ajusteVegano, this);
                         }
                     }
                 }
                 if (veganos > 1) {
                     //muchedumbre
-                    g2D.drawImage(veganoComun, j, i, this);
+                    g2D.drawImage(veganosMultiples, j, i-ajusteVegano, this);
                 }
                 j += 32;
             }
