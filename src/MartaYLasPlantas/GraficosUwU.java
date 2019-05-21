@@ -20,7 +20,7 @@ public class GraficosUwU extends JPanel {
 
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2
-            ,cemento , veganosMultiples;
+            ,cemento , veganosMultiples, veganoProteico;
     private boolean secret;
     private int alto, ancho, ajusteVegano = 8, ajusteVert = 8, ajusteHorz = 8;
     private Tablero tablero;
@@ -60,6 +60,7 @@ public class GraficosUwU extends JPanel {
             minaPatataEnt = read(getClass().getClassLoader().getResource("res/Mina-patataEnterrada.png"));
             nuez = read(getClass().getClassLoader().getResource("res/Nuez.png"));
             veganoComun = read(getClass().getClassLoader().getResource("res/Zombie.png"));
+            veganoProteico = read(getClass().getClassLoader().getResource("res/ZombieProteico.png"));
             veganoCubo = read(getClass().getClassLoader().getResource("res/ZombieCubo.png"));
             veganosMultiples = read(getClass().getClassLoader().getResource("res/Zombie++.png"));
             cortacesped = read(getClass().getClassLoader().getResource("res/cortacesped.png"));
@@ -117,7 +118,7 @@ public class GraficosUwU extends JPanel {
                         } else if (entidad instanceof VeganoCasco) {
                             g2D.drawImage(veganoCubo, j, i-ajusteVegano, this);
                         } else if (entidad instanceof VeganoProteico) {
-                            g2D.drawImage(veganoComun, j, i-ajusteVegano, this);
+                            g2D.drawImage(veganoProteico, j, i-ajusteVegano, this);
                         }
                     }
                 }
