@@ -7,10 +7,10 @@ package MartaYLasPlantas;
 
 import MartaYLasPlantas.Veganos.*;
 import MartaYLasPlantas.Plantas.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.awt.*;
 import javax.swing.*;
 
 /**
@@ -49,9 +49,6 @@ public class Principal {
         boolean puedePlantar;
         boolean pierdes = false;
         int x = -1, y = -1;
-        JFrame frame = new JFrame();
-        frame.setSize(new Dimension(500, 500));
-        frame.setVisible(true);
 
         Scanner scanner = new Scanner(System.in);
         String comando, tokens[];
@@ -68,6 +65,30 @@ public class Principal {
         System.out.println("Si no sabes como comenzar escribe \"ayuda\".");
         while (comprobando) {
             try {
+                comprobando = false;
+                System.out.print(">");
+                comando = scanner.nextLine().toUpperCase();
+                tokens = comando.split(" ");
+
+                if (!(tokens.length == 4)) {
+                    if (comando.equals("AYUDA")) {
+                        System.out.println("Para inicializar el tablero introduce: N (alto) (ancho) (dificultad).\n"
+                                + "Dificultades: BAJA, MEDIA, ALTA O IMPOSIBLE.");
+                        comprobando = true;
+                    } else {
+                        throw new ExcepcionJuego("Número incorrecto de argumentos.");
+                    }
+                } else {
+                    if (!tokens[0].equals("N")) {
+                        throw new ExcepcionJuego("Comando incorrecto.");
+                    }
+                    alto = Integer.parseInt(tokens[1]);
+                    ancho = Integer.parseInt(tokens[2]);
+                    if (!hashDificultad.containsKey(tokens[3])) {
+                        throw new ExcepcionJuego("Dificultad incorrecta: prueba con BAJA, MEDIA, ALTA O IMPOSIBLE.");
+                    }
+                    dificultad = hashDificultad.get(tokens[3]);
+                }
             } catch (NumberFormatException nfe) {
                 System.out.println("Error al procesar los argumentos: " + nfe);
                 comprobando = true;
@@ -99,6 +120,12 @@ public class Principal {
 
         tablero = new Tablero(alto, ancho);
 
+        JFrame frame = new JFrame();
+        panelJuego = new GraficosUwU(true, tablero);
+        frame.setSize(new Dimension(32 * 10 + 16, 32 * 6 + 7));
+        frame.getContentPane().add(panelJuego);
+        frame.setVisible(true);
+        panelJuego.setVisible(true);
         System.out.println("Comienza la partida.");
 
         //bucle principal del juego
@@ -109,7 +136,77 @@ public class Principal {
             while (comprobando) {
                 magia += 5;
                 try {
-                    throw new ExcepcionPlanta("e");
+                    puedePlantar = true;
+                    comprobando = false;
+                    System.out.print(">");
+                    comando = scanner.nextLine().toUpperCase();
+                    tokens = comando.split(" ");
+                    if (tokens.length != 3) {
+                        if (comando.equals("")) {
+                            break;
+                        } else if (comando.equals("AYUDA")) {
+                            System.out.println("<enter> -> Saltar un turno.\n"
+                                    + "S -> Salir.\n"
+                                    + "L <x> <y> -> Coste: 50. Lanzaguisantes en x y, ataca al primer zombie de la linea en la que esté.\n"
+                                    + "G <x> <y> -> Coste: 20. Girasól en x y, genera magia.\n"
+                                    + "B <x> <y> -> Coste: 200. Pone una bomba eliminando todo lo que se encuentre en dicha casilla.");
+                        } else if (!comando.equals("S")) {
+                            throw new ExcepcionJuego("Numero incorrecto de argumentos.");
+                        }
+                    } else {
+                        y = Integer.parseInt(tokens[1]) - 1;
+                        x = Integer.parseInt(tokens[2]) - 1;
+
+                        //si no esta dentro del tablero
+                        if ((y >= alto || y < 0) || (x >= ancho || x < 0)) {
+                            throw new ExcepcionPlanta("Posición fuera del tablero.");
+                        }
+
+                        //comprobar si hay una planta en la posicion x y
+                        for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
+                            if (puedePlantar) {
+                                puedePlantar = !(entidad instanceof Planta);
+                            }
+                        }
+                    }
+                    switch (tokens[0].charAt(0)) {
+                        case 'G':
+                            if (magia < Girasol.getCoste()) {
+                                throw new ExcepcionPlanta("Magia insuficiente.");
+                            } else if (!puedePlantar) {
+                                throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                            } else {
+                                tablero.colocarEntidad(new Girasol(tablero.getContador()), y, x);
+                                magia -= Girasol.getCoste();
+                            }
+                            break;
+                        case 'L':
+                            if (magia < Lanzadora.getCoste()) {
+                                throw new ExcepcionPlanta("Magia insuficiente.");
+                            } else if (!puedePlantar) {
+                                throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                            } else {
+                                tablero.colocarEntidad(new Lanzadora(), y, x);
+                                magia -= Lanzadora.getCoste();
+                            }
+                            break;
+                        case 'B':
+                            if (magia < 200) {
+                                throw new ExcepcionPlanta("Magia insuficiente.");                                
+                            } else {
+                                tablero.Bomba(x, y);
+                                magia-= 200;
+                                break;
+                            }
+                            
+                        case 'S':
+                            System.exit(0);
+                        case 'A':
+                            comprobando = true;
+                            break;
+                        default:
+                            throw new ExcepcionPlanta("No existe ese comando, escriba \"ayuda\" para obtener la lista de comandos.");
+                    }
                 } catch (NumberFormatException nfe) {
                     System.out.println("Error al procesar los argumentos: " + nfe);
                     comprobando = true;

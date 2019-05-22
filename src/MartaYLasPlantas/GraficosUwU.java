@@ -18,7 +18,7 @@ import MartaYLasPlantas.Plantas.*;
  */
 public class GraficosUwU extends JPanel {
 
-    private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, minaPatata,
+    private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, girasolMagia, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2
             ,cemento , veganosMultiples, veganoProteico;
     private boolean secret;
@@ -56,6 +56,7 @@ public class GraficosUwU extends JPanel {
             cereza = read(getClass().getClassLoader().getResource("res/Cereza.png"));
             lanzadora = read(getClass().getClassLoader().getResource("res/Lanzadora.png"));
             girasol = read(getClass().getClassLoader().getResource("res/Girasol.png"));
+            girasolMagia = read(getClass().getClassLoader().getResource("res/GirasolMagia.png"));
             minaPatata = read(getClass().getClassLoader().getResource("res/Mina-patata.png"));
             minaPatataEnt = read(getClass().getClassLoader().getResource("res/Mina-patataEnterrada.png"));
             nuez = read(getClass().getClassLoader().getResource("res/Nuez.png"));
@@ -104,7 +105,7 @@ public class GraficosUwU extends JPanel {
                     if (entidad instanceof Lanzadora) {
                         g2D.drawImage(lanzadora, j, i, this);
                     } else if (entidad instanceof Girasol) {
-                        g2D.drawImage(girasol, j, i, this);
+                        g2D.drawImage(girasolMagia, j, i, this);
                     } else if (entidad instanceof Nuez) {
                         g2D.drawImage(nuez, j, i, this);
                     } else if (entidad instanceof Cereza) {
