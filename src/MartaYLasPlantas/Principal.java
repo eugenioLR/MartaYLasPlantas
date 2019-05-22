@@ -163,7 +163,7 @@ public class Principal {
                         if ((y >= alto || y < 0) || (x >= ancho || x < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
-
+                        
                         //comprobar si hay una planta en la posicion x y
                         for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
                             if (puedePlantar) {
@@ -240,6 +240,7 @@ public class Principal {
                 }
             }
         }
+        puntuacion *= dificultad;
         int indice[];
         if (pierdes) {
             indice = mrTrump.getPartidasPerdidas();
