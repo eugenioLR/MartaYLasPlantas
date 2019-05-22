@@ -8,7 +8,6 @@ package MartaYLasPlantas;
 import MartaYLasPlantas.Veganos.*;
 import MartaYLasPlantas.Plantas.*;
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -106,7 +105,7 @@ public class PrincipalGraficos {
             jugando = tablero.actualiza();
             panelJuego.repaint();
             try {
-                Thread.sleep(500);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(PrincipalGraficos.class.getName()).log(Level.SEVERE, null, ex);
             }

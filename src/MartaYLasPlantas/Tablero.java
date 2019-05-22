@@ -132,7 +132,7 @@ public class Tablero {
                     if (entidad instanceof Vegano) {
                         vegTablero++;
                         //Si se encuentra en su turno de moverse.
-                        if ((entidad.getTurno() % 2) == (contador % 2) && (entidad.getTurno() != contador)) {
+                        if ((entidad.getTurno() % ((Vegano) entidad).getEspera()) == (contador % ((Vegano) entidad).getEspera()) && (entidad.getTurno() != contador)) {
                             //Mirar en su casilla
                             for (Entidad ent : terreno[i][j].getEntidades()) {
                                 //Si encuentra una planta
@@ -186,8 +186,10 @@ public class Tablero {
                         if ((entidad.getTurno() % 2) <= (contador + 2)) {
                             for (int vert = -1; vert <= 1; vert++) {
                                 for (int horz = -1; horz <= 1; horz++) {
-                                    for (Entidad ent : terreno[i + vert][j + horz].getEntidades()) {
-                                        ent.reducirSalud(entidad.getAtaque());
+                                    if (!(((i + vert) > alto || (i + vert) < 0) || ((j + horz) > ancho || (j + horz) < 0)) ) {
+                                        for (Entidad ent : terreno[i + vert][j + horz].getEntidades()) {
+                                            ent.reducirSalud(entidad.getAtaque());
+                                        }
                                     }
                                 }
                             }
