@@ -28,13 +28,14 @@ public class Principal {
      * @param vegFinal (veganos por generar en la ronda final)
      * @param turnosSinVeganos
      */
-    private static int alto;
-    private static int ancho;
+    private static int alto = 5;
+    private static int ancho = 9;
     private static int dificultad;
     private static int magia = 0;
     private static int vegQuedan;
     private static int vegFinal = 0;
     private static int turnosSinVeganos;
+    private static long puntuacion = 0;
     private static GraficosUwU panelJuego;
 
     private static Tablero tablero;
@@ -49,9 +50,18 @@ public class Principal {
         boolean puedePlantar;
         boolean pierdes = false;
         int x = -1, y = -1;
-
+        Jugador mrTrump = new Jugador("", "", 0, false);
         Scanner scanner = new Scanner(System.in);
         String comando, tokens[];
+        tablero = new Tablero(alto, ancho);
+        
+        JFrame frame = new JFrame();
+        
+        panelJuego = new GraficosUwU(true, tablero);
+        frame.setSize(new Dimension( 32 * ancho + 93, 32 * alto + 130));
+        frame.getContentPane().add(panelJuego);
+        frame.setVisible(true);
+        panelJuego.setVisible(true);
 
         HashMap<String, Integer> hashDificultad = new HashMap<>();
         hashDificultad.put("BAJA", 1);
@@ -82,8 +92,8 @@ public class Principal {
                     if (!tokens[0].equals("N")) {
                         throw new ExcepcionJuego("Comando incorrecto.");
                     }
-                    alto = Integer.parseInt(tokens[1]);
-                    ancho = Integer.parseInt(tokens[2]);
+                    alto = 5;
+                    ancho = 9;
                     if (!hashDificultad.containsKey(tokens[3])) {
                         throw new ExcepcionJuego("Dificultad incorrecta: prueba con BAJA, MEDIA, ALTA O IMPOSIBLE.");
                     }
@@ -116,16 +126,8 @@ public class Principal {
 
         //reservar Veganos para la ronda final
         vegFinal = vegQuedan / 5;
-        vegQuedan -= vegFinal;
-
-        tablero = new Tablero(alto, ancho);
-
-        JFrame frame = new JFrame();
-        panelJuego = new GraficosUwU(true, tablero);
-        frame.setSize(new Dimension(32 * 10 + 16, 32 * 6 + 7));
-        frame.getContentPane().add(panelJuego);
-        frame.setVisible(true);
-        panelJuego.setVisible(true);
+        vegQuedan -= vegFinal;        
+        
         System.out.println("Comienza la partida.");
 
         //bucle principal del juego
@@ -192,13 +194,13 @@ public class Principal {
                             break;
                         case 'B':
                             if (magia < 200) {
-                                throw new ExcepcionPlanta("Magia insuficiente.");                                
+                                throw new ExcepcionPlanta("Magia insuficiente.");
                             } else {
                                 tablero.Bomba(x, y);
-                                magia-= 200;
+                                magia -= 200;
                                 break;
                             }
-                            
+
                         case 'S':
                             System.exit(0);
                         case 'A':
@@ -225,22 +227,33 @@ public class Principal {
         }
 
         //comprobar si hay Veganos en el tablero
+        puntuacion = 100 * magia;
         for (Casilla[] fila : tablero.getTerreno()) {
             for (Casilla casilla : fila) {
                 for (Entidad entidad : casilla.getEntidades()) {
                     if (pierdes = entidad instanceof Vegano) {
+                        puntuacion = 0;
                         break;
+                    } else if (entidad instanceof Planta) {
+                        puntuacion += 200;
                     }
                 }
             }
         }
-
+        int indice[];
         if (pierdes) {
+            indice = mrTrump.getPartidasPerdidas();
+            indice[dificultad - 1]++;
+            mrTrump.setPartidasPerdidas(indice);
             System.out.println("Pero que pringao.");
         } else {
+            indice = mrTrump.getPartidasGanadas();
+            indice[dificultad - 1]++;
+            mrTrump.setPartidasGanadas(indice);
             System.out.println("Has ganado.\n"
-                    + "¡¡Enhorabuena!!");
+                    + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacion);
         }
+        mrTrump.actualizarFicha();
     }
 
     /**

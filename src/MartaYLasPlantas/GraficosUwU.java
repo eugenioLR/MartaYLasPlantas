@@ -22,7 +22,7 @@ public class GraficosUwU extends JPanel {
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2
             ,cemento , veganosMultiples, veganoProteico;
     private boolean secret;
-    private int alto, ancho, ajusteVegano = 8, ajusteVert = 8, ajusteHorz = 8;
+    private int alto, ancho, ajusteVegano = 8, ajusteVert = 80, ajusteHorz = 20;
     private Tablero tablero;
 
     /**
@@ -77,13 +77,14 @@ public class GraficosUwU extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2D = (Graphics2D) g;
-        int i, j, veganos;
+        int i, j, cCesped, veganos;
         Entidad ent;
         i = ajusteVert;
+        cCesped = 0;
         for (Casilla[] fila : tablero.getTerreno()) {
             j = ajusteHorz;
             g2D.drawImage(cemento, j, i, this);
-            if (tablero.getCortacesped()[i / 32]) {
+            if (tablero.getCortacesped()[cCesped]) {
                 if (secret) {
                     g2D.drawImage(cortacesped2, j, i, this);
                 } else {
@@ -131,7 +132,7 @@ public class GraficosUwU extends JPanel {
             }
             i += 32;
         }
-
+        cCesped++;
     }
 
     public void hierbaAlternada(Graphics2D g2D, int y, int x) {

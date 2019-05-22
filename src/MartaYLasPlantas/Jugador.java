@@ -15,6 +15,53 @@ public class Jugador {
     private String nombre;
     private long puntuacion;
     private boolean partidaCreada;
+    private int[] partidasGanadas;
+    private int[] partidasPerdidas;
+
+    public Jugador(String dni, String nombre, long puntuacion, boolean partidaCreada) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.puntuacion = puntuacion;
+        this.partidaCreada = partidaCreada;
+        partidasPerdidas = new int[4];
+        partidasGanadas = new int[4];
+    }
+
+    /**
+     * Get the value of partidasPerdidas
+     *
+     * @return the value of partidasPerdidas
+     */
+    public int[] getPartidasPerdidas() {
+        return partidasPerdidas;
+    }
+
+    /**
+     * Set the value of partidasPerdidas
+     *
+     * @param partidasPerdidas new value of partidasPerdidas
+     */
+    public void setPartidasPerdidas(int[] partidasPerdidas) {
+        this.partidasPerdidas = partidasPerdidas;
+    }
+
+    /**
+     * Get the value of partidasGanadas
+     *
+     * @return the value of partidasGanadas
+     */
+    public int[] getPartidasGanadas() {
+        return partidasGanadas;
+    }
+
+    /**
+     * Set the value of partidasGanadas
+     *
+     * @param partidasGanadas new value of partidasGanadas
+     */
+    public void setPartidasGanadas(int[] partidasGanadas) {
+        this.partidasGanadas = partidasGanadas;
+    }
 
     /**
      * Get the value of dni
@@ -88,15 +135,19 @@ public class Jugador {
         this.partidaCreada = partidaCreada;
     }
 
-    public void crearFicha(String nif){
-        
+    public void crearFicha(String nif) {
+
     }
+
     public void guardarPartida(Tablero tablero, int magia) {
 
     }
 
     public void cargarPartida() {
 
+    }
+    public void actualizarFicha(){
+        
     }
 
     @Override
