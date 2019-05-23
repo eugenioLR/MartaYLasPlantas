@@ -22,7 +22,7 @@ public class GraficosUwU extends JPanel {
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2
             ,cemento , veganosMultiples, veganoProteico;
     private boolean secret;
-    private int alto, ancho, ajusteVegano = 8, ajusteVert = 80, ajusteHorz = 20;
+    private int alto, ancho, ajusteVegano = 16, ajusteVert = 160, ajusteHorz = 40;
     private Tablero tablero;
 
     /**
@@ -36,10 +36,10 @@ public class GraficosUwU extends JPanel {
         super();
         this.secret = secret;
         this.tablero = tablero;
-        // * 32 es por que las imagenes son 32 x 32 p
-        alto = tablero.getTerreno().length * 32;
-        //+32 para imprimir los cortacesped
-        ancho = 32 + tablero.getTerreno()[0].length * 32;
+        // * 64 es por que las imagenes son 64 x 64 p
+        alto = tablero.getTerreno().length * 64;
+        //+64 para imprimir los cortacesped
+        ancho = 64 + tablero.getTerreno()[0].length * 64;
         setup();
     }
 
@@ -91,7 +91,7 @@ public class GraficosUwU extends JPanel {
                     g2D.drawImage(cortacesped, j, i, this);
                 }
             }
-            j += 32;
+            j += 64;
             for (Casilla casilla : fila) {
                 hierbaAlternada(g2D, j, i);
                 veganos = 0;
@@ -128,15 +128,15 @@ public class GraficosUwU extends JPanel {
                     //muchedumbre
                     g2D.drawImage(veganosMultiples, j, i-ajusteVegano, this);
                 }
-                j += 32;
+                j += 64;
             }
-            i += 32;
+            i += 64;
         }
         cCesped++;
     }
 
     public void hierbaAlternada(Graphics2D g2D, int y, int x) {
-        if ((y / 32) % 2 == (x / 32) % 2) {
+        if ((y / 64) % 2 == (x / 64) % 2) {
             g2D.drawImage(hierba1, y, x, this);
         } else {
             g2D.drawImage(hierba2, y, x, this);
