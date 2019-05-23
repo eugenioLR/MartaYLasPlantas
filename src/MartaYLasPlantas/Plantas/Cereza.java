@@ -19,5 +19,15 @@ public class Cereza extends Planta{
     public Cereza(int turno) {
         super(2, 10, turno);
     }
+    
+    /**
+     * Constuctor de Cereza Cargar partida
+     * @param salud
+     * @param turno 
+     */
+    public Cereza(int salud, int turno) {
+        super(salud, 10, turno);
+    }
+    
         
 }

@@ -20,5 +20,10 @@ public class Nuez extends Planta{
     public Nuez() {
         super(10, 0, 0);
     }
+
+    public Nuez(int salud) {
+        super(salud, 0, 0);
+    }
+    
     
 }

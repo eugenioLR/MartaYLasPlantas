@@ -17,5 +17,10 @@ public class VeganoCasco extends Vegano{
     public VeganoCasco(int turno) {
         super(8, 1, turno, 3);
     }
+
+    public VeganoCasco(int salud,int turno) {
+        super(salud, 1, turno, 3);
+    }
+    
     
 }

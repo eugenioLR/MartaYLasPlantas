@@ -18,8 +18,13 @@ public class Lanzadora extends Planta {
      * turno será 1 ya que no se usa, ataca cada turno
      */
     public Lanzadora() {
-        super(3, 1, 1);
+        super(3, 1, 0);
     }
+
+    public Lanzadora(int salud) {
+        super(salud, 1, 0);
+    }
+    
     
     /**
      * Get the value of coste

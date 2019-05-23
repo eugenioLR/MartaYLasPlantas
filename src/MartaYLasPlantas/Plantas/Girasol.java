@@ -22,6 +22,11 @@ public class Girasol extends Planta {
         super(1, 0, turno);
     }
 
+    public Girasol(int salud, int turno) {
+        super(salud, 0, turno);
+    }
+    
+
     /**
      * Get the value of magiaGenera
      *

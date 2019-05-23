@@ -52,6 +52,10 @@ public class Tablero {
         return contador;
     }
 
+    public void setContador(int contador) {
+        this.contador = contador;
+    }
+
     /**
      * Devuelve el array de cortacesped
      *
@@ -59,6 +63,14 @@ public class Tablero {
      */
     public boolean[] getCortacesped() {
         return cortacesped;
+    }
+
+    /**
+     *
+     * @param cortacesped
+     */
+    public void setCortacesped(boolean[] cortacesped) {
+        this.cortacesped = cortacesped;
     }
 
     /**
@@ -99,6 +111,14 @@ public class Tablero {
     }
 
     /**
+     *
+     * @param terreno
+     */
+    public void setTerreno(Casilla[][] terreno) {
+        this.terreno = terreno;
+    }
+
+    /**
      * Set the value of vegQuedan
      *
      * @param vegQuedan new value of ataque
@@ -113,7 +133,7 @@ public class Tablero {
      * @return si se sigue jugando
      */
     public boolean actualiza() {
-        boolean hayPlantas, veganoEncontrado = false;
+        boolean hayPlantas, veganoEncontrado = false, hayVeganos;
         int vegTablero;
         Entidad entidad;
 
@@ -182,11 +202,12 @@ public class Tablero {
                         }
                     }
 
+                    // Explosion cereza
                     if (entidad instanceof Cereza) {
                         if ((entidad.getTurno() % 2) <= (contador + 2)) {
                             for (int vert = -1; vert <= 1; vert++) {
                                 for (int horz = -1; horz <= 1; horz++) {
-                                    if (!(((i + vert) > alto || (i + vert) < 0) || ((j + horz) > ancho || (j + horz) < 0)) ) {
+                                    if (!(((i + vert) > alto || (i + vert) < 0) || ((j + horz) > ancho || (j + horz) < 0))) {
                                         for (Entidad ent : terreno[i + vert][j + horz].getEntidades()) {
                                             ent.reducirSalud(entidad.getAtaque());
                                         }
@@ -196,13 +217,25 @@ public class Tablero {
                         }
                     }
 
+                    //explosion MinaPatata
                     if (entidad instanceof MinaPatata) {
                         if ((entidad.getTurno() % 2) <= (contador + 2)) {
                             ((MinaPatata) entidad).setEnterrado(false);
                         }
+
                         if (!((MinaPatata) entidad).isEnterrado()) {
-                            for (Entidad ent : terreno[i][j].getEntidades()) {
-                                ent.reducirSalud(entidad.getAtaque());
+                            hayVeganos = false;
+                            
+                            for (int l = 0; l < terreno[i][j].getEntidades().size(); l++) {
+                                if (hayVeganos = (terreno[i][j].getEntidades().get(l) instanceof Vegano)) {
+                                    break;
+                                }
+                            }
+                            
+                            if (hayVeganos) {
+                                for (Entidad ent : terreno[i][j].getEntidades()) {
+                                    ent.reducirSalud(entidad.getAtaque());
+                                }
                             }
                         }
                     }

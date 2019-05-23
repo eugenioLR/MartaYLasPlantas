@@ -8,9 +8,17 @@ package MartaYLasPlantas;
 import MartaYLasPlantas.Veganos.*;
 import MartaYLasPlantas.Plantas.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -37,6 +45,7 @@ public class Principal {
     private static int turnosSinVeganos;
     private static long puntuacion = 0;
     private static GraficosUwU panelJuego;
+    private static Jugador jugador;
 
     private static Tablero tablero;
 
@@ -54,11 +63,11 @@ public class Principal {
         Scanner scanner = new Scanner(System.in);
         String comando, tokens[];
         tablero = new Tablero(alto, ancho);
-        
+
         JFrame frame = new JFrame();
-        
+
         panelJuego = new GraficosUwU(true, tablero);
-        frame.setSize(new Dimension( 32 * ancho + 93, 32 * alto + 130));
+        frame.setSize(new Dimension(32 * ancho + 93, 32 * alto + 130));
         frame.getContentPane().add(panelJuego);
         frame.setVisible(true);
         panelJuego.setVisible(true);
@@ -126,8 +135,8 @@ public class Principal {
 
         //reservar Veganos para la ronda final
         vegFinal = vegQuedan / 5;
-        vegQuedan -= vegFinal;        
-        
+        vegQuedan -= vegFinal;
+
         System.out.println("Comienza la partida.");
 
         //bucle principal del juego
@@ -163,7 +172,7 @@ public class Principal {
                         if ((y >= alto || y < 0) || (x >= ancho || x < 0)) {
                             throw new ExcepcionPlanta("Posición fuera del tablero.");
                         }
-                        
+
                         //comprobar si hay una planta en la posicion x y
                         for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
                             if (puedePlantar) {
@@ -458,6 +467,220 @@ public class Principal {
         System.out.println("|");
         System.out.println("Turno: " + tablero.getContador() + "\nMagia: " + magia);
 
+    }
+
+    /**
+     *
+     * @param jugador
+     * @return "true" si se ha podido cargar el archivo con exito
+     */
+    public static boolean cargarPartida(Jugador jugador) {
+        FileReader reader;
+        BufferedReader breader;
+        String linea, tokens[], strCasillas[], strEntidad[];
+        boolean cortacesped[] = new boolean[alto];
+        Casilla fila[];
+        int salud, turno;
+
+        try {
+            //leer el archivo "Marta.sav"
+            reader = new FileReader("partidas/" + jugador.getNombre() + ".sav");
+            breader = new BufferedReader(reader);
+
+            //leer linea por linea el archivo
+            for (int i = 1; (linea = breader.readLine()) != null; i++) {
+                switch (i) {
+                    //linea 1: DNI
+                    case 1:
+                        if (!linea.equals(jugador.getDni())) {
+                            breader.close();
+                            throw new ExcepcionJuego("archivo de guardado no valido");
+                        }
+                        break;
+
+                    //linea 2: nombre
+                    case 2:
+                        if (!linea.equals(jugador.getNombre())) {
+                            breader.close();
+                            throw new ExcepcionJuego("archivo de guardado no valido");
+                        }
+                        break;
+
+                    //linea 3: magia
+                    case 3:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("magia")) {
+                            breader.close();
+                            throw new ExcepcionJuego("archivo de guardado no valido");
+                        }
+                        magia = Integer.parseInt(tokens[1]);
+                        break;
+
+                    //linea 4: turno
+                    case 4:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("turno")) {
+                            breader.close();
+                            throw new ExcepcionJuego("archivo de guardado no valido");
+                        }
+                        tablero.setContador(Integer.parseInt(tokens[1]));
+                        break;
+
+                    //linea 5: dificultad
+                    case 5:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("dificultad")) {
+                            breader.close();
+                            throw new ExcepcionJuego("archivo de guardado no valido");
+                        }
+                        dificultad = Integer.parseInt(tokens[1]);
+                        if (dificultad > 5 || dificultad < -1) {
+                            breader.close();
+                            throw new ExcepcionJuego("archivo de guardado no valido");
+                        }
+                        break;
+                    //linea 6: cortacesped
+                    case 6:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("cortacesped")) {
+                            breader.close();
+                            throw new ExcepcionJuego("archivo de guardado no valido");
+                        }
+                        for (int j = 1; j < tokens.length; j++) {
+                            if (j < alto) {
+                                cortacesped[j] = Boolean.parseBoolean(tokens[j]);
+                            } else {
+                                breader.close();
+                                throw new ExcepcionJuego("archivo de guardado no valido");
+                            }
+                        }
+                        tablero.setCortacesped(cortacesped);
+                        break;
+                    //lineas 7-11: tablero
+                    default:
+                        strCasillas = linea.split(";");
+                        for (int j = 0; i < ancho; j++) {
+                            tokens = strCasillas[j].split(",");
+                            for (int k = 0; k < tokens.length; k++) {
+                                strEntidad = tokens[k].split(" ");
+                                salud = Integer.parseInt(strEntidad[1]);
+                                turno = Integer.parseInt(strEntidad[2]);
+                                switch (strEntidad[0]) {
+                                    case "C":
+                                        tablero.colocarEntidad(new Cereza(salud, turno), 7 - i, j);
+                                        break;
+                                    case "G":
+                                        tablero.colocarEntidad(new Girasol(salud, turno), 7 - i, j);
+                                        break;
+                                    case "L":
+                                        tablero.colocarEntidad(new Lanzadora(salud), 7 - i, j);
+                                        break;
+                                    case "M":
+                                        tablero.colocarEntidad(new MinaPatata(salud, turno), 7 - i, j);
+                                        break;
+                                    case "N":
+                                        tablero.colocarEntidad(new Nuez(salud), 7 - i, j);
+                                        break;
+                                    case "V":
+                                        tablero.colocarEntidad(new VeganoComun(salud, turno), 7 - i, j);
+                                        break;
+                                    case "VC":
+                                        tablero.colocarEntidad(new VeganoCasco(salud, turno), 7 - i, j);
+                                        break;
+                                    case "VP":
+                                        tablero.colocarEntidad(new VeganoProteico(salud, turno), 7 - i, j);
+                                        break;
+                                }
+                            }
+                        }
+                }
+            }
+        } catch (ExcepcionJuego | NumberFormatException ej) {
+            System.out.println("Excepcion Juego: " + ej);
+            tablero = null;
+            dificultad = 0;
+            magia = 0;
+            return false;
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(fnfe);
+            return false;
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+            return false;
+        }
+        return true;
+    }
+
+    public static void guardarPartida() {
+        try {
+            FileWriter nuevaPartida;
+            BufferedWriter bwriter;
+            //crear/sobreescribir "Marta.sav"
+            nuevaPartida = new FileWriter("partidas/" + jugador.getNombre() + ".sav");
+            bwriter = new BufferedWriter(nuevaPartida);
+
+            //linea 1: DNI
+            bwriter.write(jugador.getDni());
+            bwriter.newLine();
+
+            //linea 2: nombre
+            bwriter.write(jugador.getNombre());
+            bwriter.newLine();
+
+            //linea 3: magia
+            bwriter.write("magia " + magia);
+            bwriter.newLine();
+
+            //linea 4: turno
+            bwriter.write("turno " + tablero.getContador());
+            bwriter.newLine();
+
+            //linea 5: dificultad
+            bwriter.write("dificultad " + dificultad);
+            bwriter.newLine();
+
+            //linea 6: cortacesped
+            bwriter.write("cortacesped ");
+            for (boolean cortacesped : tablero.getCortacesped()) {
+                bwriter.write(String.valueOf(cortacesped) + " ");
+            }
+            bwriter.newLine();
+
+            //lineas 7-11: tablero
+            for (Casilla[] fila : tablero.getTerreno()) {
+                for (Casilla casilla : fila) {
+                    for (Entidad entidad : casilla.getEntidades()) {
+                        if (entidad != null) {
+                            if (entidad instanceof Cereza) {
+                                bwriter.write("C");
+                            } else if (entidad instanceof Girasol) {
+                                bwriter.write("G");
+                            } else if (entidad instanceof Lanzadora) {
+                                bwriter.write("L");
+                            } else if (entidad instanceof MinaPatata) {
+                                bwriter.write("MP");
+                            } else if (entidad instanceof Nuez) {
+                                bwriter.write("N");
+                            } else if (entidad instanceof VeganoComun) {
+                                bwriter.write("V");
+                            } else if (entidad instanceof VeganoCasco) {
+                                bwriter.write("VC");
+                            } else if (entidad instanceof VeganoProteico) {
+                                bwriter.write("VP");
+                            }
+                            bwriter.write(entidad.getSalud() + " ");
+                            bwriter.write(entidad.getTurno());
+                            bwriter.write(",");
+                        }
+                    }
+                    bwriter.write(";");
+                }
+                bwriter.newLine();
+            }
+            bwriter.close();
+        } catch (IOException ioe) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ioe);
+        }
     }
 }
 

@@ -22,6 +22,11 @@ public class MinaPatata extends Planta {
         //regla de 3 con el daño base que tienen los lanzaguisantes, se obtiene el siguiente  
     }
 
+    public MinaPatata(int salud, int turno) {
+        super(salud, 90, turno);
+    }
+    
+
     /**
      * Get the value of Enterrado
      *

@@ -131,8 +131,8 @@ public class GraficosUwU extends JPanel {
                 j += 64;
             }
             i += 64;
+            cCesped++;
         }
-        cCesped++;
     }
 
     public void hierbaAlternada(Graphics2D g2D, int y, int x) {

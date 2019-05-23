@@ -16,10 +16,12 @@ public class VeganoComun extends Vegano {
     /**
      * Constructor de Vegano. {@inheritDoc}
      */
-    public VeganoComun( int turno) {
-
-        
+    public VeganoComun(int turno) {
         super(5, 1, turno, 2);
+    }
+    
+    public VeganoComun(int salud,int turno) {
+        super(salud, 1, turno, 2);
     }
 
 }
