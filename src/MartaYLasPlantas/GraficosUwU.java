@@ -25,13 +25,6 @@ public class GraficosUwU extends JPanel {
     private int alto, ancho, ajusteVegano = 16, ajusteVert = 160, ajusteHorz = 40;
     private Tablero tablero;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        JFrame mainFrame = new JFrame();
-    }
-
     public GraficosUwU(boolean secret, Tablero tablero) {
         super();
         this.secret = secret;

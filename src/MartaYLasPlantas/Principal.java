@@ -10,6 +10,7 @@ import MartaYLasPlantas.Plantas.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -59,7 +60,7 @@ public class Principal {
         boolean puedePlantar;
         boolean pierdes = false;
         int x = -1, y = -1;
-        Jugador mrTrump = new Jugador("", "", 0, false);
+        jugador = new Jugador("6453776F", "MrTrump", 0, false);
         Scanner scanner = new Scanner(System.in);
         String comando, tokens[];
         tablero = new Tablero(alto, ancho);
@@ -233,6 +234,7 @@ public class Principal {
             tablero.setVegQuedan(vegQuedan);
             jugando = tablero.actualiza();
             panelJuego.repaint();
+            guardarPartida();
         }
 
         //comprobar si hay Veganos en el tablero
@@ -252,18 +254,18 @@ public class Principal {
         puntuacion *= dificultad;
         int indice[];
         if (pierdes) {
-            indice = mrTrump.getPartidasPerdidas();
+            indice = jugador.getPartidasPerdidas();
             indice[dificultad - 1]++;
-            mrTrump.setPartidasPerdidas(indice);
+            jugador.setPartidasPerdidas(indice);
             System.out.println("Pero que pringao.");
         } else {
-            indice = mrTrump.getPartidasGanadas();
+            indice = jugador.getPartidasGanadas();
             indice[dificultad - 1]++;
-            mrTrump.setPartidasGanadas(indice);
+            jugador.setPartidasGanadas(indice);
             System.out.println("Has ganado.\n"
                     + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacion);
         }
-        mrTrump.actualizarFicha();
+        jugador.actualizarFicha();
     }
 
     /**
@@ -562,34 +564,36 @@ public class Principal {
                         for (int j = 0; i < ancho; j++) {
                             tokens = strCasillas[j].split(",");
                             for (int k = 0; k < tokens.length; k++) {
-                                strEntidad = tokens[k].split(" ");
-                                salud = Integer.parseInt(strEntidad[1]);
-                                turno = Integer.parseInt(strEntidad[2]);
-                                switch (strEntidad[0]) {
-                                    case "C":
-                                        tablero.colocarEntidad(new Cereza(salud, turno), 7 - i, j);
-                                        break;
-                                    case "G":
-                                        tablero.colocarEntidad(new Girasol(salud, turno), 7 - i, j);
-                                        break;
-                                    case "L":
-                                        tablero.colocarEntidad(new Lanzadora(salud), 7 - i, j);
-                                        break;
-                                    case "M":
-                                        tablero.colocarEntidad(new MinaPatata(salud, turno), 7 - i, j);
-                                        break;
-                                    case "N":
-                                        tablero.colocarEntidad(new Nuez(salud), 7 - i, j);
-                                        break;
-                                    case "V":
-                                        tablero.colocarEntidad(new VeganoComun(salud, turno), 7 - i, j);
-                                        break;
-                                    case "VC":
-                                        tablero.colocarEntidad(new VeganoCasco(salud, turno), 7 - i, j);
-                                        break;
-                                    case "VP":
-                                        tablero.colocarEntidad(new VeganoProteico(salud, turno), 7 - i, j);
-                                        break;
+                                if (tokens[k].equals("")) {
+                                    strEntidad = tokens[k].split(" ");
+                                    salud = Integer.parseInt(strEntidad[1]);
+                                    turno = Integer.parseInt(strEntidad[2]);
+                                    switch (strEntidad[0]) {
+                                        case "C":
+                                            tablero.colocarEntidad(new Cereza(salud, turno), 7 - i, j);
+                                            break;
+                                        case "G":
+                                            tablero.colocarEntidad(new Girasol(salud, turno), 7 - i, j);
+                                            break;
+                                        case "L":
+                                            tablero.colocarEntidad(new Lanzadora(salud), 7 - i, j);
+                                            break;
+                                        case "M":
+                                            tablero.colocarEntidad(new MinaPatata(salud, turno), 7 - i, j);
+                                            break;
+                                        case "N":
+                                            tablero.colocarEntidad(new Nuez(salud), 7 - i, j);
+                                            break;
+                                        case "V":
+                                            tablero.colocarEntidad(new VeganoComun(salud, turno), 7 - i, j);
+                                            break;
+                                        case "VC":
+                                            tablero.colocarEntidad(new VeganoCasco(salud, turno), 7 - i, j);
+                                            break;
+                                        case "VP":
+                                            tablero.colocarEntidad(new VeganoProteico(salud, turno), 7 - i, j);
+                                            break;
+                                    }
                                 }
                             }
                         }
@@ -616,7 +620,12 @@ public class Principal {
             FileWriter nuevaPartida;
             BufferedWriter bwriter;
             //crear/sobreescribir "Marta.sav"
-            nuevaPartida = new FileWriter("partidas/" + jugador.getNombre() + ".sav");
+            new File("partidas").mkdir();
+            File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
+            if (archivoPartida.createNewFile()) {
+
+            }
+            nuevaPartida = new FileWriter(archivoPartida);
             bwriter = new BufferedWriter(nuevaPartida);
 
             //linea 1: DNI
@@ -652,24 +661,24 @@ public class Principal {
                     for (Entidad entidad : casilla.getEntidades()) {
                         if (entidad != null) {
                             if (entidad instanceof Cereza) {
-                                bwriter.write("C");
+                                bwriter.write("C ");
                             } else if (entidad instanceof Girasol) {
-                                bwriter.write("G");
+                                bwriter.write("G ");
                             } else if (entidad instanceof Lanzadora) {
-                                bwriter.write("L");
+                                bwriter.write("L ");
                             } else if (entidad instanceof MinaPatata) {
-                                bwriter.write("MP");
+                                bwriter.write("MP ");
                             } else if (entidad instanceof Nuez) {
-                                bwriter.write("N");
+                                bwriter.write("N ");
                             } else if (entidad instanceof VeganoComun) {
-                                bwriter.write("V");
+                                bwriter.write("V ");
                             } else if (entidad instanceof VeganoCasco) {
-                                bwriter.write("VC");
+                                bwriter.write("VC ");
                             } else if (entidad instanceof VeganoProteico) {
-                                bwriter.write("VP");
+                                bwriter.write("VP ");
                             }
                             bwriter.write(entidad.getSalud() + " ");
-                            bwriter.write(entidad.getTurno());
+                            bwriter.write(entidad.getTurno() + "");
                             bwriter.write(",");
                         }
                     }
