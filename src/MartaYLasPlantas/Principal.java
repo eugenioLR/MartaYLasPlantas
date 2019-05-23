@@ -496,7 +496,7 @@ public class Principal {
                     case 1:
                         if (!linea.equals(jugador.getDni())) {
                             breader.close();
-                            throw new ExcepcionJuego("archivo de guardado no valido");
+                            throw new ExcepcionJuego();
                         }
                         break;
 
@@ -504,7 +504,7 @@ public class Principal {
                     case 2:
                         if (!linea.equals(jugador.getNombre())) {
                             breader.close();
-                            throw new ExcepcionJuego("archivo de guardado no valido");
+                            throw new ExcepcionJuego();
                         }
                         break;
 
@@ -513,7 +513,7 @@ public class Principal {
                         tokens = linea.split(" ");
                         if (!tokens[0].equals("magia")) {
                             breader.close();
-                            throw new ExcepcionJuego("archivo de guardado no valido");
+                            throw new ExcepcionJuego();
                         }
                         magia = Integer.parseInt(tokens[1]);
                         break;
@@ -523,7 +523,7 @@ public class Principal {
                         tokens = linea.split(" ");
                         if (!tokens[0].equals("turno")) {
                             breader.close();
-                            throw new ExcepcionJuego("archivo de guardado no valido");
+                            throw new ExcepcionJuego();
                         }
                         tablero.setContador(Integer.parseInt(tokens[1]));
                         break;
@@ -533,12 +533,12 @@ public class Principal {
                         tokens = linea.split(" ");
                         if (!tokens[0].equals("dificultad")) {
                             breader.close();
-                            throw new ExcepcionJuego("archivo de guardado no valido");
+                            throw new ExcepcionJuego();
                         }
                         dificultad = Integer.parseInt(tokens[1]);
                         if (dificultad > 5 || dificultad < -1) {
                             breader.close();
-                            throw new ExcepcionJuego("archivo de guardado no valido");
+                            throw new ExcepcionJuego();
                         }
                         break;
                     //linea 6: cortacesped
@@ -546,14 +546,14 @@ public class Principal {
                         tokens = linea.split(" ");
                         if (!tokens[0].equals("cortacesped")) {
                             breader.close();
-                            throw new ExcepcionJuego("archivo de guardado no valido");
+                            throw new ExcepcionJuego();
                         }
                         for (int j = 1; j < tokens.length; j++) {
                             if (j < alto) {
                                 cortacesped[j] = Boolean.parseBoolean(tokens[j]);
                             } else {
                                 breader.close();
-                                throw new ExcepcionJuego("archivo de guardado no valido");
+                                throw new ExcepcionJuego();
                             }
                         }
                         tablero.setCortacesped(cortacesped);
@@ -564,7 +564,7 @@ public class Principal {
                         for (int j = 0; i < ancho; j++) {
                             tokens = strCasillas[j].split(",");
                             for (int k = 0; k < tokens.length; k++) {
-                                if (tokens[k].equals("")) {
+                                if (!tokens[k].equals("")) {
                                     strEntidad = tokens[k].split(" ");
                                     salud = Integer.parseInt(strEntidad[1]);
                                     turno = Integer.parseInt(strEntidad[2]);
@@ -704,5 +704,10 @@ class ExcepcionJuego extends Exception {
 
     public ExcepcionJuego(String message) {
         super(message);
+    }    
+
+    public ExcepcionJuego() {
+        super("archivo de guardado no valido");
     }
+    
 }
