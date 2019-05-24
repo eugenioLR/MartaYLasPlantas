@@ -377,7 +377,7 @@ public class Principal {
             }
         }
     }
-    
+
     /**
      *
      * @param jugador
@@ -388,7 +388,6 @@ public class Principal {
         BufferedReader breader;
         String linea, tokens[], strCasillas[], strEntidad[];
         boolean cortacesped[] = new boolean[alto];
-        Casilla fila[];
         int salud = 0, turno = 0;
 
         try {
@@ -405,7 +404,6 @@ public class Principal {
                             breader.close();
                             throw new ExcepcionJuego();
                         }
-                        System.out.println("Dni Valido.");
                         break;
 
                     //linea 2: nombre
@@ -414,7 +412,6 @@ public class Principal {
                             breader.close();
                             throw new ExcepcionJuego();
                         }
-                        System.out.println("Nombre Valido.");
                         break;
 
                     //linea 3: magia
@@ -425,7 +422,6 @@ public class Principal {
                             throw new ExcepcionJuego();
                         }
                         magia = Integer.parseInt(tokens[1]);
-                        System.out.println("Magia Valido.");
                         break;
 
                     //linea 4: turno
@@ -436,7 +432,6 @@ public class Principal {
                             throw new ExcepcionJuego();
                         }
                         tablero.setContador(Integer.parseInt(tokens[1]));
-                        System.out.println("Turno Valido.");
                         break;
 
                     //linea 5: dificultad
@@ -451,8 +446,8 @@ public class Principal {
                             breader.close();
                             throw new ExcepcionJuego();
                         }
-                        System.out.println("Dificultad Valido.");
                         break;
+
                     //linea 6: cortacesped
                     case 6:
                         tokens = linea.split(" ");
@@ -465,7 +460,6 @@ public class Principal {
                             cortacesped[j] = Boolean.parseBoolean(tokens[j + 1]);
                         }
                         tablero.setCortacesped(cortacesped);
-                        System.out.println("Cortacesped Valido.");
                         break;
                     //linea 7: veganos restantes
                     case 7:
@@ -475,7 +469,6 @@ public class Principal {
                             throw new ExcepcionJuego();
                         }
                         vegQuedan = Integer.parseInt(tokens[1]);
-                        System.out.println("VeganosRestantes Valido.");
                         break;
 
                     //lineas 8-12: tablero
@@ -483,11 +476,9 @@ public class Principal {
                         strCasillas = linea.split(";");
                         System.out.println(linea);
                         for (int j = 0; j < strCasillas.length; j++) {
-                            System.out.println("hmm" + strCasillas[j] );
                             tokens = strCasillas[j].split(",");
                             for (int k = 0; k < tokens.length; k++) {
                                 strEntidad = tokens[k].split(" ");
-                                System.out.println("hm" + tokens[k] + "|");
                                 if (strEntidad.length > 1) {
                                     salud = Integer.parseInt(strEntidad[1]);
                                     turno = Integer.parseInt(strEntidad[2]);
@@ -528,7 +519,6 @@ public class Principal {
                                 }
                             }
                         }
-                        System.out.println("Tablero Valido.");
                 }
             }
         } catch (ExcepcionJuego | NumberFormatException ej) {
@@ -551,9 +541,7 @@ public class Principal {
             //crear/sobreescribir "Marta.sav"
             new File("partidas").mkdir();
             File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
-            if (archivoPartida.createNewFile()) {
-
-            }
+            archivoPartida.createNewFile();
             nuevaPartida = new FileWriter(archivoPartida);
             bwriter = new BufferedWriter(nuevaPartida);
 
@@ -624,7 +612,8 @@ public class Principal {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ioe);
         }
     }
-        /**
+
+    /**
      * imprime por pantalla el tablero del juego
      */
     public static void imprimirTablero_ATravesDeCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla() {
