@@ -66,7 +66,6 @@ public class Principal {
         tablero = new Tablero(alto, ancho);
 
         JFrame frame = new JFrame();
-
         panelJuego = new GraficosUwU(true, tablero);
         frame.setSize(new Dimension(32 * ancho + 93, 32 * alto + 130));
         frame.getContentPane().add(panelJuego);
@@ -140,6 +139,12 @@ public class Principal {
 
         System.out.println("Comienza la partida.");
 
+        while (!cargarPartida(jugador)) {
+            System.out.print("Algo fue mal...: ");
+            if (scanner.nextLine().equals("S")) {
+                System.exit(0);
+            }
+        }
         //bucle principal del juego
         while (jugando) {
             imprimirTablero_ATravesDeCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla();
@@ -372,8 +377,254 @@ public class Principal {
             }
         }
     }
-
+    
     /**
+     *
+     * @param jugador
+     * @return "true" si se ha podido cargar el archivo con exito
+     */
+    public static boolean cargarPartida(Jugador jugador) {
+        FileReader reader;
+        BufferedReader breader;
+        String linea, tokens[], strCasillas[], strEntidad[];
+        boolean cortacesped[] = new boolean[alto];
+        Casilla fila[];
+        int salud = 0, turno = 0;
+
+        try {
+            //leer el archivo "Marta.sav"
+            reader = new FileReader("partidas/" + jugador.getNombre() + ".sav");
+            breader = new BufferedReader(reader);
+
+            //leer linea por linea el archivo
+            for (int i = 1; (linea = breader.readLine()) != null; i++) {
+                switch (i) {
+                    //linea 1: DNI
+                    case 1:
+                        if (!linea.equals(jugador.getDni())) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        System.out.println("Dni Valido.");
+                        break;
+
+                    //linea 2: nombre
+                    case 2:
+                        if (!linea.equals(jugador.getNombre())) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        System.out.println("Nombre Valido.");
+                        break;
+
+                    //linea 3: magia
+                    case 3:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("magia")) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        magia = Integer.parseInt(tokens[1]);
+                        System.out.println("Magia Valido.");
+                        break;
+
+                    //linea 4: turno
+                    case 4:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("turno")) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        tablero.setContador(Integer.parseInt(tokens[1]));
+                        System.out.println("Turno Valido.");
+                        break;
+
+                    //linea 5: dificultad
+                    case 5:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("dificultad")) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        dificultad = Integer.parseInt(tokens[1]);
+                        if (dificultad > 5 || dificultad < -1) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        System.out.println("Dificultad Valido.");
+                        break;
+                    //linea 6: cortacesped
+                    case 6:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("cortacesped")) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        for (int j = 0; j < alto; j++) {
+                            System.out.println(tokens[j + 1]);
+                            cortacesped[j] = Boolean.parseBoolean(tokens[j + 1]);
+                        }
+                        tablero.setCortacesped(cortacesped);
+                        System.out.println("Cortacesped Valido.");
+                        break;
+                    //linea 7: veganos restantes
+                    case 7:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("VeganosQuedan")) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        vegQuedan = Integer.parseInt(tokens[1]);
+                        System.out.println("VeganosRestantes Valido.");
+                        break;
+
+                    //lineas 8-12: tablero
+                    default:
+                        strCasillas = linea.split(";");
+                        System.out.println(linea);
+                        for (int j = 0; j < strCasillas.length; j++) {
+                            System.out.println("hmm" + strCasillas[j] );
+                            tokens = strCasillas[j].split(",");
+                            for (int k = 0; k < tokens.length; k++) {
+                                strEntidad = tokens[k].split(" ");
+                                System.out.println("hm" + tokens[k] + "|");
+                                if (strEntidad.length > 1) {
+                                    salud = Integer.parseInt(strEntidad[1]);
+                                    turno = Integer.parseInt(strEntidad[2]);
+                                }
+                                switch (strEntidad[0]) {
+                                    case "C":
+                                        tablero.colocarEntidad(new Cereza(salud, turno), i - 8, j);
+                                        System.out.println("cereza");
+                                        break;
+                                    case "G":
+                                        tablero.colocarEntidad(new Girasol(salud, turno), i - 8, j);
+                                        System.out.println("girasol");
+                                        break;
+                                    case "L":
+                                        tablero.colocarEntidad(new Lanzadora(salud), i - 8, j);
+                                        System.out.println("lanzaguisantes");
+                                        break;
+                                    case "MP":
+                                        tablero.colocarEntidad(new MinaPatata(salud, turno), i - 8, j);
+                                        System.out.println("Minapatata");
+                                        break;
+                                    case "N":
+                                        tablero.colocarEntidad(new Nuez(salud), i - 8, j);
+                                        System.out.println("nuez");
+                                        break;
+                                    case "V":
+                                        tablero.colocarEntidad(new VeganoComun(salud, turno), i - 8, j);
+                                        System.out.println("vegano");
+                                        break;
+                                    case "VC":
+                                        tablero.colocarEntidad(new VeganoCasco(salud, turno), i - 8, j);
+                                        System.out.println("vegano casco");
+                                        break;
+                                    case "VP":
+                                        tablero.colocarEntidad(new VeganoProteico(salud, turno), i - 8, j);
+                                        System.out.println("vegano proteico");
+                                        break;
+                                }
+                            }
+                        }
+                        System.out.println("Tablero Valido.");
+                }
+            }
+        } catch (ExcepcionJuego | NumberFormatException ej) {
+            System.out.println("Excepcion Juego: " + ej);
+            return false;
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(fnfe);
+            return false;
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+            return false;
+        }
+        return true;
+    }
+
+    public static void guardarPartida() {
+        try {
+            FileWriter nuevaPartida;
+            BufferedWriter bwriter;
+            //crear/sobreescribir "Marta.sav"
+            new File("partidas").mkdir();
+            File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
+            if (archivoPartida.createNewFile()) {
+
+            }
+            nuevaPartida = new FileWriter(archivoPartida);
+            bwriter = new BufferedWriter(nuevaPartida);
+
+            //linea 1: DNI
+            bwriter.write(jugador.getDni());
+            bwriter.newLine();
+
+            //linea 2: nombre
+            bwriter.write(jugador.getNombre());
+            bwriter.newLine();
+
+            //linea 3: magia
+            bwriter.write("magia " + magia);
+            bwriter.newLine();
+
+            //linea 4: turno
+            bwriter.write("turno " + tablero.getContador());
+            bwriter.newLine();
+
+            //linea 5: dificultad
+            bwriter.write("dificultad " + dificultad);
+            bwriter.newLine();
+
+            //linea 6: cortacesped
+            bwriter.write("cortacesped ");
+            for (boolean cortacesped : tablero.getCortacesped()) {
+                bwriter.write(String.valueOf(cortacesped) + " ");
+            }
+            bwriter.newLine();
+
+            //linea 7: veganos restantes
+            bwriter.write("VeganosQuedan " + vegQuedan);
+            bwriter.newLine();
+
+            //lineas 8-12: tablero
+            for (Casilla[] fila : tablero.getTerreno()) {
+                for (Casilla casilla : fila) {
+                    for (Entidad entidad : casilla.getEntidades()) {
+                        if (entidad != null) {
+                            if (entidad instanceof Cereza) {
+                                bwriter.write("C ");
+                            } else if (entidad instanceof Girasol) {
+                                bwriter.write("G ");
+                            } else if (entidad instanceof Lanzadora) {
+                                bwriter.write("L ");
+                            } else if (entidad instanceof MinaPatata) {
+                                bwriter.write("MP ");
+                            } else if (entidad instanceof Nuez) {
+                                bwriter.write("N ");
+                            } else if (entidad instanceof VeganoComun) {
+                                bwriter.write("V ");
+                            } else if (entidad instanceof VeganoCasco) {
+                                bwriter.write("VC ");
+                            } else if (entidad instanceof VeganoProteico) {
+                                bwriter.write("VP ");
+                            }
+                            bwriter.write(entidad.getSalud() + " ");
+                            bwriter.write(entidad.getTurno() + "");
+                            bwriter.write(",");
+                        }
+                    }
+                    bwriter.write(";");
+                }
+                bwriter.newLine();
+            }
+            bwriter.close();
+        } catch (IOException ioe) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ioe);
+        }
+    }
+        /**
      * imprime por pantalla el tablero del juego
      */
     public static void imprimirTablero_ATravesDeCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla() {
@@ -471,240 +722,6 @@ public class Principal {
 
     }
 
-    /**
-     *
-     * @param jugador
-     * @return "true" si se ha podido cargar el archivo con exito
-     */
-    public static boolean cargarPartida(Jugador jugador) {
-        FileReader reader;
-        BufferedReader breader;
-        String linea, tokens[], strCasillas[], strEntidad[];
-        boolean cortacesped[] = new boolean[alto];
-        Casilla fila[];
-        int salud, turno;
-
-        try {
-            //leer el archivo "Marta.sav"
-            reader = new FileReader("partidas/" + jugador.getNombre() + ".sav");
-            breader = new BufferedReader(reader);
-
-            //leer linea por linea el archivo
-            for (int i = 1; (linea = breader.readLine()) != null; i++) {
-                switch (i) {
-                    //linea 1: DNI
-                    case 1:
-                        if (!linea.equals(jugador.getDni())) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        break;
-
-                    //linea 2: nombre
-                    case 2:
-                        if (!linea.equals(jugador.getNombre())) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        break;
-
-                    //linea 3: magia
-                    case 3:
-                        tokens = linea.split(" ");
-                        if (!tokens[0].equals("magia")) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        magia = Integer.parseInt(tokens[1]);
-                        break;
-
-                    //linea 4: turno
-                    case 4:
-                        tokens = linea.split(" ");
-                        if (!tokens[0].equals("turno")) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        tablero.setContador(Integer.parseInt(tokens[1]));
-                        break;
-
-                    //linea 5: dificultad
-                    case 5:
-                        tokens = linea.split(" ");
-                        if (!tokens[0].equals("dificultad")) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        dificultad = Integer.parseInt(tokens[1]);
-                        if (dificultad > 5 || dificultad < -1) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        break;
-                    //linea 6: cortacesped
-                    case 6:
-                        tokens = linea.split(" ");
-                        if (!tokens[0].equals("cortacesped")) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        for (int j = 1; j < tokens.length; j++) {
-                            if (j < alto) {
-                                cortacesped[j] = Boolean.parseBoolean(tokens[j]);
-                            } else {
-                                breader.close();
-                                throw new ExcepcionJuego();
-                            }
-                        }
-                        tablero.setCortacesped(cortacesped);
-                        break;
-                    //linea 7: veganos restantes
-                    case 7:
-                        tokens = linea.split(" ");
-                        if (!tokens[0].equals("VeganosQuedan")) {
-                            breader.close();
-                            throw new ExcepcionJuego();
-                        }
-                        vegQuedan = Integer.parseInt(tokens[1]);
-                        break;
-
-                    //lineas 8-12: tablero
-                    default:
-                        strCasillas = linea.split(";");
-                        for (int j = 0; i < ancho; j++) {
-                            tokens = strCasillas[j].split(",");
-                            for (int k = 0; k < tokens.length; k++) {
-                                if (!tokens[k].equals("")) {
-                                    strEntidad = tokens[k].split(" ");
-                                    salud = Integer.parseInt(strEntidad[1]);
-                                    turno = Integer.parseInt(strEntidad[2]);
-                                    switch (strEntidad[0]) {
-                                        case "C":
-                                            tablero.colocarEntidad(new Cereza(salud, turno), 7 - i, j);
-                                            break;
-                                        case "G":
-                                            tablero.colocarEntidad(new Girasol(salud, turno), 7 - i, j);
-                                            break;
-                                        case "L":
-                                            tablero.colocarEntidad(new Lanzadora(salud), 7 - i, j);
-                                            break;
-                                        case "M":
-                                            tablero.colocarEntidad(new MinaPatata(salud, turno), 7 - i, j);
-                                            break;
-                                        case "N":
-                                            tablero.colocarEntidad(new Nuez(salud), 7 - i, j);
-                                            break;
-                                        case "V":
-                                            tablero.colocarEntidad(new VeganoComun(salud, turno), 7 - i, j);
-                                            break;
-                                        case "VC":
-                                            tablero.colocarEntidad(new VeganoCasco(salud, turno), 7 - i, j);
-                                            break;
-                                        case "VP":
-                                            tablero.colocarEntidad(new VeganoProteico(salud, turno), 7 - i, j);
-                                            break;
-                                    }
-                                }
-                            }
-                        }
-                }
-            }
-        } catch (ExcepcionJuego | NumberFormatException ej) {
-            System.out.println("Excepcion Juego: " + ej);
-            tablero = null;
-            dificultad = 0;
-            magia = 0;
-            return false;
-        } catch (FileNotFoundException fnfe) {
-            System.out.println(fnfe);
-            return false;
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-            return false;
-        }
-        return true;
-    }
-
-    public static void guardarPartida() {
-        try {
-            FileWriter nuevaPartida;
-            BufferedWriter bwriter;
-            //crear/sobreescribir "Marta.sav"
-            new File("partidas").mkdir();
-            File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
-            if (archivoPartida.createNewFile()) {
-
-            }
-            nuevaPartida = new FileWriter(archivoPartida);
-            bwriter = new BufferedWriter(nuevaPartida);
-
-            //linea 1: DNI
-            bwriter.write(jugador.getDni());
-            bwriter.newLine();
-
-            //linea 2: nombre
-            bwriter.write(jugador.getNombre());
-            bwriter.newLine();
-
-            //linea 3: magia
-            bwriter.write("magia " + magia);
-            bwriter.newLine();
-
-            //linea 4: turno
-            bwriter.write("turno " + tablero.getContador());
-            bwriter.newLine();
-
-            //linea 5: dificultad
-            bwriter.write("dificultad " + dificultad);
-            bwriter.newLine();
-
-            //linea 6: cortacesped
-            bwriter.write("cortacesped ");
-            for (boolean cortacesped : tablero.getCortacesped()) {
-                bwriter.write(String.valueOf(cortacesped) + " ");
-            }
-            bwriter.newLine();
-
-            //linea 7: veganos restantes
-            bwriter.write("VeganosQuedan " + vegQuedan);
-            bwriter.newLine();
-
-            //lineas 8-12: tablero
-            for (Casilla[] fila : tablero.getTerreno()) {
-                for (Casilla casilla : fila) {
-                    for (Entidad entidad : casilla.getEntidades()) {
-                        if (entidad != null) {
-                            if (entidad instanceof Cereza) {
-                                bwriter.write("C ");
-                            } else if (entidad instanceof Girasol) {
-                                bwriter.write("G ");
-                            } else if (entidad instanceof Lanzadora) {
-                                bwriter.write("L ");
-                            } else if (entidad instanceof MinaPatata) {
-                                bwriter.write("MP ");
-                            } else if (entidad instanceof Nuez) {
-                                bwriter.write("N ");
-                            } else if (entidad instanceof VeganoComun) {
-                                bwriter.write("V ");
-                            } else if (entidad instanceof VeganoCasco) {
-                                bwriter.write("VC ");
-                            } else if (entidad instanceof VeganoProteico) {
-                                bwriter.write("VP ");
-                            }
-                            bwriter.write(entidad.getSalud() + " ");
-                            bwriter.write(entidad.getTurno() + "");
-                            bwriter.write(",");
-                        }
-                    }
-                    bwriter.write(";");
-                }
-                bwriter.newLine();
-            }
-            bwriter.close();
-        } catch (IOException ioe) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ioe);
-        }
-    }
 }
 
 class ExcepcionPlanta extends Exception {
