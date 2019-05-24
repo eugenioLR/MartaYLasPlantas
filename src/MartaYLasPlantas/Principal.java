@@ -558,7 +558,17 @@ public class Principal {
                         }
                         tablero.setCortacesped(cortacesped);
                         break;
-                    //lineas 7-11: tablero
+                    //linea 7: veganos restantes
+                    case 7:
+                        tokens = linea.split(" ");
+                        if (!tokens[0].equals("VeganosQuedan")) {
+                            breader.close();
+                            throw new ExcepcionJuego();
+                        }
+                        vegQuedan = Integer.parseInt(tokens[1]);
+                        break;
+
+                    //lineas 8-12: tablero
                     default:
                         strCasillas = linea.split(";");
                         for (int j = 0; i < ancho; j++) {
@@ -655,7 +665,11 @@ public class Principal {
             }
             bwriter.newLine();
 
-            //lineas 7-11: tablero
+            //linea 7: veganos restantes
+            bwriter.write("VeganosQuedan " + vegQuedan);
+            bwriter.newLine();
+
+            //lineas 8-12: tablero
             for (Casilla[] fila : tablero.getTerreno()) {
                 for (Casilla casilla : fila) {
                     for (Entidad entidad : casilla.getEntidades()) {
@@ -704,10 +718,10 @@ class ExcepcionJuego extends Exception {
 
     public ExcepcionJuego(String message) {
         super(message);
-    }    
+    }
 
     public ExcepcionJuego() {
         super("archivo de guardado no valido");
     }
-    
+
 }
