@@ -155,7 +155,7 @@ public class Jugador {
     public static void registrarse() {
         leerJugadores();
         String dni = JOptionPane.showInputDialog("DNI: ");
-        if (jugadores.containsValue(dni)) {
+        if (jugadores.containsKey(dni)) {
             // empezaríamos el juego
         } else {
             // añadimos al jugador.
@@ -177,11 +177,11 @@ public class Jugador {
                 switch (i % 6) {
                     case 0:
                         tokens = linea.split(" ");
-                        dni = tokens[0];
+                        dni = tokens[1];
                         break;
                     case 1:
                         tokens = linea.split(" ");
-                        nombre = tokens[0];
+                        nombre = tokens[1];
                         break;
                     case 2:
                         tokens = linea.split(" ");
