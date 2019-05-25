@@ -50,7 +50,7 @@ public class Principal {
     private static HashMap jugadores = new HashMap<>();
     private static Tablero tablero;
 
-    public static void loguearse() {
+    public static void registrarse() {
         String dni = JOptionPane.showInputDialog("DNI: ");
         if (jugadores.containsValue(dni)) {
             // empezaríamos el juego
@@ -58,7 +58,7 @@ public class Principal {
             // añadimos al jugador.
             String nombre = JOptionPane.showInputDialog("Nombre: ");
             jugadores.put(dni, nombre);
-
+            jugador.setIndice(jugadores.size());
         }
     }
 
@@ -90,7 +90,7 @@ public class Principal {
         hashDificultad.put("IMPOSIBLE", 4);
 
         magia = 50;
-
+        
         //Comando inicial
         System.out.println("Si no sabes como comenzar escribe \"ayuda\".");
         while (comprobando) {
@@ -149,15 +149,17 @@ public class Principal {
         vegQuedan -= vegFinal;
 
         System.out.println("Comienza la partida.");
-
+/*
         while (!cargarPartida(jugador)) {
             System.out.print("Algo fue mal...: ");
             if (scanner.nextLine().equals("S")) {
                 System.exit(0);
             }
-        }
+        }*/
+        
         //bucle principal del juego
         while (jugando) {
+            panelJuego.repaint();
             imprimirTablero_ATravesDeCaracteresASCIIRepresentandoPlantasYVeganosPorPantalla();
             comprobando = true;
             //Plantar platas , avanzar o salir del juego
@@ -249,8 +251,7 @@ public class Principal {
             generarVeganos();
             tablero.setVegQuedan(vegQuedan);
             jugando = tablero.actualiza();
-            panelJuego.repaint();
-            guardarPartida();
+//            guardarPartida();
         }
 
         //comprobar si hay Veganos en el tablero

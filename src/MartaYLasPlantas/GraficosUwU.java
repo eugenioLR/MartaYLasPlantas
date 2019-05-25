@@ -127,7 +127,12 @@ public class GraficosUwU extends JPanel {
             cCesped++;
         }
     }
-
+    /**
+     * Dibuja por pantalla la hierba de forma alterna
+     * @param g2D
+     * @param y
+     * @param x 
+     */
     public void hierbaAlternada(Graphics2D g2D, int y, int x) {
         if ((y / 64) % 2 == (x / 64) % 2) {
             g2D.drawImage(hierba1, y, x, this);

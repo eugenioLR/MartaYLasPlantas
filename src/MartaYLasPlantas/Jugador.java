@@ -17,6 +17,7 @@ public class Jugador {
     private boolean partidaCreada;
     private int[] partidasGanadas;
     private int[] partidasPerdidas;
+    private int indice;
 
     public Jugador(String dni, String nombre, long puntuacion, boolean partidaCreada) {
         this.dni = dni;
@@ -117,6 +118,15 @@ public class Jugador {
         this.puntuacion = puntuacion;
     }
 
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }  
+    
+
     /**
      * Get the value of partidaCreada
      *
@@ -134,7 +144,7 @@ public class Jugador {
     public void setPartidaCreada(boolean partidaCreada) {
         this.partidaCreada = partidaCreada;
     }
-
+    
     public void crearFicha(String nif) {
 
     }
