@@ -153,6 +153,7 @@ public class Jugador {
     }
 
     public static void registrarse() {
+        leerJugadores();
         String dni = JOptionPane.showInputDialog("DNI: ");
         if (jugadores.containsValue(dni)) {
             // empezaríamos el juego
@@ -201,11 +202,12 @@ public class Jugador {
                         }
                         break;
                     default:
-                        jugadorAux = new Jugador(nombre, dni, false);
+                        jugadorAux = new Jugador(dni, nombre, false);
                         jugadorAux.setPartidasGanadas(ptdsGanadas);
                         jugadorAux.setPartidasPerdidas(ptdsPerdidas);
                         jugadorAux.setPuntuacion(pts);
                         jugadores.put(dni, jugadorAux);
+                        System.out.println(dni);
                 }
             }
         } catch (IOException ex) {
@@ -265,22 +267,17 @@ public class Jugador {
                     if (tokens[1].equals(dni)) {
                         for (int j = 0; j < 5; j++) {
                             breader.readLine();
-                            registroAux2 = registroAux;
-                            registroAux = "";
                         }
                     }
-                    registroAux += linea + "\n";
-
                 }
-
+                    registroAux += linea + "\n";
+                
             }
 
             registroJugadores = new File("jugadores.dat");
             registroJugadores.createNewFile();
             nuevoRegistro = new FileWriter(registroJugadores);
             bwriter = new BufferedWriter(nuevoRegistro);
-
-            bwriter.write(registroAux2);
 
             //linea1: dni
             bwriter.write("dni " + dni);
