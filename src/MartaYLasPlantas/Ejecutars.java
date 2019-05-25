@@ -16,10 +16,12 @@ public class Ejecutars {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Menu manu = new Menu();
+        /*Menu manu = new Menu();
         pg = new PrincipalGraficos(false , new Tablero(5,9));
         manu.setVisible(true);
-        pg.____();
+        pg.____();*/
+        Jugador kfc = new Jugador("345445V", "Chicken", false);
+        kfc.crearFicha();
     }
 
     public static void tableroVisible() {

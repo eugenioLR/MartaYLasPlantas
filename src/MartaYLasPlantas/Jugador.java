@@ -5,8 +5,11 @@
  */
 package MartaYLasPlantas;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -162,7 +165,52 @@ public class Jugador {
     }
 
     public static void leerJugadores() {
-
+        try {
+            FileReader reader = new FileReader("jugadores.dat");
+            BufferedReader breader = new BufferedReader(reader);
+            String linea, tokens[], nombre = null, dni = null;
+            Jugador jugadorAux;
+            int ptdsGanadas[] = new int[4], ptdsPerdidas[] = new int[4];
+            long pts[] = new long[4];
+            for (int i = 0; (linea = breader.readLine()) != null; i++) {
+                switch (i % 6) {
+                    case 0:
+                        tokens = linea.split(" ");
+                        nombre = tokens[0];
+                        break;
+                    case 1:
+                        tokens = linea.split(" ");
+                        dni = tokens[0];
+                        break;
+                    case 2:
+                        tokens = linea.split(" ");
+                        for(int j = 0; j<4;j++){
+                            ptdsGanadas[j] = Integer.parseInt(tokens[j+1]);
+                        }
+                        break;
+                    case 3:
+                        tokens = linea.split(" ");
+                        for(int j = 0; j<4;j++){
+                            ptdsPerdidas[j] = Integer.parseInt(tokens[j+1]);
+                        }
+                        break;
+                    case 4:
+                        tokens = linea.split(" ");
+                        for(int j = 0; j<4;j++){
+                            pts[j] = Integer.parseInt(tokens[j+1]);
+                        }
+                        break;
+                    default:
+                        jugadorAux = new Jugador(nombre, dni, false);
+                        jugadorAux.setPartidasGanadas(ptdsGanadas);
+                        jugadorAux.setPartidasPerdidas(ptdsPerdidas);
+                        jugadorAux.setPuntuacion(pts);
+                        jugadores.put(dni, jugadorAux);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Jugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void crearFicha() {
@@ -176,53 +224,90 @@ public class Jugador {
             nuevaFicha = new FileWriter(ficha);
             bwriter = new BufferedWriter(nuevaFicha);
 
+            //linea1: nombre
             bwriter.write("nombre " + nombre);
             bwriter.newLine();
 
+            //linea2: dni
             bwriter.write("dni " + dni);
             bwriter.newLine();
 
+            //linea3: PartidasGanadas
             bwriter.write("ParitdasGanadas ");
             for (int partida : partidasGanadas) {
                 bwriter.write(partida + " ");
             }
+            bwriter.newLine();
 
+            //linea4: PartidasPerdidas
             bwriter.write("ParitdasPerdidas ");
             for (int partida : partidasPerdidas) {
                 bwriter.write(partida + " ");
             }
+            bwriter.newLine();
+            
+            bwriter.write("Puntuacion ");
+            for (long pts : puntuacion) {
+                bwriter.write(pts + " ");
+            }
+            bwriter.newLine();
+            bwriter.newLine();
             bwriter.close();
 
+            //Registro Jugadores
+            String registroAux = "" ,linea;
+            FileReader reader = new FileReader("jugadores.dat");
+            BufferedReader breader = new BufferedReader(reader);
+            while((linea = breader.readLine()) != null){
+                registroAux += linea + "\n";
+            }
+            
             registroJugadores = new File("jugadores.dat");
             registroJugadores.createNewFile();
             nuevoRegistro = new FileWriter(registroJugadores);
             bwriter = new BufferedWriter(nuevoRegistro);
 
+            bwriter.write(registroAux);
+            
+            //linea1: nombre
             bwriter.write("nombre " + nombre);
             bwriter.newLine();
 
+            //linea2: dni
             bwriter.write("dni " + dni);
             bwriter.newLine();
 
+            //linea3: PartidasGanadas
             bwriter.write("ParitdasGanadas ");
             for (int partida : partidasGanadas) {
                 bwriter.write(partida + " ");
             }
+            bwriter.newLine();
 
+            //linea4: PartidasPerdidas
             bwriter.write("ParitdasPerdidas ");
             for (int partida : partidasPerdidas) {
                 bwriter.write(partida + " ");
             }
+            bwriter.newLine();
+            
+            //linea5: puntuacion
+            bwriter.write("Puntuacion ");
+            for (long pts : puntuacion) {
+                bwriter.write(pts + " ");
+            }
+            bwriter.newLine();
+            bwriter.newLine();
+            bwriter.close();
         } catch (IOException ex) {
             Logger.getLogger(Jugador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    public void actualizarFicha() {
+    /*public void actualizarFicha() {
 
-    }
-
+    }*/
     public void ranking() {
         //HashMap auxx = new HashMap<>();
         switch (PrincipalTerminal.getDificultad()) {

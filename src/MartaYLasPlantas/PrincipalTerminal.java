@@ -276,7 +276,7 @@ public class PrincipalTerminal {
         long ptc[] = jugador.getPuntuacion();
         ptc[dificultad - 1] += puntuacionPartida;
         jugador.setPuntuacion(ptc);
-        jugador.actualizarFicha();
+        //jugador.actualizarFicha();
     }
 
     /**
