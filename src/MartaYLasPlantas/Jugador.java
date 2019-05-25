@@ -7,7 +7,7 @@ package MartaYLasPlantas;
 
 /**
  *
- * @author ACER
+ * @author EDGENP
  */
 public class Jugador {
 
@@ -146,12 +146,13 @@ public class Jugador {
     public void cargarPartida() {
 
     }
-    public void actualizarFicha(){
-        
+    
+    public void actualizarFicha() {
+
     }
 
     @Override
     public String toString() {
         return "Jugador{" + "dni=" + dni + ", nombre=" + nombre + ", puntuacion=" + puntuacion + "}";
     }
-}
+}   

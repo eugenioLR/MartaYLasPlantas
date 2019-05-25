@@ -47,14 +47,25 @@ public class Principal {
     private static long puntuacion = 0;
     private static GraficosUwU panelJuego;
     private static Jugador jugador;
-
+    private static HashMap jugadores = new HashMap<>();
     private static Tablero tablero;
 
+    public static void loguearse() {
+        String dni = JOptionPane.showInputDialog("DNI: ");
+        if (jugadores.containsValue(dni)) {
+            // empezaríamos el juego
+        } else {
+            // añadimos al jugador.
+            String nombre = JOptionPane.showInputDialog("Nombre: ");
+            jugadores.put(dni, nombre);
+
+        }
+    }
+
     /**
-     * @param args
      *
      */
-    public static void main(String[] args) {
+    public static void jugar() {
         boolean jugando = true;
         boolean comprobando = true;
         boolean puedePlantar;

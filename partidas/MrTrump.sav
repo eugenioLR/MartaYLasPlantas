@@ -1,12 +1,12 @@
 6453776F
 MrTrump
-magia 45
-turno 21
+magia 120
+turno 34
 dificultad 4
 cortacesped false true true false true 
-VeganosQuedan 3
-;;;;;;;VC 8 17,;;
+VeganosQuedan 0
+;;;VC 8 17,;;;;;;
 L 3 0,;;;;;;;;;
 ;;;;;;;;;
-;;;;;;;;;
-;;;;;;;V 5 17,;VC 8 20,;
+VP 2 25,;;;;;;;;;
+V 5 17,;;;VP 2 26,;VC 8 20,;VC 8 22,V 5 25,;;;;
