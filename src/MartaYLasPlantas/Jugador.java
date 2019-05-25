@@ -5,6 +5,9 @@
  */
 package MartaYLasPlantas;
 
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author EDGENP
@@ -13,16 +16,18 @@ public class Jugador {
 
     private String dni;
     private String nombre;
-    private long puntuacion;
+    private static long puntuacion[] = new long[3];
     private boolean partidaCreada;
     private int[] partidasGanadas;
     private int[] partidasPerdidas;
-    private int indice;
+    private static int indice;
+    private static HashMap jugadores = new HashMap<>();
+    private HashMap puntuaciones = new HashMap<>();
 
     public Jugador(String dni, String nombre, long puntuacion, boolean partidaCreada) {
         this.dni = dni;
         this.nombre = nombre;
-        this.puntuacion = puntuacion;
+        this.puntuacion[Principal.getDificultad() - 1] = puntuacion;
         this.partidaCreada = partidaCreada;
         partidasPerdidas = new int[4];
         partidasGanadas = new int[4];
@@ -105,27 +110,23 @@ public class Jugador {
      *
      * @return the value of puntuacion
      */
-    public long getPuntuacion() {
+    public static long[] getPuntuacion() {
         return puntuacion;
     }
 
-    /**
-     * Set the value of puntuacion
-     *
-     * @param puntuacion new value of puntuacion
-     */
-    public void setPuntuacion(long puntuacion) {
-        this.puntuacion = puntuacion;
+    public static void setPuntuacion(long[] puntuacion) {
+        Jugador.puntuacion = puntuacion;
     }
 
-    public int getIndice() {
+
+
+    public static int getIndice() {
         return indice;
     }
 
-    public void setIndice(int indice) {
-        this.indice = indice;
-    }  
-    
+    public static void setIndice(int indice) {
+        Jugador.indice = indice;
+    }
 
     /**
      * Get the value of partidaCreada
@@ -144,7 +145,19 @@ public class Jugador {
     public void setPartidaCreada(boolean partidaCreada) {
         this.partidaCreada = partidaCreada;
     }
-    
+
+    public static void registrarse() {
+        String dni = JOptionPane.showInputDialog("DNI: ");
+        if (jugadores.containsValue(dni)) {
+            // empezaríamos el juego
+        } else {
+            // añadimos al jugador.
+            String nombre = JOptionPane.showInputDialog("Nombre: ");
+            jugadores.put(dni, nombre);
+            setIndice(jugadores.size());
+        }
+    }
+
     public void crearFicha(String nif) {
 
     }
@@ -156,8 +169,24 @@ public class Jugador {
     public void cargarPartida() {
 
     }
-    
+
     public void actualizarFicha() {
+
+    }
+
+    public void ranking() {
+        //HashMap auxx = new HashMap<>();
+        switch (Principal.getDificultad()) {
+
+            case 1:
+
+            case 2:
+
+            case 3:
+
+            case 4:
+
+        }
 
     }
 
@@ -165,4 +194,4 @@ public class Jugador {
     public String toString() {
         return "Jugador{" + "dni=" + dni + ", nombre=" + nombre + ", puntuacion=" + puntuacion + "}";
     }
-}   
+}

@@ -193,7 +193,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmarTrucoActionPerformed
 
     private void nuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPartidaActionPerformed
-        Principal.registrarse();
+        Jugador.registrarse();
         Principal.jugar();
     }//GEN-LAST:event_nuevaPartidaActionPerformed
 

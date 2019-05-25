@@ -44,22 +44,14 @@ public class Principal {
     private static int vegQuedan;
     private static int vegFinal = 0;
     private static int turnosSinVeganos;
-    private static long puntuacion = 0;
+    private static long[] puntuacion = Jugador.getPuntuacion();
+    private static long puntuacionPartida;
     private static GraficosUwU panelJuego;
     private static Jugador jugador;
-    private static HashMap jugadores = new HashMap<>();
     private static Tablero tablero;
 
-    public static void registrarse() {
-        String dni = JOptionPane.showInputDialog("DNI: ");
-        if (jugadores.containsValue(dni)) {
-            // empezaríamos el juego
-        } else {
-            // añadimos al jugador.
-            String nombre = JOptionPane.showInputDialog("Nombre: ");
-            jugadores.put(dni, nombre);
-            jugador.setIndice(jugadores.size());
-        }
+    public static int getDificultad() {
+        return dificultad;
     }
 
     /**
@@ -90,7 +82,7 @@ public class Principal {
         hashDificultad.put("IMPOSIBLE", 4);
 
         magia = 50;
-        
+
         //Comando inicial
         System.out.println("Si no sabes como comenzar escribe \"ayuda\".");
         while (comprobando) {
@@ -149,14 +141,14 @@ public class Principal {
         vegQuedan -= vegFinal;
 
         System.out.println("Comienza la partida.");
-/*
+        /*
         while (!cargarPartida(jugador)) {
             System.out.print("Algo fue mal...: ");
             if (scanner.nextLine().equals("S")) {
                 System.exit(0);
             }
         }*/
-        
+
         //bucle principal del juego
         while (jugando) {
             panelJuego.repaint();
@@ -255,20 +247,23 @@ public class Principal {
         }
 
         //comprobar si hay Veganos en el tablero
-        puntuacion = 100 * magia;
+        puntuacion[dificultad - 1] = puntuacionPartida;// hay que cambiar cositas
+
+        puntuacionPartida = 100 * magia;
+
         for (Casilla[] fila : tablero.getTerreno()) {
             for (Casilla casilla : fila) {
                 for (Entidad entidad : casilla.getEntidades()) {
                     if (pierdes = entidad instanceof Vegano) {
-                        puntuacion = 0;
+                        puntuacionPartida = 0;
                         break;
                     } else if (entidad instanceof Planta) {
-                        puntuacion += 200;
+                        puntuacionPartida += 200;
                     }
                 }
             }
         }
-        puntuacion *= dificultad;
+        puntuacionPartida *= dificultad;
         int indice[];
         if (pierdes) {
             indice = jugador.getPartidasPerdidas();
@@ -280,8 +275,9 @@ public class Principal {
             indice[dificultad - 1]++;
             jugador.setPartidasGanadas(indice);
             System.out.println("Has ganado.\n"
-                    + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacion);
+                    + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacionPartida);
         }
+        jugador.setPuntuacion(puntuacion);
         jugador.actualizarFicha();
     }
 
