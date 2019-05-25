@@ -17,14 +17,10 @@ public class Ejecutars {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-<<<<<<< HEAD
         /*Menu manu = new Menu();
         pg = new PrincipalGraficos(false , new Tablero(5,9));
-=======
-
         Menu manu = new Menu();
         pg = new PrincipalGraficos(false, new Tablero(5, 9));
->>>>>>> ef3d850cd14473e82d031d3517ba00ef73f93160
         manu.setVisible(true);
         pg.____();*/
         Jugador kfc = new Jugador("345445V", "Chicken", false);
