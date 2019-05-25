@@ -5,7 +5,13 @@
  */
 package MartaYLasPlantas;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -117,8 +123,6 @@ public class Jugador {
         this.puntuacion = puntuacion;
     }
 
-
-
     public static int getIndice() {
         return indice;
     }
@@ -157,15 +161,61 @@ public class Jugador {
         }
     }
 
-    public void crearFicha(String nif) {
+    public static void leerJugadores() {
 
     }
 
-    public void guardarPartida(Tablero tablero, int magia) {
+    public void crearFicha() {
+        try {
+            FileWriter nuevaFicha, nuevoRegistro;
+            BufferedWriter bwriter;
+            new File("jugadores").mkdir();
+            File ficha, registroJugadores;
+            ficha = new File("jugadores/" + dni + ".dat");
+            ficha.createNewFile();
+            nuevaFicha = new FileWriter(ficha);
+            bwriter = new BufferedWriter(nuevaFicha);
 
-    }
+            bwriter.write("nombre " + nombre);
+            bwriter.newLine();
 
-    public void cargarPartida() {
+            bwriter.write("dni " + dni);
+            bwriter.newLine();
+
+            bwriter.write("ParitdasGanadas ");
+            for (int partida : partidasGanadas) {
+                bwriter.write(partida + " ");
+            }
+
+            bwriter.write("ParitdasPerdidas ");
+            for (int partida : partidasPerdidas) {
+                bwriter.write(partida + " ");
+            }
+            bwriter.close();
+
+            registroJugadores = new File("jugadores.dat");
+            registroJugadores.createNewFile();
+            nuevoRegistro = new FileWriter(registroJugadores);
+            bwriter = new BufferedWriter(nuevoRegistro);
+
+            bwriter.write("nombre " + nombre);
+            bwriter.newLine();
+
+            bwriter.write("dni " + dni);
+            bwriter.newLine();
+
+            bwriter.write("ParitdasGanadas ");
+            for (int partida : partidasGanadas) {
+                bwriter.write(partida + " ");
+            }
+
+            bwriter.write("ParitdasPerdidas ");
+            for (int partida : partidasPerdidas) {
+                bwriter.write(partida + " ");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Jugador.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
