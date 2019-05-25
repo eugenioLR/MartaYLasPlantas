@@ -16,7 +16,7 @@ public class Jugador {
 
     private String dni;
     private String nombre;
-    private static long puntuacion[] = new long[3];
+    private long puntuacion[] = new long[4];
     private boolean partidaCreada;
     private int[] partidasGanadas;
     private int[] partidasPerdidas;
@@ -24,10 +24,9 @@ public class Jugador {
     private static HashMap jugadores = new HashMap<>();
     private HashMap puntuaciones = new HashMap<>();
 
-    public Jugador(String dni, String nombre, long puntuacion, boolean partidaCreada) {
+    public Jugador(String dni, String nombre, boolean partidaCreada) {
         this.dni = dni;
         this.nombre = nombre;
-        this.puntuacion[Principal.getDificultad() - 1] = puntuacion;
         this.partidaCreada = partidaCreada;
         partidasPerdidas = new int[4];
         partidasGanadas = new int[4];
@@ -110,12 +109,12 @@ public class Jugador {
      *
      * @return the value of puntuacion
      */
-    public static long[] getPuntuacion() {
+    public long[] getPuntuacion() {
         return puntuacion;
     }
 
-    public static void setPuntuacion(long[] puntuacion) {
-        Jugador.puntuacion = puntuacion;
+    public void setPuntuacion(long[] puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
 

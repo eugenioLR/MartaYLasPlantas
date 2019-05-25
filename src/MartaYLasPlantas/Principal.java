@@ -44,7 +44,7 @@ public class Principal {
     private static int vegQuedan;
     private static int vegFinal = 0;
     private static int turnosSinVeganos;
-    private static long[] puntuacion = Jugador.getPuntuacion();
+    private static long[] puntuacion;
     private static long puntuacionPartida;
     private static GraficosUwU panelJuego;
     private static Jugador jugador;
@@ -63,7 +63,7 @@ public class Principal {
         boolean puedePlantar;
         boolean pierdes = false;
         int x = -1, y = -1;
-        jugador = new Jugador("6453776F", "MrTrump", 0, false);
+        jugador = new Jugador("6453776F", "MrTrump", false);
         Scanner scanner = new Scanner(System.in);
         String comando, tokens[];
         tablero = new Tablero(alto, ancho);
@@ -277,7 +277,9 @@ public class Principal {
             System.out.println("Has ganado.\n"
                     + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacionPartida);
         }
-        jugador.setPuntuacion(puntuacion);
+        long ptc[] = jugador.getPuntuacion();
+        ptc[dificultad - 1] += puntuacionPartida;
+        jugador.setPuntuacion(ptc);
         jugador.actualizarFicha();
     }
 
