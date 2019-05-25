@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,8 +29,10 @@ public class PrincipalGraficos extends JFrame {
 
     private static int alto = 5;
     private static int ancho = 9;
-    private static int dificultad = 4;
-    private static int magia = 0;
+    private static int altopx = 5;
+    private static int anchopx = 9;
+    private static int dificultad;
+    private static int magia = 50;
     private static int vegQuedan;
     private static int vegFinal = 0;
     private static int turnosSinVeganos;
@@ -51,9 +54,9 @@ public class PrincipalGraficos extends JFrame {
         this.secret = secret;
         PrincipalGraficos.tablero = tablero;
         // * 64 es por que las imagenes son 64 x 64 p
-        alto = tablero.getTerreno().length * 64;
+        altopx = tablero.getTerreno().length * 64;
         //+64 para imprimir los cortacesped
-        ancho = 64 + tablero.getTerreno()[0].length * 64;
+        anchopx = 64 + tablero.getTerreno()[0].length * 64;
         setup();
     }
 
@@ -166,6 +169,20 @@ public class PrincipalGraficos extends JFrame {
     }
 
     public void ____() {
+
+        tablero = new Tablero(alto, ancho);
+        String dificultat;
+
+        HashMap<String, Integer> hashDificultad = new HashMap<>();
+        hashDificultad.put("BAJA", 1);
+        hashDificultad.put("MEDIA", 2);
+        hashDificultad.put("ALTA", 3);
+        hashDificultad.put("IMPOSIBLE", 4);
+        while (!this.isVisible()) {System.out.println();}
+        
+        dificultat = JOptionPane.showInputDialog("Ya sabes, dificultad");
+        dificultad = hashDificultad.get(dificultat);
+
         switch (dificultad) {
             case 1:
                 vegQuedan = 5;
@@ -185,9 +202,7 @@ public class PrincipalGraficos extends JFrame {
         try {
             boolean jugando = true, comprobando, puedePlantar;
             String comando, tokens[];
-            int x, y;
-            int pos[] = new int[2];
-            while (!this.isVisible()) {System.out.println();}
+            int x = -1, y = -1;
             while (jugando) {
                 comprobando = true;
                 while (comprobando) {
@@ -594,6 +609,7 @@ public class PrincipalGraficos extends JFrame {
         }
     }
 }
+
 class ExcepcionPlanta extends Exception {
 
     public ExcepcionPlanta(String message) {
