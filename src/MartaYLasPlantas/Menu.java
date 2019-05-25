@@ -21,6 +21,27 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
     }
 
+        private boolean variabl3 = true;
+
+    /**
+     * Get the value of variabl3
+     *
+     * @return the value of variabl3
+     */
+    public boolean isVariabl3() {
+        return variabl3;
+    }
+
+    /**
+     * Set the value of variabl3
+     *
+     * @param variabl3 new value of variabl3
+     */
+    public void setVariabl3(boolean variabl3) {
+        this.variabl3 = variabl3;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,8 +214,13 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmarTrucoActionPerformed
 
     private void nuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPartidaActionPerformed
+        
         Jugador.registrarse();
-        Principal.jugar();
+        //Principal.jugar();
+        variabl3 = false;
+        
+        System.out.println("me has cambiado? pervertido!");
+        this.setVisible(false);
     }//GEN-LAST:event_nuevaPartidaActionPerformed
 
     private void SecretoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SecretoActionPerformed
@@ -231,6 +257,7 @@ public class Menu extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Menu().setVisible(true);
 

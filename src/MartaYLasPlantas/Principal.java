@@ -28,6 +28,17 @@ import javax.swing.*;
  */
 public class Principal {
 
+    public static void main(String args[]) {
+        Menu Meus = new Menu();
+        Meus.main(null);
+        boolean esSierto = Meus.isVariabl3();
+
+        while (!esSierto){
+        
+        }
+        
+    }
+
     /**
      * @param alto (alto del tablero)
      * @param ancho (ancho del tablero)
