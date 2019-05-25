@@ -28,17 +28,6 @@ import javax.swing.*;
  */
 public class PrincipalTerminal {
 
-    public static void main(String args[]) {
-        Menu Meus = new Menu();
-        Meus.main(null);
-        boolean esSierto = Meus.isVariabl3();
-
-        while (!esSierto){
-        
-        }
-        
-    }
-
     /**
      * @param alto (alto del tablero)
      * @param ancho (ancho del tablero)
@@ -79,11 +68,7 @@ public class PrincipalTerminal {
         String comando, tokens[];
         tablero = new Tablero(alto, ancho);
 
-        JFrame frame = new JFrame();
         panelJuego = new PrincipalGraficos(true, tablero);
-        frame.setSize(new Dimension(32 * ancho + 93, 32 * alto + 130));
-        frame.getContentPane().add(panelJuego);
-        frame.setVisible(true);
         panelJuego.setVisible(true);
 
         HashMap<String, Integer> hashDificultad = new HashMap<>();
@@ -730,25 +715,6 @@ public class PrincipalTerminal {
         System.out.println("|");
         System.out.println("Turno: " + tablero.getContador() + "\nMagia: " + magia);
 
-    }
-
-}
-
-class ExcepcionPlanta extends Exception {
-
-    public ExcepcionPlanta(String message) {
-        super(message);
-    }
-}
-
-class ExcepcionJuego extends Exception {
-
-    public ExcepcionJuego(String message) {
-        super(message);
-    }
-
-    public ExcepcionJuego() {
-        super("archivo de guardado no valido");
     }
 
 }

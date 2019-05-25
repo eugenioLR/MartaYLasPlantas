@@ -21,25 +21,6 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
     }
 
-        private boolean variabl3 = true;
-
-    /**
-     * Get the value of variabl3
-     *
-     * @return the value of variabl3
-     */
-    public boolean isVariabl3() {
-        return variabl3;
-    }
-
-    /**
-     * Set the value of variabl3
-     *
-     * @param variabl3 new value of variabl3
-     */
-    public void setVariabl3(boolean variabl3) {
-        this.variabl3 = variabl3;
-    }
 
     
     /**
@@ -214,12 +195,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmarTrucoActionPerformed
 
     private void nuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPartidaActionPerformed
-        
         Jugador.registrarse();
-        //Principal.jugar();
-        variabl3 = false;
-        
-        System.out.println("me has cambiado? pervertido!");
+        Ejecutars.tableroVisible();
         this.setVisible(false);
     }//GEN-LAST:event_nuevaPartidaActionPerformed
 

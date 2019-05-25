@@ -24,11 +24,11 @@ import java.util.logging.Logger;
 /**
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class PrincipalGraficos extends JPanel {
+public class PrincipalGraficos extends JFrame {
 
     private static int alto = 5;
     private static int ancho = 9;
-    private static int dificultad;
+    private static int dificultad = 4;
     private static int magia = 0;
     private static int vegQuedan;
     private static int vegFinal = 0;
@@ -41,12 +41,15 @@ public class PrincipalGraficos extends JPanel {
 
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, girasolMagia, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2, cemento, veganosMultiples, veganoProteico;
+    private static boolean sePuedeVer;
     private boolean secret;
     private int ajusteVegano = 16, ajusteVert = 160, ajusteHorz = 40;
 
     public PrincipalGraficos(boolean secret, Tablero tablero) {
+
         super();
         this.secret = secret;
+        PrincipalGraficos.tablero = tablero;
         // * 64 es por que las imagenes son 64 x 64 p
         alto = tablero.getTerreno().length * 64;
         //+64 para imprimir los cortacesped
@@ -55,6 +58,7 @@ public class PrincipalGraficos extends JPanel {
     }
 
     public final void setup() {
+        setVisible(false);
         setSize(new Dimension(alto, ancho));
         CargarSprites();
     }
@@ -158,6 +162,111 @@ public class PrincipalGraficos extends JPanel {
             g2D.drawImage(hierba1, y, x, this);
         } else {
             g2D.drawImage(hierba2, y, x, this);
+        }
+    }
+
+    public void ____() {
+        switch (dificultad) {
+            case 1:
+                vegQuedan = 5;
+                break;
+            case 2:
+                vegQuedan = 15;
+                break;
+            case 3:
+                vegQuedan = 25;
+                break;
+            case 4:
+                vegQuedan = 50;
+                break;
+            default:
+                vegQuedan = 10;
+        }
+        try {
+            boolean jugando = true, comprobando, puedePlantar;
+            String comando, tokens[];
+            int x, y;
+            int pos[] = new int[2];
+            while (!this.isVisible()) {System.out.println();}
+            while (jugando) {
+                comprobando = true;
+                while (comprobando) {
+                    magia += 5;
+                    try {
+                        puedePlantar = true;
+                        comprobando = false;
+                        comando = JOptionPane.showInputDialog("Ya sabes, estas vainas");
+                        tokens = comando.split(" ");
+                        if (tokens.length != 3) {
+                            if (comando.equals("")) {
+                                break;
+                            }
+                        } else {
+                            y = Integer.parseInt(tokens[1]) - 1;
+                            x = Integer.parseInt(tokens[2]) - 1;
+
+                            //si no esta dentro del tablero
+                            if ((y >= alto || y < 0) || (x >= ancho || x < 0)) {
+                                throw new ExcepcionPlanta("Posición fuera del tablero.");
+                            }
+
+                            //comprobar si hay una planta en la posicion x y
+                            for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
+                                if (puedePlantar) {
+                                    puedePlantar = !(entidad instanceof Planta);
+                                }
+                            }
+
+                            switch (tokens[0].charAt(0)) {
+                                case 'G':
+                                    if (magia < Girasol.getCoste()) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else if (!puedePlantar) {
+                                        throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                                    } else {
+                                        tablero.colocarEntidad(new Girasol(tablero.getContador()), y, x);
+                                        magia -= Girasol.getCoste();
+                                    }
+                                    break;
+                                case 'L':
+                                    if (magia < Lanzadora.getCoste()) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else if (!puedePlantar) {
+                                        throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                                    } else {
+                                        tablero.colocarEntidad(new Lanzadora(), y, x);
+                                        magia -= Lanzadora.getCoste();
+                                    }
+                                    break;
+                                case 'B':
+                                    if (magia < 200) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else {
+                                        tablero.Bomba(x, y);
+                                        magia -= 200;
+                                        break;
+                                    }
+                                default:
+                                    throw new ExcepcionPlanta("No existe ese comando, escriba \"ayuda\" para obtener la lista de comandos.");
+                            }
+                        }
+                    } catch (NumberFormatException nfe) {
+                        System.out.println("Error al procesar los argumentos: " + nfe);
+                        comprobando = true;
+                    } catch (ExcepcionPlanta ep) {
+                        System.out.println("Error al plantar: " + ep);
+                        comprobando = true;
+                    }
+                }
+                generarVeganos();
+                tablero.actualiza();
+                tablero.setVegQuedan(vegQuedan);
+                this.repaint();
+                Thread.sleep(200);
+            }
+
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PrincipalGraficos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -392,7 +501,8 @@ public class PrincipalGraficos extends JPanel {
             }
             bwriter.close();
         } catch (IOException ioe) {
-            Logger.getLogger(PrincipalTerminal.class.getName()).log(Level.SEVERE, null, ioe);
+            Logger.getLogger(PrincipalTerminal.class
+                    .getName()).log(Level.SEVERE, null, ioe);
         }
     }
 
@@ -483,4 +593,22 @@ public class PrincipalGraficos extends JPanel {
             }
         }
     }
+}
+class ExcepcionPlanta extends Exception {
+
+    public ExcepcionPlanta(String message) {
+        super(message);
+    }
+}
+
+class ExcepcionJuego extends Exception {
+
+    public ExcepcionJuego(String message) {
+        super(message);
+    }
+
+    public ExcepcionJuego() {
+        super("archivo de guardado no valido");
+    }
+
 }
