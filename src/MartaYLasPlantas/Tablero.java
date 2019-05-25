@@ -198,7 +198,7 @@ public class Tablero {
                     if (entidad instanceof Girasol) {
                         if ((entidad.getTurno() % 2) == (contador % 2)) {
                             // generarMagia
-                            Principal.incrementarMagia(((Girasol) entidad).getMagiaGenera());
+                            PrincipalTerminal.incrementarMagia(((Girasol) entidad).getMagiaGenera());
                         }
                     }
 

@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 /**
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class GraficosUwU extends JPanel {
+public class PrincipalGraficos extends JPanel {
 
     private static int alto = 5;
     private static int ancho = 9;
@@ -35,7 +35,7 @@ public class GraficosUwU extends JPanel {
     private static int turnosSinVeganos;
     private static long[] puntuacion;
     private static long puntuacionPartida;
-    private static GraficosUwU panelJuego;
+    private static PrincipalGraficos panelJuego;
     private static Jugador jugador;
     private static Tablero tablero;
 
@@ -44,10 +44,9 @@ public class GraficosUwU extends JPanel {
     private boolean secret;
     private int ajusteVegano = 16, ajusteVert = 160, ajusteHorz = 40;
 
-    public GraficosUwU(boolean secret, Tablero tablero) {
+    public PrincipalGraficos(boolean secret, Tablero tablero) {
         super();
         this.secret = secret;
-        this.tablero = tablero;
         // * 64 es por que las imagenes son 64 x 64 p
         alto = tablero.getTerreno().length * 64;
         //+64 para imprimir los cortacesped
@@ -171,7 +170,7 @@ public class GraficosUwU extends JPanel {
         FileReader reader;
         BufferedReader breader;
         String linea, tokens[], strCasillas[], strEntidad[];
-        boolean cortacesped[] = new boolean[alto];
+        boolean hayCortacesped[] = new boolean[alto];
         int salud = 0, turno = 0;
 
         try {
@@ -241,9 +240,9 @@ public class GraficosUwU extends JPanel {
                         }
                         for (int j = 0; j < alto; j++) {
                             System.out.println(tokens[j + 1]);
-                            cortacesped[j] = Boolean.parseBoolean(tokens[j + 1]);
+                            hayCortacesped[j] = Boolean.parseBoolean(tokens[j + 1]);
                         }
-                        tablero.setCortacesped(cortacesped);
+                        tablero.setCortacesped(hayCortacesped);
                         break;
                     //linea 7: veganos restantes
                     case 7:
@@ -393,7 +392,7 @@ public class GraficosUwU extends JPanel {
             }
             bwriter.close();
         } catch (IOException ioe) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ioe);
+            Logger.getLogger(PrincipalTerminal.class.getName()).log(Level.SEVERE, null, ioe);
         }
     }
 
@@ -463,7 +462,6 @@ public class GraficosUwU extends JPanel {
                         turnosSinVeganos++;
                     }
                 } else if (contador == 7) {
-                    System.out.println(" FINAL WAVE !!! ");
                     vegQuedan += vegFinal;
                 } else {
                     if (pfinal >= 1.00 && vegQuedan >= 3) {
@@ -485,5 +483,4 @@ public class GraficosUwU extends JPanel {
             }
         }
     }
-
 }

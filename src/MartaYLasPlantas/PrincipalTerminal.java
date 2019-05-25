@@ -26,7 +26,7 @@ import javax.swing.*;
  *
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class Principal {
+public class PrincipalTerminal {
 
     public static void main(String args[]) {
         Menu Meus = new Menu();
@@ -57,7 +57,7 @@ public class Principal {
     private static int turnosSinVeganos;
     private static long[] puntuacion;
     private static long puntuacionPartida;
-    private static GraficosUwU panelJuego;
+    private static PrincipalGraficos panelJuego;
     private static Jugador jugador;
     private static Tablero tablero;
 
@@ -80,7 +80,7 @@ public class Principal {
         tablero = new Tablero(alto, ancho);
 
         JFrame frame = new JFrame();
-        panelJuego = new GraficosUwU(true, tablero);
+        panelJuego = new PrincipalGraficos(true, tablero);
         frame.setSize(new Dimension(32 * ancho + 93, 32 * alto + 130));
         frame.getContentPane().add(panelJuego);
         frame.setVisible(true);
@@ -630,7 +630,7 @@ public class Principal {
             }
             bwriter.close();
         } catch (IOException ioe) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ioe);
+            Logger.getLogger(PrincipalTerminal.class.getName()).log(Level.SEVERE, null, ioe);
         }
     }
 

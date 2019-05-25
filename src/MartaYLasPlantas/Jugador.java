@@ -175,7 +175,7 @@ public class Jugador {
 
     public void ranking() {
         //HashMap auxx = new HashMap<>();
-        switch (Principal.getDificultad()) {
+        switch (PrincipalTerminal.getDificultad()) {
 
             case 1:
 
