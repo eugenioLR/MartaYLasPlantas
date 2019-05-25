@@ -12,12 +12,14 @@ package MartaYLasPlantas;
 public class Ejecutars {
 
     private static PrincipalGraficos pg;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         Menu manu = new Menu();
-        pg = new PrincipalGraficos(false , new Tablero(5,9));
+        pg = new PrincipalGraficos(false, new Tablero(5, 9));
         manu.setVisible(true);
         pg.____();
     }
@@ -25,5 +27,5 @@ public class Ejecutars {
     public static void tableroVisible() {
         pg.setVisible(true);
     }
-    
+
 }
