@@ -23,7 +23,7 @@ public class Ejecutars {
         pg = new PrincipalGraficos(false, new Tablero(5, 9));
         manu.setVisible(true);
         pg.____();*/
-        Jugador kfc = new Jugador("345445V", "Chicken", false);
+        Jugador kfc = new Jugador("344549V", "iuv", false);
         kfc.crearFicha();
     }
 

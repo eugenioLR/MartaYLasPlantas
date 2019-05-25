@@ -176,28 +176,28 @@ public class Jugador {
                 switch (i % 6) {
                     case 0:
                         tokens = linea.split(" ");
-                        nombre = tokens[0];
+                        dni = tokens[0];
                         break;
                     case 1:
                         tokens = linea.split(" ");
-                        dni = tokens[0];
+                        nombre = tokens[0];
                         break;
                     case 2:
                         tokens = linea.split(" ");
-                        for(int j = 0; j<4;j++){
-                            ptdsGanadas[j] = Integer.parseInt(tokens[j+1]);
+                        for (int j = 0; j < 4; j++) {
+                            ptdsGanadas[j] = Integer.parseInt(tokens[j + 1]);
                         }
                         break;
                     case 3:
                         tokens = linea.split(" ");
-                        for(int j = 0; j<4;j++){
-                            ptdsPerdidas[j] = Integer.parseInt(tokens[j+1]);
+                        for (int j = 0; j < 4; j++) {
+                            ptdsPerdidas[j] = Integer.parseInt(tokens[j + 1]);
                         }
                         break;
                     case 4:
                         tokens = linea.split(" ");
-                        for(int j = 0; j<4;j++){
-                            pts[j] = Integer.parseInt(tokens[j+1]);
+                        for (int j = 0; j < 4; j++) {
+                            pts[j] = Integer.parseInt(tokens[j + 1]);
                         }
                         break;
                     default:
@@ -224,12 +224,12 @@ public class Jugador {
             nuevaFicha = new FileWriter(ficha);
             bwriter = new BufferedWriter(nuevaFicha);
 
-            //linea1: nombre
-            bwriter.write("nombre " + nombre);
+            //linea1: dni
+            bwriter.write("dni " + dni);
             bwriter.newLine();
 
-            //linea2: dni
-            bwriter.write("dni " + dni);
+            //linea2: nombre
+            bwriter.write("nombre " + nombre);
             bwriter.newLine();
 
             //linea3: PartidasGanadas
@@ -245,7 +245,8 @@ public class Jugador {
                 bwriter.write(partida + " ");
             }
             bwriter.newLine();
-            
+
+            //linea4: Puntuacion
             bwriter.write("Puntuacion ");
             for (long pts : puntuacion) {
                 bwriter.write(pts + " ");
@@ -255,26 +256,38 @@ public class Jugador {
             bwriter.close();
 
             //Registro Jugadores
-            String registroAux = "" ,linea;
+            String registroAux = "", registroAux2 = "", linea, tokens[];
             FileReader reader = new FileReader("jugadores.dat");
             BufferedReader breader = new BufferedReader(reader);
-            while((linea = breader.readLine()) != null){
-                registroAux += linea + "\n";
+            while ((linea = breader.readLine()) != null) {
+                tokens = linea.split(" ");
+                if (tokens[0].equals("dni")) {
+                    if (tokens[1].equals(dni)) {
+                        for (int j = 0; j < 5; j++) {
+                            breader.readLine();
+                            registroAux2 = registroAux;
+                            registroAux = "";
+                        }
+                    }
+                    registroAux += linea + "\n";
+
+                }
+
             }
-            
+
             registroJugadores = new File("jugadores.dat");
             registroJugadores.createNewFile();
             nuevoRegistro = new FileWriter(registroJugadores);
             bwriter = new BufferedWriter(nuevoRegistro);
 
-            bwriter.write(registroAux);
-            
-            //linea1: nombre
-            bwriter.write("nombre " + nombre);
+            bwriter.write(registroAux2);
+
+            //linea1: dni
+            bwriter.write("dni " + dni);
             bwriter.newLine();
 
-            //linea2: dni
-            bwriter.write("dni " + dni);
+            //linea2: nombre
+            bwriter.write("nombre " + nombre);
             bwriter.newLine();
 
             //linea3: PartidasGanadas
@@ -290,7 +303,7 @@ public class Jugador {
                 bwriter.write(partida + " ");
             }
             bwriter.newLine();
-            
+
             //linea5: puntuacion
             bwriter.write("Puntuacion ");
             for (long pts : puntuacion) {
@@ -298,7 +311,9 @@ public class Jugador {
             }
             bwriter.newLine();
             bwriter.newLine();
+            bwriter.write(registroAux);
             bwriter.close();
+
         } catch (IOException ex) {
             Logger.getLogger(Jugador.class.getName()).log(Level.SEVERE, null, ex);
         }
