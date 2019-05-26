@@ -12,14 +12,8 @@ import static javax.imageio.ImageIO.read;
 import javax.swing.*;
 import MartaYLasPlantas.Veganos.*;
 import MartaYLasPlantas.Plantas.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.awt.event.*;
+import java.io.*;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,10 +41,10 @@ public class PrincipalGraficos extends JFrame {
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, girasolMagia, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2, cemento,
             veganosMultiples, veganoProteico, veganoZombie, veganoGolem, veganoEsqueloide, hierbaM,
-            hierbaM2, grava, veganosMultiplesM;
+            hierbaM2, grava, veganosMultiplesM, fondo;
     private static boolean sePuedeVer;
     private static boolean secret, minecraft, magos;
-    private int ajusteVegano = 16, ajusteVert = 160, ajusteHorz = 40;
+    private int ajusteVegano = 16, ajusteVert = 170, ajusteHorz = 476;
 
     public PrincipalGraficos(Tablero tablero) {
 
@@ -77,7 +71,7 @@ public class PrincipalGraficos extends JFrame {
 
     public final void setup() {
         setVisible(false);
-        setSize(new Dimension(alto, ancho));
+        setSize(new Dimension(alto + 32, ancho));
         CargarSprites();
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -96,6 +90,7 @@ public class PrincipalGraficos extends JFrame {
     public final void CargarSprites() {
         try {
             // habrá que explicarlo de algún modo :D
+            fondo = read(getClass().getClassLoader().getResource("res/xombi.png"));
             hierba1 = read(getClass().getClassLoader().getResource("res/Hierba.png"));
             hierba2 = read(getClass().getClassLoader().getResource("res/Hierba2.png"));
             cereza = read(getClass().getClassLoader().getResource("res/Cereza.png"));
@@ -134,6 +129,7 @@ public class PrincipalGraficos extends JFrame {
         Entidad ent;
         i = ajusteVert;
         cCesped = 0;
+        g2D.drawImage(fondo, 0,32, this);
         for (Casilla[] fila : tablero.getTerreno()) {
             j = ajusteHorz;
             if (minecraft) {
@@ -333,18 +329,23 @@ public class PrincipalGraficos extends JFrame {
                             boxY.addItem(i);
                         }
 
+                        JPanel global = new JPanel();
+                        global.setLayout(new BorderLayout());
+                        JPanel titulo = new JPanel();
                         JPanel panelComando = new JPanel();
                         JTextField textField = new JTextField(10);
                         //panelComando.add(textField);
-                        panelComando.add(new JLabel("magia: " + magia + " turno: " + tablero.getContador()));
+                        titulo.add(new JLabel("magia: " + magia + " turno: " + tablero.getContador()));
                         panelComando.add(new JLabel("Planta"));
                         panelComando.add(boxPlanta);
                         panelComando.add(new JLabel("X"));
                         panelComando.add(boxX);
                         panelComando.add(new JLabel("Y"));
                         panelComando.add(boxY);
-
-                        int opcionComando = JOptionPane.showOptionDialog(null, panelComando, "A PLANTAR",
+                        global.add(titulo, BorderLayout.NORTH);
+                        global.add(panelComando, BorderLayout.CENTER);
+                        
+                        int opcionComando = JOptionPane.showOptionDialog(null, global, "A PLANTAR",
                                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                                 null, opcionesComando, null);
                         System.out.println(opcionComando);
