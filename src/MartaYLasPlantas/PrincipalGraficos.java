@@ -45,7 +45,7 @@ public class PrincipalGraficos extends JFrame {
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, girasolMagia, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2, cemento, veganosMultiples, veganoProteico;
     private static boolean sePuedeVer;
-    private boolean secret;
+    private static boolean secret, minecraft, magos;
     private int ajusteVegano = 16, ajusteVert = 160, ajusteHorz = 40;
 
     public PrincipalGraficos(boolean secret, Tablero tablero) {
@@ -58,6 +58,19 @@ public class PrincipalGraficos extends JFrame {
         //+64 para imprimir los cortacesped
         anchopx = 64 + tablero.getTerreno()[0].length * 64;
         setup();
+    }
+
+    public static void setSecret(boolean secret) {
+        PrincipalGraficos.secret = secret;
+    }
+
+
+    public static void setMinecraft(boolean minecraft) {
+        PrincipalGraficos.minecraft = minecraft;
+    }
+
+    public static void setMagos(boolean magos) {
+        PrincipalGraficos.magos = magos;
     }
 
     public final void setup() {
@@ -178,7 +191,7 @@ public class PrincipalGraficos extends JFrame {
         hashDificultad.put("MEDIA", 2);
         hashDificultad.put("ALTA", 3);
         hashDificultad.put("IMPOSIBLE", 4);
-        while (!this.isVisible()) {System.out.println();}
+        while (!this.isVisible()) {System.out.print("");}
         
         dificultat = JOptionPane.showInputDialog("Ya sabes, dificultad");
         dificultad = hashDificultad.get(dificultat);

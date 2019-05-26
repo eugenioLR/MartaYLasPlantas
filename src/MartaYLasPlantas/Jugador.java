@@ -152,9 +152,9 @@ public class Jugador {
         this.partidaCreada = partidaCreada;
     }
 
-    public static void registrarse() {
+    public static void registrarse(String dni) {
         leerJugadores();
-        String dni = JOptionPane.showInputDialog("DNI: ");
+        //String dni = JOptionPane.showInputDialog("DNI: ");
         if (jugadores.containsKey(dni)) {
             // empezaríamos el juego
         } else {
