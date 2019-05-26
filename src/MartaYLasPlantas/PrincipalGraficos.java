@@ -299,6 +299,8 @@ public class PrincipalGraficos extends JFrame {
                         if (result == JOptionPane.YES_OPTION) {
                             comando = textField.getText().toUpperCase();
                         } else {
+                            guardarPartida();
+                            JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
                             System.exit(0);
                             comando = null;
                         }
@@ -409,6 +411,7 @@ public class PrincipalGraficos extends JFrame {
             JOptionPane.showMessageDialog(null, "Has ganado.\n"
                     + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacionPartida);
         }
+        System.exit(0);
         //jugador.actualizarFicha();
     }
 

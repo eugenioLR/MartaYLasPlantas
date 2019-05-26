@@ -1,0 +1,12 @@
+ss
+sd
+magia 115
+turno 12
+dificultad 4
+cortacesped true true true true true 
+VeganosQuedan 27
+;;;;VP 2 7,;;V 5 6,VP 2 7,;;V 5 11,;
+;;;;;;V 5 6,;V 5 8,;VC 8 9,V 5 10,VC 8 11,VP 2 11,;
+;;;;;;;V 5 8,VP 2 9,;V 5 10,;
+;;;VP 2 6,;;VP 2 8,;V 5 6,VP 2 7,;V 5 8,;VC 8 10,;
+;;;;;;;VC 8 7,V 5 9,;VC 8 9,VP 2 11,;
