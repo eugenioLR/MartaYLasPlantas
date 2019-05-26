@@ -174,7 +174,11 @@ public class PrincipalGraficos extends JFrame {
                     } else if (entidad instanceof Cereza) {
                         g2D.drawImage(cereza, j, i, this);
                     } else if (entidad instanceof MinaPatata) {
-                        g2D.drawImage(minaPatata, j, i, this);
+                        if (((MinaPatata) entidad).isEnterrado()) {
+                            g2D.drawImage(minaPatataEnt, j, i, this);
+                        } else {
+                            g2D.drawImage(minaPatata, j, i, this);
+                        }
                     }
                     if (veganos == 1) {
 
@@ -242,7 +246,7 @@ public class PrincipalGraficos extends JFrame {
 
     public void jugar() {
         String dificultat;
-        boolean comprobando;
+        boolean comprobando, saltaTurno;
 
         HashMap<String, Integer> hashDificultad = new HashMap<>();
         hashDificultad.put("BAJA", 1);
@@ -255,7 +259,7 @@ public class PrincipalGraficos extends JFrame {
         setSize(new Dimension(1282, 724));
 
         JPanel panelDificultad = new JPanel();
-        
+
         Object[] opcionesDificultad = {"Elegir", "Salir"};
         JComboBox boxDificultad = new JComboBox();
         boxDificultad.addItem("BAJA");
@@ -264,7 +268,8 @@ public class PrincipalGraficos extends JFrame {
         boxDificultad.addItem("IMPOSIBLE");
 
         panelDificultad.add(boxDificultad);
-        int opcionDificultad = JOptionPane.showOptionDialog(null, panelDificultad, "Elejir dificultad",
+
+        int opcionDificultad = JOptionPane.showOptionDialog(null, panelDificultad, "Elegir dificultad",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, opcionesDificultad, null);
         String strDificultad = (String) boxDificultad.getSelectedItem();
@@ -306,81 +311,124 @@ public class PrincipalGraficos extends JFrame {
                     try {
                         puedePlantar = true;
                         comprobando = false;
-                        Object[] opcionesComando = {"Ejecutar", "Guardar y salir", "Salir"};
+                        saltaTurno = false;
+
+                        Object[] opcionesComando = {"Ejecutar", "Saltar Turno", "Guardar y salir"};
+
+                        JComboBox boxPlanta = new JComboBox();
+                        boxPlanta.addItem("LANZAGUISANTES");
+                        boxPlanta.addItem("GIRASOL");
+                        boxPlanta.addItem("CEREZA");
+                        boxPlanta.addItem("NUEZ");
+                        boxPlanta.addItem("MINA-PATATA");
+                        boxPlanta.addItem("BOMBA");
+
+                        JComboBox boxX = new JComboBox();
+                        for (int i = 1; i <= 9; i++) {
+                            boxX.addItem(i);
+                        }
+
+                        JComboBox boxY = new JComboBox();
+                        for (int i = 1; i <= 5; i++) {
+                            boxY.addItem(i);
+                        }
 
                         JPanel panelComando = new JPanel();
                         JTextField textField = new JTextField(10);
-                        panelComando.add(textField);
+                        //panelComando.add(textField);
+                        panelComando.add(new JLabel("magia: " + magia + " turno: " + tablero.getContador()));
+                        panelComando.add(new JLabel("Planta"));
+                        panelComando.add(boxPlanta);
+                        panelComando.add(new JLabel("X"));
+                        panelComando.add(boxX);
+                        panelComando.add(new JLabel("Y"));
+                        panelComando.add(boxY);
 
-                        int opcionComando = JOptionPane.showOptionDialog(null, panelComando, "Ejecutar comando",
+                        int opcionComando = JOptionPane.showOptionDialog(null, panelComando, "A PLANTAR",
                                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                                 null, opcionesComando, null);
+                        System.out.println(opcionComando);
                         switch (opcionComando) {
-                            case JOptionPane.YES_OPTION:
-                                comando = textField.getText().toUpperCase();
+                            case 0:
                                 break;
-                            case JOptionPane.NO_OPTION:
+                            case 1:
+                                saltaTurno = true;
+                                break;
+                            case 2:
                                 guardarPartida();
                                 JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
                             default:
                                 System.exit(0);
-                                comando = null;
                         }
-                        if (comando != null) {
-                            tokens = comando.split(" ");
-
-                            if (tokens.length != 3) {
-                                if (comando.equals("")) {
-                                    break;
-                                }
-                            } else {
-                                y = Integer.parseInt(tokens[1]) - 1;
-                                x = Integer.parseInt(tokens[2]) - 1;
-
-                                //si no esta dentro del tablero
-                                if ((y >= alto || y < 0) || (x >= ancho || x < 0)) {
-                                    throw new ExcepcionPlanta("Posición fuera del tablero.");
-                                }
-
-                                //comprobar si hay una planta en la posicion x y
-                                for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
-                                    if (puedePlantar) {
-                                        puedePlantar = !(entidad instanceof Planta);
+                        y = (int) boxY.getSelectedItem() - 1;
+                        x = (int) boxX.getSelectedItem() - 1;
+                        //comprobar si hay una planta en la posicion x y
+                        for (Entidad entidad : tablero.getTerreno()[y][x].getEntidades()) {
+                            if (puedePlantar) {
+                                puedePlantar = !(entidad instanceof Planta);
+                            }
+                        }
+                        if (!saltaTurno) {
+                            switch ((String) boxPlanta.getSelectedItem()) {
+                                case "GIRASOL":
+                                    if (magia < Girasol.getCoste()) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else if (!puedePlantar) {
+                                        throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                                    } else {
+                                        tablero.colocarEntidad(new Girasol(tablero.getContador()), y, x);
+                                        magia -= Girasol.getCoste();
                                     }
-                                }
+                                    break;
+                                case "LANZAGUISANTES":
+                                    if (magia < Lanzadora.getCoste()) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else if (!puedePlantar) {
+                                        throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                                    } else {
+                                        tablero.colocarEntidad(new Lanzadora(), y, x);
+                                        magia -= Lanzadora.getCoste();
+                                    }
+                                    break;
+                                case "CEREZA":
+                                    if (magia < Cereza.getCoste()) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else if (!puedePlantar) {
+                                        throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                                    } else {
+                                        tablero.colocarEntidad(new Cereza(tablero.getContador()), y, x);
+                                        magia -= Cereza.getCoste();
+                                    }
+                                    break;
+                                case "NUEZ":
+                                    if (magia < Nuez.getCoste()) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else if (!puedePlantar) {
+                                        throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                                    } else {
+                                        tablero.colocarEntidad(new Nuez(), y, x);
+                                        magia -= Nuez.getCoste();
+                                    }
+                                    break;
+                                case "MINA-PATATA":
 
-                                switch (tokens[0].charAt(0)) {
-                                    case 'G':
-                                        if (magia < Girasol.getCoste()) {
-                                            throw new ExcepcionPlanta("Magia insuficiente.");
-                                        } else if (!puedePlantar) {
-                                            throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
-                                        } else {
-                                            tablero.colocarEntidad(new Girasol(tablero.getContador()), y, x);
-                                            magia -= Girasol.getCoste();
-                                        }
+                                    if (magia < MinaPatata.getCoste()) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else if (!puedePlantar) {
+                                        throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
+                                    } else {
+                                        tablero.colocarEntidad(new MinaPatata(tablero.getContador()), y, x);
+                                        magia -= MinaPatata.getCoste();
+                                    }
+                                    break;
+                                case "BOMBA":
+                                    if (magia < 200) {
+                                        throw new ExcepcionPlanta("Magia insuficiente.");
+                                    } else {
+                                        tablero.Bomba(x, y);
+                                        magia -= 200;
                                         break;
-                                    case 'L':
-                                        if (magia < Lanzadora.getCoste()) {
-                                            throw new ExcepcionPlanta("Magia insuficiente.");
-                                        } else if (!puedePlantar) {
-                                            throw new ExcepcionPlanta("Ya hay una planta en esa posición.");
-                                        } else {
-                                            tablero.colocarEntidad(new Lanzadora(), y, x);
-                                            magia -= Lanzadora.getCoste();
-                                        }
-                                        break;
-                                    case 'B':
-                                        if (magia < 200) {
-                                            throw new ExcepcionPlanta("Magia insuficiente.");
-                                        } else {
-                                            tablero.Bomba(x, y);
-                                            magia -= 200;
-                                            break;
-                                        }
-                                    default:
-                                        throw new ExcepcionPlanta("No existe ese comando, escriba \"ayuda\" para obtener la lista de comandos.");
-                                }
+                                    }
                             }
                         }
                     } catch (NumberFormatException nfe) {
@@ -421,23 +469,32 @@ public class PrincipalGraficos extends JFrame {
                         puntuacionPartida = 0;
                         break;
                     } else if (entidad instanceof Planta) {
-                        puntuacionPartida += 200;
+                        puntuacionPartida += 100;
                     }
                 }
             }
         }
-        puntuacionPartida *= dificultad;
         int indice[];
         if (pierdes) {
+
+            int partidasPerdidas[] = jugador.getPartidasPerdidas();
+            partidasPerdidas[dificultad - 1]++;
+            jugador.setPartidasPerdidas(partidasPerdidas);
             JOptionPane.showMessageDialog(null, "Perdona profe >w<");
+
         } else {
+            int partidasGanadas[] = jugador.getPartidasGanadas();
+            partidasGanadas[dificultad - 1]++;
+            jugador.setPartidasGanadas(partidasGanadas);
+
+            long puntuaciones[] = jugador.getPuntuacion();
+            puntuaciones[dificultad - 1] += puntuacionPartida;
+            jugador.setPuntuacion(puntuaciones);
+
             JOptionPane.showMessageDialog(null, "Has ganado.\n"
                     + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacionPartida);
         }
-
-        System.exit(
-                0);
-        //jugador.actualizarFicha();
+        jugador.crearFicha();
     }
 
     /**

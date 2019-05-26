@@ -12,7 +12,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -162,10 +168,10 @@ public class Jugador {
             String nombre = JOptionPane.showInputDialog("Nombre: ");
             jugadorAux = new Jugador(dni, nombre, true);
             int reply = JOptionPane.showConfirmDialog(null, "crear ficha", "Guardar Partida", JOptionPane.YES_NO_OPTION);
-                if (reply == JOptionPane.YES_OPTION) {
-                    jugadorAux.crearFicha();
-                }
-            
+            if (reply == JOptionPane.YES_OPTION) {
+                jugadorAux.crearFicha();
+            }
+
             jugadores.put(dni, jugadorAux);
             setIndice(jugadores.size());
         }
@@ -279,8 +285,8 @@ public class Jugador {
                         }
                     }
                 }
-                    registroAux += linea + "\n";
-                
+                registroAux += linea + "\n";
+
             }
 
             registroJugadores = new File("jugadores.dat");
@@ -325,24 +331,38 @@ public class Jugador {
         }
 
     }
-
-    /*public void actualizarFicha() {
-
-    }*/
-    public void ranking() {
-        //HashMap auxx = new HashMap<>();
-        switch (PrincipalTerminal.getDificultad()) {
-
-            case 1:
-
-            case 2:
-
-            case 3:
-
-            case 4:
+    /**
+     * 
+     * @param dificultad
+     * @return 
+     */
+    public static Jugador[] ranking(int dificultad) {
+        leerJugadores();
+        Jugador arrJugadores[] = new Jugador[jugadores.size()];
+        
+        //hashMap -> array
+        int i = 0;
+        for (String clave : jugadores.keySet()) {
+            arrJugadores[i] = jugadores.get(clave);
+            i++;
 
         }
 
+        //ordenamiento burbuja
+        boolean ordenado = false;
+        Jugador jugadorAux;
+        while (!ordenado) {
+            ordenado = true;
+            for (int j = 0; j < arrJugadores.length - 1; j++) {
+                if (arrJugadores[j].getPuntuacion()[dificultad - 1] > arrJugadores[j + 1].getPuntuacion()[dificultad - 1]) {
+                    jugadorAux = arrJugadores[j];
+                    arrJugadores[j] = arrJugadores[j + 1];
+                    arrJugadores[j + 1] = jugadorAux;
+                    ordenado = false;
+                }
+            }
+        }
+        return arrJugadores;
     }
 
     @Override

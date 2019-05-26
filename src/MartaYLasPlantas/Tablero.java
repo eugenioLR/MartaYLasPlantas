@@ -204,7 +204,7 @@ public class Tablero {
 
                     // Explosion cereza
                     if (entidad instanceof Cereza) {
-                        if ((entidad.getTurno() % 2) <= (contador + 2)) {
+                        if ((entidad.getTurno() + 2)  <= contador) {
                             for (int vert = -1; vert <= 1; vert++) {
                                 for (int horz = -1; horz <= 1; horz++) {
                                     if (!(((i + vert) > alto || (i + vert) < 0) || ((j + horz) > ancho || (j + horz) < 0))) {
@@ -219,7 +219,7 @@ public class Tablero {
 
                     //explosion MinaPatata
                     if (entidad instanceof MinaPatata) {
-                        if ((entidad.getTurno() % 2) <= (contador + 2)) {
+                        if ((entidad.getTurno() + 2)  <= contador) {
                             ((MinaPatata) entidad).setEnterrado(false);
                         }
 

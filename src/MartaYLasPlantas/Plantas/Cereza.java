@@ -29,5 +29,9 @@ public class Cereza extends Planta{
         super(salud, 10, turno);
     }
     
-        
+    private static int coste = 50;
+    
+    public static int getCoste() {
+        return coste;
+    }       
 }

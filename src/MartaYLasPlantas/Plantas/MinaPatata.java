@@ -25,7 +25,6 @@ public class MinaPatata extends Planta {
     public MinaPatata(int salud, int turno) {
         super(salud, 90, turno);
     }
-    
 
     /**
      * Get the value of Enterrado
@@ -44,5 +43,9 @@ public class MinaPatata extends Planta {
     public void setEnterrado(boolean Enterrado) {
         this.Enterrado = Enterrado;
     }
+    private static int coste = 25;
 
+    public static int getCoste() {
+        return coste;
+    }
 }

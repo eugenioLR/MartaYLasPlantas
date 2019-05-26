@@ -24,6 +24,9 @@ public class Nuez extends Planta{
     public Nuez(int salud) {
         super(salud, 0, 0);
     }
+    private static int coste = 50;
     
-    
+    public static int getCoste() {
+        return coste;
+    }    
 }
