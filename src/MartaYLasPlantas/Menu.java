@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author this is portatil
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
 public class Menu extends javax.swing.JFrame {
 
@@ -49,7 +48,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(nuevaPartida);
-        nuevaPartida.setBounds(410, 270, 135, 25);
+        nuevaPartida.setBounds(420, 240, 100, 50);
 
         secreto.setText("Secretos?");
         secreto.addActionListener(new java.awt.event.ActionListener() {
@@ -58,7 +57,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(secreto);
-        secreto.setBounds(370, 380, 91, 22);
+        secreto.setBounds(370, 380, 91, 20);
 
         confirmarTruco.setText("►");
         confirmarTruco.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +70,7 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel1.setText("Código");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(320, 380, 39, 16);
+        jLabel1.setBounds(320, 380, 34, 14);
 
         dniTexto.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
         dniTexto.setText("DNI:");
@@ -120,7 +119,7 @@ public class Menu extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Codigo rechazado");
         }
-        
+
         switch (secreto.getText()) {
             case "minecraft":
                 PrincipalGraficos.setMinecraft(true);

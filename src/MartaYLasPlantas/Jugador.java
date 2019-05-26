@@ -18,8 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author EDGENP
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
 public class Jugador {
 
@@ -162,6 +161,11 @@ public class Jugador {
             // añadimos al jugador.
             String nombre = JOptionPane.showInputDialog("Nombre: ");
             jugadorAux = new Jugador(dni, nombre, true);
+            int reply = JOptionPane.showConfirmDialog(null, "crear ficha", "Guardar Partida", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    jugadorAux.crearFicha();
+                }
+            
             jugadores.put(dni, jugadorAux);
             setIndice(jugadores.size());
         }
@@ -262,7 +266,9 @@ public class Jugador {
 
             //Registro Jugadores
             String registroAux = "", registroAux2 = "", linea, tokens[];
-            FileReader reader = new FileReader("jugadores.dat");
+            File registro = new File("jugadores.dat");
+            registro.createNewFile();
+            FileReader reader = new FileReader(registro);
             BufferedReader breader = new BufferedReader(reader);
             while ((linea = breader.readLine()) != null) {
                 tokens = linea.split(" ");

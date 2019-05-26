@@ -82,11 +82,11 @@ public class PrincipalGraficos extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int reply = JOptionPane.showConfirmDialog(null, "Quieres guardar?", "Guardar Partida", JOptionPane.YES_NO_OPTION);
+                /*int reply = JOptionPane.showConfirmDialog(null, "Quieres guardar?", "Guardar Partida", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     guardarPartida();
                     JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
-                }
+                }*/
                 System.exit(0);
             }
         });
@@ -240,10 +240,9 @@ public class PrincipalGraficos extends JFrame {
 
     }
 
-    public void ____() {
-
-        tablero = new Tablero(alto, ancho);
+    public void jugar() {
         String dificultat;
+        boolean comprobando;
 
         HashMap<String, Integer> hashDificultad = new HashMap<>();
         hashDificultad.put("BAJA", 1);
@@ -255,8 +254,27 @@ public class PrincipalGraficos extends JFrame {
         }
         setSize(new Dimension(1282, 724));
 
-        dificultat = JOptionPane.showInputDialog("Elige la dificultad").toUpperCase();
-        dificultad = hashDificultad.get(dificultat);
+        JPanel panelDificultad = new JPanel();
+        
+        Object[] opcionesDificultad = {"Elegir", "Salir"};
+        JComboBox boxDificultad = new JComboBox();
+        boxDificultad.addItem("BAJA");
+        boxDificultad.addItem("MEDIA");
+        boxDificultad.addItem("ALTA");
+        boxDificultad.addItem("IMPOSIBLE");
+
+        panelDificultad.add(boxDificultad);
+        int opcionDificultad = JOptionPane.showOptionDialog(null, panelDificultad, "Elejir dificultad",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, opcionesDificultad, null);
+        String strDificultad = (String) boxDificultad.getSelectedItem();
+        switch (opcionDificultad) {
+            case JOptionPane.YES_OPTION:
+                dificultad = hashDificultad.get(strDificultad);
+                break;
+            default:
+                System.exit(0);
+        }
 
         switch (dificultad) {
             case 1:
@@ -275,8 +293,9 @@ public class PrincipalGraficos extends JFrame {
                 vegQuedan = 10;
         }
         repaint();
+
         try {
-            boolean jugando = true, comprobando, puedePlantar;
+            boolean jugando = true, puedePlantar;
             String comando;
             String[] tokens;
             int x, y;
@@ -287,22 +306,25 @@ public class PrincipalGraficos extends JFrame {
                     try {
                         puedePlantar = true;
                         comprobando = false;
-                        Object[] options1 = {"Ejecutar", "Guardar y salir"};
+                        Object[] opcionesComando = {"Ejecutar", "Guardar y salir", "Salir"};
 
-                        JPanel panel = new JPanel();
+                        JPanel panelComando = new JPanel();
                         JTextField textField = new JTextField(10);
-                        panel.add(textField);
+                        panelComando.add(textField);
 
-                        int result = JOptionPane.showOptionDialog(null, panel, "Ejecutar comando",
+                        int opcionComando = JOptionPane.showOptionDialog(null, panelComando, "Ejecutar comando",
                                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-                                null, options1, null);
-                        if (result == JOptionPane.YES_OPTION) {
-                            comando = textField.getText().toUpperCase();
-                        } else {
-                            guardarPartida();
-                            JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
-                            System.exit(0);
-                            comando = null;
+                                null, opcionesComando, null);
+                        switch (opcionComando) {
+                            case JOptionPane.YES_OPTION:
+                                comando = textField.getText().toUpperCase();
+                                break;
+                            case JOptionPane.NO_OPTION:
+                                guardarPartida();
+                                JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
+                            default:
+                                System.exit(0);
+                                comando = null;
                         }
                         if (comando != null) {
                             tokens = comando.split(" ");
@@ -391,7 +413,8 @@ public class PrincipalGraficos extends JFrame {
         boolean pierdes = false;
         puntuacionPartida = 100 * magia;
 
-        for (Casilla[] fila : tablero.getTerreno()) {
+        for (Casilla[] fila
+                : tablero.getTerreno()) {
             for (Casilla casilla : fila) {
                 for (Entidad entidad : casilla.getEntidades()) {
                     if (pierdes = entidad instanceof Vegano) {
@@ -411,7 +434,9 @@ public class PrincipalGraficos extends JFrame {
             JOptionPane.showMessageDialog(null, "Has ganado.\n"
                     + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacionPartida);
         }
-        System.exit(0);
+
+        System.exit(
+                0);
         //jugador.actualizarFicha();
     }
 
@@ -747,6 +772,7 @@ public class PrincipalGraficos extends JFrame {
      */
     public static void setJugador(Jugador jugador) {
         PrincipalGraficos.jugador = jugador;
+
     }
 
 }

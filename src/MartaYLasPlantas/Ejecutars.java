@@ -6,8 +6,7 @@
 package MartaYLasPlantas;
 
 /**
- *
- * @author ACER
+ * @author EDGENP: Eugenio Lorente Darius Tamas
  */
 public class Ejecutars {
 
@@ -20,10 +19,7 @@ public class Ejecutars {
         Menu manu = new Menu();
         pg = new PrincipalGraficos(new Tablero(5, 9));
         manu.setVisible(true);
-        pg.____();
-        /*
-        Jugador kfc = new Jugador("jfibb994", "mopa", false);
-        kfc.crearFicha();*/
+        pg.jugar();
     }
 
     public static void tableroVisible() {
