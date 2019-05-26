@@ -6,6 +6,7 @@
 package MartaYLasPlantas;
 
 import java.awt.event.InputMethodListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -141,22 +142,29 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void confirmarTrucoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarTrucoActionPerformed
-        switch(secreto.getText()){
+
+        ArrayList<String> trucos = new ArrayList<String>();
+        trucos.add("minecraft");
+        trucos.add("magia");
+        trucos.add("casimiro");
+
+        if (trucos.contains(secreto.getText())) {
+            JOptionPane.showMessageDialog(null, "codigo aceptado");
+        } else {
+            JOptionPane.showMessageDialog(null, "Codigo rechazado");
+        }
+        
+        switch (secreto.getText()) {
             case "minecraft":
                 PrincipalGraficos.setMinecraft(true);
-                JOptionPane.showMessageDialog(null, "codigo aceptado");
                 break;
             case "magia":
                 PrincipalGraficos.setMagos(true);
-                JOptionPane.showMessageDialog(null, "codigo aceptado");
                 break;
             case "casimiro":
                 PrincipalGraficos.setSecret(true);
-                JOptionPane.showMessageDialog(null, "codigo aceptado");
                 break;
-            default:
-                JOptionPane.showMessageDialog(null, "Codigo rechazado");
-            
+
         }
     }//GEN-LAST:event_confirmarTrucoActionPerformed
 

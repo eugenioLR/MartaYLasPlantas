@@ -43,7 +43,9 @@ public class PrincipalGraficos extends JFrame {
     private static Tablero tablero;
 
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, girasolMagia, minaPatata,
-            minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2, cemento, veganosMultiples, veganoProteico;
+            minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2, cemento,
+            veganosMultiples, veganoProteico, veganoZombie, veganoGolem, veganoEsqueloide, hierbaM,
+            hierbaM2, grava, veganosMultiplesM;
     private static boolean sePuedeVer;
     private static boolean secret, minecraft, magos;
     private int ajusteVegano = 16, ajusteVert = 160, ajusteHorz = 40;
@@ -63,7 +65,6 @@ public class PrincipalGraficos extends JFrame {
     public static void setSecret(boolean secret) {
         PrincipalGraficos.secret = secret;
     }
-
 
     public static void setMinecraft(boolean minecraft) {
         PrincipalGraficos.minecraft = minecraft;
@@ -97,7 +98,15 @@ public class PrincipalGraficos extends JFrame {
             veganosMultiples = read(getClass().getClassLoader().getResource("res/Zombie++.png"));
             cortacesped = read(getClass().getClassLoader().getResource("res/cortacesped.png"));
             cortacesped2 = read(getClass().getClassLoader().getResource("res/cortacespedOjos.png"));
+            veganoZombie = read(getClass().getClassLoader().getResource("res/ZombieMinecraft.png"));
+            veganoGolem = read(getClass().getClassLoader().getResource("res/ZombieCuboMinecraft.png"));
+            veganoEsqueloide = read(getClass().getClassLoader().getResource("res/ZombieProteicoMinecraft.png"));
+            hierbaM = read(getClass().getClassLoader().getResource("res/HierbaMinecraft.png"));
+            hierbaM2 = read(getClass().getClassLoader().getResource("res/Hierba2Minecraft.png"));
             cemento = read(getClass().getClassLoader().getResource("res/cemento.png"));
+            grava = read(getClass().getClassLoader().getResource("res/cementoMinecraft.png"));
+            veganosMultiplesM = read(getClass().getClassLoader().getResource("res/ZombieMaincra++.png"));
+
         } catch (IOException ex) {
             System.out.println("Error al cargar las imagenes" + ex);
         }
@@ -114,7 +123,11 @@ public class PrincipalGraficos extends JFrame {
         cCesped = 0;
         for (Casilla[] fila : tablero.getTerreno()) {
             j = ajusteHorz;
-            g2D.drawImage(cemento, j, i, this);
+            if (minecraft) {
+                g2D.drawImage(grava, j, i, this);
+            } else {
+                g2D.drawImage(cemento, j, i, this);
+            }
             if (tablero.getCortacesped()[cCesped]) {
                 if (secret) {
                     g2D.drawImage(cortacesped2, j, i, this);
@@ -137,7 +150,12 @@ public class PrincipalGraficos extends JFrame {
                     if (entidad instanceof Lanzadora) {
                         g2D.drawImage(lanzadora, j, i, this);
                     } else if (entidad instanceof Girasol) {
-                        g2D.drawImage(girasolMagia, j, i, this);
+                        if (magos) {
+                            g2D.drawImage(girasolMagia, j, i, this);
+                        } else {
+                            g2D.drawImage(girasol, j, i, this);
+                        }
+
                     } else if (entidad instanceof Nuez) {
                         g2D.drawImage(nuez, j, i, this);
                     } else if (entidad instanceof Cereza) {
@@ -146,18 +164,37 @@ public class PrincipalGraficos extends JFrame {
                         g2D.drawImage(minaPatata, j, i, this);
                     }
                     if (veganos == 1) {
+
                         if (entidad instanceof VeganoComun) {
-                            g2D.drawImage(veganoComun, j, i - ajusteVegano, this);
+                            if (minecraft) {
+                                g2D.drawImage(veganoZombie, j, i - ajusteVegano, this);
+                            } else {
+                                g2D.drawImage(veganoComun, j, i - ajusteVegano, this);
+                            }
+
                         } else if (entidad instanceof VeganoCasco) {
-                            g2D.drawImage(veganoCubo, j, i - ajusteVegano, this);
+                            if (minecraft) {
+                                g2D.drawImage(veganoGolem, j, i - ajusteVegano, this);
+                            } else {
+                                g2D.drawImage(veganoCubo, j, i - ajusteVegano, this);
+                            }
                         } else if (entidad instanceof VeganoProteico) {
-                            g2D.drawImage(veganoProteico, j, i - ajusteVegano, this);
+                            if (minecraft) {
+                                g2D.drawImage(veganoEsqueloide, j, i - ajusteVegano, this);
+                            } else {
+                                g2D.drawImage(veganoProteico, j, i - ajusteVegano, this);
+                            }
+
                         }
+
                     }
                 }
                 if (veganos > 1) {
-                    //muchedumbre
-                    g2D.drawImage(veganosMultiples, j, i - ajusteVegano, this);
+                    if (minecraft) {
+                        g2D.drawImage(veganosMultiplesM, j, i - ajusteVegano, this);
+                    } else {
+                        g2D.drawImage(veganosMultiples, j, i - ajusteVegano, this);
+                    }
                 }
                 j += 64;
             }
@@ -175,10 +212,19 @@ public class PrincipalGraficos extends JFrame {
      */
     public void hierbaAlternada(Graphics2D g2D, int y, int x) {
         if ((y / 64) % 2 == (x / 64) % 2) {
-            g2D.drawImage(hierba1, y, x, this);
+            if (minecraft) {
+                g2D.drawImage(hierbaM, y, x, this);
+            } else {
+                g2D.drawImage(hierba1, y, x, this);
+            }
         } else {
-            g2D.drawImage(hierba2, y, x, this);
+            if (minecraft) {
+                g2D.drawImage(hierbaM2, y, x, this);
+            } else {
+                g2D.drawImage(hierba2, y, x, this);
+            }
         }
+
     }
 
     public void ____() {
@@ -191,8 +237,10 @@ public class PrincipalGraficos extends JFrame {
         hashDificultad.put("MEDIA", 2);
         hashDificultad.put("ALTA", 3);
         hashDificultad.put("IMPOSIBLE", 4);
-        while (!this.isVisible()) {System.out.print("");}
-        
+        while (!this.isVisible()) {
+            System.out.print("");
+        }
+
         dificultat = JOptionPane.showInputDialog("Ya sabes, dificultad");
         dificultad = hashDificultad.get(dificultat);
 
@@ -291,10 +339,12 @@ public class PrincipalGraficos extends JFrame {
                 tablero.setVegQuedan(vegQuedan);
                 this.repaint();
                 Thread.sleep(200);
+
             }
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(PrincipalGraficos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalGraficos.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -528,6 +578,7 @@ public class PrincipalGraficos extends JFrame {
                 bwriter.newLine();
             }
             bwriter.close();
+
         } catch (IOException ioe) {
             Logger.getLogger(PrincipalTerminal.class
                     .getName()).log(Level.SEVERE, null, ioe);
@@ -616,6 +667,7 @@ public class PrincipalGraficos extends JFrame {
                         turnosSinVeganos = 0;
                     } else {
                         turnosSinVeganos++;
+
                     }
                 }
             }
