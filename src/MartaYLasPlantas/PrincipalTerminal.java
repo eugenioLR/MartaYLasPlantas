@@ -68,7 +68,7 @@ public class PrincipalTerminal {
         String comando, tokens[];
         tablero = new Tablero(alto, ancho);
 
-        panelJuego = new PrincipalGraficos(true, tablero);
+        panelJuego = new PrincipalGraficos(tablero);
         panelJuego.setVisible(true);
 
         HashMap<String, Integer> hashDificultad = new HashMap<>();

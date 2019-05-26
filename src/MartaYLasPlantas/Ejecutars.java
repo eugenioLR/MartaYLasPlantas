@@ -18,7 +18,7 @@ public class Ejecutars {
      */
     public static void main(String[] args) {
         Menu manu = new Menu();
-        pg = new PrincipalGraficos(false , new Tablero(5,9));
+        pg = new PrincipalGraficos(new Tablero(5, 9));
         manu.setVisible(true);
         pg.____();
         /*
