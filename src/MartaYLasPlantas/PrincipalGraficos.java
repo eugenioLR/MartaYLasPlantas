@@ -82,7 +82,7 @@ public class PrincipalGraficos extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int reply = JOptionPane.showConfirmDialog(null, "Quieres guardad?", "fref", JOptionPane.YES_NO_OPTION);
+                int reply = JOptionPane.showConfirmDialog(null, "Quieres guardar?", "Guardar Partida", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     guardarPartida();
                     JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
@@ -254,7 +254,8 @@ public class PrincipalGraficos extends JFrame {
             System.out.print("");
         }
         setSize(new Dimension(1282, 724));
-        dificultat = JOptionPane.showInputDialog("Ya sabes, dificultad").toUpperCase();
+
+        dificultat = JOptionPane.showInputDialog("Elige la dificultad").toUpperCase();
         dificultad = hashDificultad.get(dificultat);
 
         switch (dificultad) {
@@ -276,7 +277,8 @@ public class PrincipalGraficos extends JFrame {
         repaint();
         try {
             boolean jugando = true, comprobando, puedePlantar;
-            String comando, tokens[];
+            String comando;
+            String[] tokens;
             int x, y;
             while (jugando) {
                 comprobando = true;
@@ -285,7 +287,21 @@ public class PrincipalGraficos extends JFrame {
                     try {
                         puedePlantar = true;
                         comprobando = false;
-                        comando = JOptionPane.showInputDialog("Ya sabes, estas vainas");
+                        Object[] options1 = {"Ejecutar", "Guardar y salir"};
+
+                        JPanel panel = new JPanel();
+                        JTextField textField = new JTextField(10);
+                        panel.add(textField);
+
+                        int result = JOptionPane.showOptionDialog(null, panel, "Ejecutar comando",
+                                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                                null, options1, null);
+                        if (result == JOptionPane.YES_OPTION) {
+                            comando = textField.getText().toUpperCase();
+                        } else {
+                            System.exit(0);
+                            comando = null;
+                        }
                         if (comando != null) {
                             tokens = comando.split(" ");
 
@@ -721,6 +737,15 @@ public class PrincipalGraficos extends JFrame {
             }
         }
     }
+
+    /**
+     *
+     * @param jugador
+     */
+    public static void setJugador(Jugador jugador) {
+        PrincipalGraficos.jugador = jugador;
+    }
+
 }
 
 class ExcepcionPlanta extends Exception {

@@ -30,7 +30,7 @@ public class Jugador {
     private int[] partidasGanadas;
     private int[] partidasPerdidas;
     private static int indice;
-    private static HashMap jugadores = new HashMap<>();
+    private static HashMap<String, Jugador> jugadores = new HashMap<>();
     private HashMap puntuaciones = new HashMap<>();
 
     public Jugador(String dni, String nombre, boolean partidaCreada) {
@@ -152,17 +152,20 @@ public class Jugador {
         this.partidaCreada = partidaCreada;
     }
 
-    public static void registrarse(String dni) {
+    public static Jugador registrarse(String dni) {
+        Jugador jugadorAux;
         leerJugadores();
         //String dni = JOptionPane.showInputDialog("DNI: ");
         if (jugadores.containsKey(dni)) {
-            // empezaríamos el juego
+            jugadorAux = jugadores.get(dni);
         } else {
             // añadimos al jugador.
             String nombre = JOptionPane.showInputDialog("Nombre: ");
-            jugadores.put(dni, nombre);
+            jugadorAux = new Jugador(dni, nombre, true);
+            jugadores.put(dni, jugadorAux);
             setIndice(jugadores.size());
         }
+        return jugadorAux;
     }
 
     public static void leerJugadores() {
