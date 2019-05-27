@@ -6,7 +6,9 @@
 package MartaYLasPlantas;
 
 import java.awt.event.InputMethodListener;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,13 +32,20 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         nuevaPartida = new javax.swing.JButton();
         secreto = new javax.swing.JTextField();
         confirmarTruco = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         dniTexto = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cargarPartida = new javax.swing.JLabel();
+        empezar = new javax.swing.JLabel();
+        ranking = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+
+        jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -48,8 +57,9 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(nuevaPartida);
-        nuevaPartida.setBounds(420, 240, 100, 50);
+        nuevaPartida.setBounds(270, 100, 100, 50);
 
+        secreto.setBackground(new java.awt.Color(124, 105, 89));
         secreto.setText("Secretos?");
         secreto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,21 +67,19 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(secreto);
-        secreto.setBounds(370, 380, 91, 20);
+        secreto.setBounds(290, 290, 90, 22);
 
-        confirmarTruco.setText("►");
+        confirmarTruco.setBackground(new java.awt.Color(124, 105, 89));
+        confirmarTruco.setForeground(new java.awt.Color(124, 105, 89));
         confirmarTruco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmarTrucoActionPerformed(evt);
             }
         });
         getContentPane().add(confirmarTruco);
-        confirmarTruco.setBounds(480, 380, 55, 22);
+        confirmarTruco.setBounds(390, 290, 20, 22);
 
-        jLabel1.setText("Código");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(320, 380, 34, 14);
-
+        dniTexto.setBackground(new java.awt.Color(124, 105, 89));
         dniTexto.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
         dniTexto.setText("DNI:");
         dniTexto.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +88,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(dniTexto);
-        dniTexto.setBounds(300, 280, 103, 22);
+        dniTexto.setBounds(290, 240, 103, 22);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -98,7 +106,42 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/menu.png"))); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 556, 420);
+        jLabel2.setBounds(0, 0, 0, 420);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/TumbaDesarrolladores.png"))); // NOI18N
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(100, 220, 60, 90);
+
+        cargarPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/botonCargar.png"))); // NOI18N
+        cargarPartida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cargarPartidaMouseClicked(evt);
+            }
+        });
+        getContentPane().add(cargarPartida);
+        cargarPartida.setBounds(430, 300, 80, 60);
+
+        empezar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/botonComenzar.png"))); // NOI18N
+        empezar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                empezarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(empezar);
+        empezar.setBounds(430, 240, 100, 60);
+
+        ranking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/botonRankings.png"))); // NOI18N
+        ranking.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rankingMouseClicked(evt);
+            }
+        });
+        getContentPane().add(ranking);
+        ranking.setBounds(40, 330, 60, 40);
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/menuAjustado.png"))); // NOI18N
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(1, -4, 556, 420);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -148,6 +191,40 @@ public class Menu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_secretoActionPerformed
 
+    private void empezarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezarMouseClicked
+        if (!dniTexto.getText().equals("DNI:")) {
+            PrincipalGraficos.setJugador(Jugador.registrarse(dniTexto.getText()));
+            Ejecutars.tableroVisible();
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Introduce un DNI para empezar.");
+        }
+    }//GEN-LAST:event_empezarMouseClicked
+
+    private void cargarPartidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarPartidaMouseClicked
+        Jugador.leerJugadores();
+        String dni = dniTexto.getText();
+        HashMap<String, Jugador> jugadores = Jugador.getJugadores();
+        try {
+            if (Jugador.existeJugador(dni)) {
+                Jugador jugador = jugadores.get(dni);
+                PrincipalGraficos.cargarPartida(jugador);
+            }
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo. ");
+        }
+
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cargarPartidaMouseClicked
+
+    private void rankingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankingMouseClicked
+
+        
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_rankingMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -186,12 +263,17 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cargarPartida;
     private javax.swing.JButton confirmarTruco;
     private javax.swing.JTextField dniTexto;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel empezar;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton nuevaPartida;
+    private javax.swing.JLabel ranking;
     private javax.swing.JTextField secreto;
     // End of variables declaration//GEN-END:variables
 }

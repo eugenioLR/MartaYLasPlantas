@@ -131,30 +131,12 @@ public class Jugador {
         this.puntuacion = puntuacion;
     }
 
-    public static int getIndice() {
-        return indice;
+    public static HashMap<String, Jugador> getJugadores() {
+        return jugadores;
     }
 
-    public static void setIndice(int indice) {
-        Jugador.indice = indice;
-    }
-
-    /**
-     * Get the value of partidaCreada
-     *
-     * @return the value of partidaCreada
-     */
-    public boolean isPartidaCreada() {
-        return partidaCreada;
-    }
-
-    /**
-     * Set the value of partidaCreada
-     *
-     * @param partidaCreada new value of partidaCreada
-     */
-    public void setPartidaCreada(boolean partidaCreada) {
-        this.partidaCreada = partidaCreada;
+    public static void setJugadores(HashMap<String, Jugador> jugadores) {
+        Jugador.jugadores = jugadores;
     }
 
     public static Jugador registrarse(String dni) {
@@ -173,9 +155,12 @@ public class Jugador {
             }
 
             jugadores.put(dni, jugadorAux);
-            setIndice(jugadores.size());
         }
         return jugadorAux;
+    }
+
+    public static boolean existeJugador(String dni) {
+        return jugadores.containsKey(dni);
     }
 
     public static void leerJugadores() {
@@ -220,7 +205,6 @@ public class Jugador {
                         jugadorAux.setPartidasPerdidas(ptdsPerdidas);
                         jugadorAux.setPuntuacion(pts);
                         jugadores.put(dni, jugadorAux);
-                        System.out.println(dni);
                 }
             }
         } catch (IOException ex) {
@@ -331,21 +315,21 @@ public class Jugador {
         }
 
     }
+
     /**
-     * 
+     *
      * @param dificultad
-     * @return 
+     * @return
      */
     public static Jugador[] ranking(int dificultad) {
         leerJugadores();
         Jugador arrJugadores[] = new Jugador[jugadores.size()];
-        
+
         //hashMap -> array
         int i = 0;
         for (String clave : jugadores.keySet()) {
             arrJugadores[i] = jugadores.get(clave);
             i++;
-
         }
 
         //ordenamiento burbuja

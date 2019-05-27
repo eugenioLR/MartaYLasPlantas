@@ -129,7 +129,7 @@ public class PrincipalGraficos extends JFrame {
         Entidad ent;
         i = ajusteVert;
         cCesped = 0;
-        g2D.drawImage(fondo, 0,32, this);
+        g2D.drawImage(fondo, 0, 32, this);
         for (Casilla[] fila : tablero.getTerreno()) {
             j = ajusteHorz;
             if (minecraft) {
@@ -344,7 +344,7 @@ public class PrincipalGraficos extends JFrame {
                         panelComando.add(boxY);
                         global.add(titulo, BorderLayout.NORTH);
                         global.add(panelComando, BorderLayout.CENTER);
-                        
+
                         int opcionComando = JOptionPane.showOptionDialog(null, global, "A PLANTAR",
                                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                                 null, opcionesComando, null);
@@ -502,8 +502,9 @@ public class PrincipalGraficos extends JFrame {
      *
      * @param jugador
      * @return "true" si se ha podido cargar el archivo con exito
+     * @throws java.io.FileNotFoundException
      */
-    public boolean cargarPartida(Jugador jugador) {
+    public static boolean cargarPartida(Jugador jugador) throws FileNotFoundException {
         FileReader reader;
         BufferedReader breader;
         String linea, tokens[], strCasillas[], strEntidad[];
@@ -643,9 +644,6 @@ public class PrincipalGraficos extends JFrame {
             }
         } catch (ExcepcionJuego | NumberFormatException ej) {
             System.out.println("Excepcion Juego: " + ej);
-            return false;
-        } catch (FileNotFoundException fnfe) {
-            System.out.println(fnfe);
             return false;
         } catch (IOException ioe) {
             System.out.println(ioe);
