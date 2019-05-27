@@ -5,6 +5,7 @@
  */
 package MartaYLasPlantas;
 
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +20,7 @@ public class Ejecutars {
      */
     public static void main(String[] args) {
         Menu manu = new Menu();
+        manu.setSize(new Dimension(557,450));
         pg = new PrincipalGraficos(new Tablero(5, 9));
         manu.setVisible(true);
         pg.jugar();

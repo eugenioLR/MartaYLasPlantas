@@ -5,11 +5,17 @@
  */
 package MartaYLasPlantas;
 
+import java.awt.GridLayout;
 import java.awt.event.InputMethodListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  * @author EDGENP: Eugenio Lorente Darius Tamas
@@ -32,42 +38,30 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
-        nuevaPartida = new javax.swing.JButton();
         secreto = new javax.swing.JTextField();
         confirmarTruco = new javax.swing.JButton();
         dniTexto = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cargarPartida = new javax.swing.JLabel();
         empezar = new javax.swing.JLabel();
         ranking = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
-        jLabel4.setText("jLabel4");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        nuevaPartida.setText("Comenzar Partida");
-        nuevaPartida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevaPartidaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(nuevaPartida);
-        nuevaPartida.setBounds(270, 100, 100, 50);
-
         secreto.setBackground(new java.awt.Color(124, 105, 89));
+        secreto.setForeground(new java.awt.Color(255, 255, 255));
         secreto.setText("Secretos?");
+        secreto.setBorder(null);
         secreto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 secretoActionPerformed(evt);
             }
         });
         getContentPane().add(secreto);
-        secreto.setBounds(290, 290, 90, 22);
+        secreto.setBounds(290, 290, 90, 14);
 
         confirmarTruco.setBackground(new java.awt.Color(124, 105, 89));
         confirmarTruco.setForeground(new java.awt.Color(124, 105, 89));
@@ -77,18 +71,20 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(confirmarTruco);
-        confirmarTruco.setBounds(390, 290, 20, 22);
+        confirmarTruco.setBounds(390, 290, 20, 20);
 
         dniTexto.setBackground(new java.awt.Color(124, 105, 89));
         dniTexto.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
+        dniTexto.setForeground(new java.awt.Color(255, 255, 255));
         dniTexto.setText("DNI:");
+        dniTexto.setBorder(null);
         dniTexto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dniTextoActionPerformed(evt);
             }
         });
         getContentPane().add(dniTexto);
-        dniTexto.setBounds(290, 240, 103, 22);
+        dniTexto.setBounds(300, 230, 103, 16);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,10 +99,6 @@ public class Menu extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(66, 157, 412, 0);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/menu.png"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 0, 0, 420);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/TumbaDesarrolladores.png"))); // NOI18N
         getContentPane().add(jLabel3);
@@ -156,6 +148,7 @@ public class Menu extends javax.swing.JFrame {
         trucos.add("minecraft");
         trucos.add("magia");
         trucos.add("casimiro");
+        trucos.add("veganos");
 
         if (trucos.contains(secreto.getText())) {
             JOptionPane.showMessageDialog(null, "codigo aceptado");
@@ -173,18 +166,12 @@ public class Menu extends javax.swing.JFrame {
             case "casimiro":
                 PrincipalGraficos.setSecret(true);
                 break;
+            case "veganos":
+                PrincipalGraficos.setVeganos(true);
+                break;
         }
+        secreto.setText("");
     }//GEN-LAST:event_confirmarTrucoActionPerformed
-
-    private void nuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaPartidaActionPerformed
-        if (!dniTexto.getText().equals("DNI:")) {
-            PrincipalGraficos.setJugador(Jugador.registrarse(dniTexto.getText()));
-            Ejecutars.tableroVisible();
-            this.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Introduce un DNI para empezar.");
-        }
-    }//GEN-LAST:event_nuevaPartidaActionPerformed
 
     private void secretoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secretoActionPerformed
         // TODO add your handling code here:
@@ -205,10 +192,17 @@ public class Menu extends javax.swing.JFrame {
         Jugador.leerJugadores();
         String dni = dniTexto.getText();
         HashMap<String, Jugador> jugadores = Jugador.getJugadores();
+        System.out.println(dni);
         try {
-            if (Jugador.existeJugador(dni)) {
-                Jugador jugador = jugadores.get(dni);
-                PrincipalGraficos.cargarPartida(jugador);
+            if (dni != null) {
+                if (Jugador.existeJugador(dni)) {
+                    Jugador jugador = jugadores.get(dni);
+                    PrincipalGraficos.cargarPartida(jugador);
+                    PrincipalGraficos.setPartidaCagada(true);
+                    PrincipalGraficos.setJugador(jugador);
+                    Ejecutars.tableroVisible();
+                    this.setVisible(false);
+                }
             }
         } catch (FileNotFoundException fnfe) {
             JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo. ");
@@ -219,10 +213,50 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cargarPartidaMouseClicked
 
     private void rankingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankingMouseClicked
+        Jugador.leerJugadores();
+        String dni = dniTexto.getText();
+        int dificultad;
+        HashMap<String, Jugador> jugadores = Jugador.getJugadores();
+        HashMap<String, Integer> hashDificultad = new HashMap<>();
 
-        
-        // TODO add your handling code here:
+        hashDificultad.put("BAJA", 1);
+        hashDificultad.put("MEDIA", 2);
+        hashDificultad.put("ALTA", 3);
+        hashDificultad.put("IMPOSIBLE", 4);
 
+        Object[] opcionesDificultad = {"Elegir", "Salir"};
+        JPanel panelDificultad = new JPanel();
+        JComboBox boxDificultad = new JComboBox();
+        boxDificultad.addItem("BAJA");
+        boxDificultad.addItem("MEDIA");
+        boxDificultad.addItem("ALTA");
+        boxDificultad.addItem("IMPOSIBLE");
+
+        panelDificultad.add(boxDificultad);
+
+        int opcionDificultad = JOptionPane.showOptionDialog(null, panelDificultad, "Elegir dificultad",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, opcionesDificultad, null);
+        String strDificultad = (String) boxDificultad.getSelectedItem();
+
+        if (opcionDificultad == JOptionPane.YES_OPTION) {
+            JPanel panel = new JPanel();
+            Object[] opciones = {"Salir"};
+            dificultad = hashDificultad.get(strDificultad);
+            Jugador lista[] = Jugador.ranking(dificultad);
+            panel.setLayout(new GridLayout(lista.length, 1));
+
+            int i = 1;
+            for (Jugador jug : lista) {
+                panel.add(new JLabel(i + ": " + jug.getNombre() + ": "
+                        + jug.getPuntuacion()[dificultad - 1] + "puntos"));
+                i++;
+            }
+
+            JOptionPane.showOptionDialog(null, panel, "RANKINGS",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, opciones, null);
+        }
     }//GEN-LAST:event_rankingMouseClicked
 
     /**
@@ -267,12 +301,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton confirmarTruco;
     private javax.swing.JTextField dniTexto;
     private javax.swing.JLabel empezar;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton nuevaPartida;
     private javax.swing.JLabel ranking;
     private javax.swing.JTextField secreto;
     // End of variables declaration//GEN-END:variables

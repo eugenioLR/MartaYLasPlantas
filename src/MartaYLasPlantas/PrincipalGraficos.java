@@ -41,9 +41,8 @@ public class PrincipalGraficos extends JFrame {
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, girasolMagia, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2, cemento,
             veganosMultiples, veganoProteico, veganoZombie, veganoGolem, veganoEsqueloide, hierbaM,
-            hierbaM2, grava, veganosMultiplesM, fondo;
-    private static boolean sePuedeVer;
-    private static boolean secret, minecraft, magos;
+            hierbaM2, grava, veganosMultiplesM, zombieVegano, zombieVeganoCubo, zombieVeganoProteico, zombiesVeganosMultiples, fondo;
+    private static boolean secret, minecraft, magos, zombies, partidaCagada = false;
     private int ajusteVegano = 16, ajusteVert = 170, ajusteHorz = 476;
 
     public PrincipalGraficos(Tablero tablero) {
@@ -67,6 +66,14 @@ public class PrincipalGraficos extends JFrame {
 
     public static void setMagos(boolean magos) {
         PrincipalGraficos.magos = magos;
+    }
+
+    public static void setPartidaCagada(boolean partidaCagada) {
+        PrincipalGraficos.partidaCagada = partidaCagada;
+    }
+
+    public static void setVeganos(boolean veganos) {
+        PrincipalGraficos.zombies = veganos;
     }
 
     public final void setup() {
@@ -101,6 +108,10 @@ public class PrincipalGraficos extends JFrame {
             minaPatataEnt = read(getClass().getClassLoader().getResource("res/Mina-patataEnterrada.png"));
             nuez = read(getClass().getClassLoader().getResource("res/Nuez.png"));
             veganoComun = read(getClass().getClassLoader().getResource("res/Zombie.png"));
+            zombieVegano = read(getClass().getClassLoader().getResource("res/ZombieVegano.png"));
+            zombieVeganoCubo = read(getClass().getClassLoader().getResource("res/ZombieCuboVegano.png"));
+            zombieVeganoProteico = read(getClass().getClassLoader().getResource("res/ZombieProteicoVegano.png"));
+            zombiesVeganosMultiples = read(getClass().getClassLoader().getResource("res/Zombie++Vegano.png"));
             veganoProteico = read(getClass().getClassLoader().getResource("res/ZombieProteico.png"));
             veganoCubo = read(getClass().getClassLoader().getResource("res/ZombieCubo.png"));
             veganosMultiples = read(getClass().getClassLoader().getResource("res/Zombie++.png"));
@@ -181,6 +192,8 @@ public class PrincipalGraficos extends JFrame {
                         if (entidad instanceof VeganoComun) {
                             if (minecraft) {
                                 g2D.drawImage(veganoZombie, j, i - ajusteVegano, this);
+                            } else if (zombies) {
+                                g2D.drawImage(zombieVegano, j, i - ajusteVegano, this);
                             } else {
                                 g2D.drawImage(veganoComun, j, i - ajusteVegano, this);
                             }
@@ -188,12 +201,16 @@ public class PrincipalGraficos extends JFrame {
                         } else if (entidad instanceof VeganoCasco) {
                             if (minecraft) {
                                 g2D.drawImage(veganoGolem, j, i - ajusteVegano, this);
+                            } else if (zombies) {
+                                g2D.drawImage(zombieVeganoCubo, j, i - ajusteVegano, this);
                             } else {
                                 g2D.drawImage(veganoCubo, j, i - ajusteVegano, this);
                             }
                         } else if (entidad instanceof VeganoProteico) {
                             if (minecraft) {
                                 g2D.drawImage(veganoEsqueloide, j, i - ajusteVegano, this);
+                            } else if (zombies) {
+                                g2D.drawImage(zombieVeganoProteico, j, i - ajusteVegano, this);
                             } else {
                                 g2D.drawImage(veganoProteico, j, i - ajusteVegano, this);
                             }
@@ -205,6 +222,8 @@ public class PrincipalGraficos extends JFrame {
                 if (veganos > 1) {
                     if (minecraft) {
                         g2D.drawImage(veganosMultiplesM, j, i - ajusteVegano, this);
+                    } else if (zombies) {
+                        g2D.drawImage(zombiesVeganosMultiples, j, i - ajusteVegano, this);
                     } else {
                         g2D.drawImage(veganosMultiples, j, i - ajusteVegano, this);
                     }
@@ -241,66 +260,67 @@ public class PrincipalGraficos extends JFrame {
     }
 
     public void jugar() {
-        String dificultat;
         boolean comprobando, saltaTurno;
-
-        HashMap<String, Integer> hashDificultad = new HashMap<>();
-        hashDificultad.put("BAJA", 1);
-        hashDificultad.put("MEDIA", 2);
-        hashDificultad.put("ALTA", 3);
-        hashDificultad.put("IMPOSIBLE", 4);
         while (!this.isVisible()) {
             System.out.print("");
         }
         setSize(new Dimension(1282, 724));
 
-        JPanel panelDificultad = new JPanel();
+        if (!partidaCagada) {
+            HashMap<String, Integer> hashDificultad = new HashMap<>();
+            hashDificultad.put("BAJA", 1);
+            hashDificultad.put("MEDIA", 2);
+            hashDificultad.put("ALTA", 3);
+            hashDificultad.put("IMPOSIBLE", 4);
 
-        Object[] opcionesDificultad = {"Elegir", "Salir"};
-        JComboBox boxDificultad = new JComboBox();
-        boxDificultad.addItem("BAJA");
-        boxDificultad.addItem("MEDIA");
-        boxDificultad.addItem("ALTA");
-        boxDificultad.addItem("IMPOSIBLE");
+            JPanel panelDificultad = new JPanel();
+            Object[] opcionesDificultad = {"Elegir", "Salir"};
+            JComboBox boxDificultad = new JComboBox();
+            boxDificultad.addItem("BAJA");
+            boxDificultad.addItem("MEDIA");
+            boxDificultad.addItem("ALTA");
+            boxDificultad.addItem("IMPOSIBLE");
 
-        panelDificultad.add(boxDificultad);
+            panelDificultad.add(boxDificultad);
 
-        int opcionDificultad = JOptionPane.showOptionDialog(null, panelDificultad, "Elegir dificultad",
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-                null, opcionesDificultad, null);
-        String strDificultad = (String) boxDificultad.getSelectedItem();
-        switch (opcionDificultad) {
-            case JOptionPane.YES_OPTION:
-                dificultad = hashDificultad.get(strDificultad);
-                break;
-            default:
-                System.exit(0);
+            int opcionDificultad = JOptionPane.showOptionDialog(null, panelDificultad, "Elegir dificultad",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, opcionesDificultad, null);
+            String strDificultad = (String) boxDificultad.getSelectedItem();
+            switch (opcionDificultad) {
+                case JOptionPane.YES_OPTION:
+                    dificultad = hashDificultad.get(strDificultad);
+                    break;
+                default:
+                    System.exit(0);
+            }
+
+            switch (dificultad) {
+                case 1:
+                    vegQuedan = 5;
+                    break;
+                case 2:
+                    vegQuedan = 15;
+                    break;
+                case 3:
+                    vegQuedan = 25;
+                    break;
+                case 4:
+                    vegQuedan = 50;
+                    break;
+                default:
+                    vegQuedan = 10;
+            }
         }
 
-        switch (dificultad) {
-            case 1:
-                vegQuedan = 5;
-                break;
-            case 2:
-                vegQuedan = 15;
-                break;
-            case 3:
-                vegQuedan = 25;
-                break;
-            case 4:
-                vegQuedan = 50;
-                break;
-            default:
-                vegQuedan = 10;
-        }
-        repaint();
-
+        this.repaint();
         try {
             boolean jugando = true, puedePlantar;
             String comando;
             String[] tokens;
             int x, y;
             while (jugando) {
+                repaint();
                 comprobando = true;
                 while (comprobando) {
                     magia += 5;
@@ -607,35 +627,27 @@ public class PrincipalGraficos extends JFrame {
                                 switch (strEntidad[0]) {
                                     case "C":
                                         tablero.colocarEntidad(new Cereza(salud, turno), i - 8, j);
-                                        System.out.println("cereza");
                                         break;
                                     case "G":
                                         tablero.colocarEntidad(new Girasol(salud, turno), i - 8, j);
-                                        System.out.println("girasol");
                                         break;
                                     case "L":
                                         tablero.colocarEntidad(new Lanzadora(salud), i - 8, j);
-                                        System.out.println("lanzaguisantes");
                                         break;
                                     case "MP":
                                         tablero.colocarEntidad(new MinaPatata(salud, turno), i - 8, j);
-                                        System.out.println("Minapatata");
                                         break;
                                     case "N":
                                         tablero.colocarEntidad(new Nuez(salud), i - 8, j);
-                                        System.out.println("nuez");
                                         break;
                                     case "V":
                                         tablero.colocarEntidad(new VeganoComun(salud, turno), i - 8, j);
-                                        System.out.println("vegano");
                                         break;
                                     case "VC":
                                         tablero.colocarEntidad(new VeganoCasco(salud, turno), i - 8, j);
-                                        System.out.println("vegano casco");
                                         break;
                                     case "VP":
                                         tablero.colocarEntidad(new VeganoProteico(salud, turno), i - 8, j);
-                                        System.out.println("vegano proteico");
                                         break;
                                 }
                             }
@@ -656,10 +668,14 @@ public class PrincipalGraficos extends JFrame {
         try {
             FileWriter nuevaPartida;
             BufferedWriter bwriter;
+            
             //crear/sobreescribir "Marta.sav"
             new File("partidas").mkdir();
             File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
-            archivoPartida.createNewFile();
+            
+            if (!archivoPartida.exists()) {
+                archivoPartida.createNewFile();
+            }
             nuevaPartida = new FileWriter(archivoPartida);
             bwriter = new BufferedWriter(nuevaPartida);
 

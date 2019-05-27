@@ -8,17 +8,10 @@ package MartaYLasPlantas;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -197,14 +190,21 @@ public class Jugador {
                         tokens = linea.split(" ");
                         for (int j = 0; j < 4; j++) {
                             pts[j] = Integer.parseInt(tokens[j + 1]);
+                            System.out.print(pts[j]);
                         }
+                        System.out.println();
                         break;
-                    default:
+                    case 5:
                         jugadorAux = new Jugador(dni, nombre, false);
                         jugadorAux.setPartidasGanadas(ptdsGanadas);
                         jugadorAux.setPartidasPerdidas(ptdsPerdidas);
                         jugadorAux.setPuntuacion(pts);
                         jugadores.put(dni, jugadorAux);
+                        System.out.println(jugadores.get(dni).getPuntuacion()[0]);
+                        //se reinician los arrays para evitar errores
+                        pts = new long[4];
+                        ptdsPerdidas = new int[4];
+                        ptdsGanadas = new int[4];
                 }
             }
         } catch (IOException ex) {
@@ -255,7 +255,7 @@ public class Jugador {
             bwriter.close();
 
             //Registro Jugadores
-            String registroAux = "", registroAux2 = "", linea, tokens[];
+            String registroAux = "", linea, tokens[];
             File registro = new File("jugadores.dat");
             registro.createNewFile();
             FileReader reader = new FileReader(registro);
@@ -264,8 +264,8 @@ public class Jugador {
                 tokens = linea.split(" ");
                 if (tokens[0].equals("dni")) {
                     if (tokens[1].equals(dni)) {
-                        for (int j = 0; j < 5; j++) {
-                            breader.readLine();
+                        for (int j = 0; j < 6; j++) {
+                            linea = breader.readLine();
                         }
                     }
                 }
@@ -322,13 +322,14 @@ public class Jugador {
      * @return
      */
     public static Jugador[] ranking(int dificultad) {
-        leerJugadores();
+        //leerJugadores();
         Jugador arrJugadores[] = new Jugador[jugadores.size()];
 
         //hashMap -> array
         int i = 0;
-        for (String clave : jugadores.keySet()) {
-            arrJugadores[i] = jugadores.get(clave);
+        for (Object valor : jugadores.values().toArray()) {
+            arrJugadores[i] = (Jugador) valor;
+            System.out.println(arrJugadores[i].getNombre() + arrJugadores[i].getPuntuacion()[dificultad - 1]);
             i++;
         }
 
@@ -338,7 +339,9 @@ public class Jugador {
         while (!ordenado) {
             ordenado = true;
             for (int j = 0; j < arrJugadores.length - 1; j++) {
-                if (arrJugadores[j].getPuntuacion()[dificultad - 1] > arrJugadores[j + 1].getPuntuacion()[dificultad - 1]) {
+                System.out.println(j);
+                if (arrJugadores[j].getPuntuacion()[dificultad - 1]
+                        < arrJugadores[j + 1].getPuntuacion()[dificultad - 1]) {
                     jugadorAux = arrJugadores[j];
                     arrJugadores[j] = arrJugadores[j + 1];
                     arrJugadores[j + 1] = jugadorAux;
@@ -346,11 +349,11 @@ public class Jugador {
                 }
             }
         }
+        System.out.println(dificultad - 1);
+        for (Jugador j : arrJugadores) {
+            System.out.print(j.puntuacion[dificultad - 1]);
+        }
         return arrJugadores;
     }
 
-    @Override
-    public String toString() {
-        return "Jugador{" + "dni=" + dni + ", nombre=" + nombre + ", puntuacion=" + puntuacion + "}";
-    }
 }
