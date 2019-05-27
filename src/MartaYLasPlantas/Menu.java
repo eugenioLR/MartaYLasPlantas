@@ -281,43 +281,43 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmarTrucoMouseClicked
 
     private void empezarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezarMousePressed
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonComenzarPulsado.png"));
-        empezar.setIcon(II);
+        ImageIcon empezarBotonP = new ImageIcon(getClass().getResource("/res/Menu/botonComenzarPulsado.png"));
+        empezar.setIcon(empezarBotonP);
     }//GEN-LAST:event_empezarMousePressed
 
     private void empezarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezarMouseReleased
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonComenzar.png"));
-        empezar.setIcon(II);
+        ImageIcon empezarBoton = new ImageIcon(getClass().getResource("/res/Menu/botonComenzar.png"));
+        empezar.setIcon(empezarBoton);
     }//GEN-LAST:event_empezarMouseReleased
 
     private void cargarPartidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarPartidaMousePressed
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonCargarPulsado.png"));
-        cargarPartida.setIcon(II);
+        ImageIcon cargarPartidaBotonP = new ImageIcon(getClass().getResource("/res/Menu/botonCargarPulsado.png"));
+        cargarPartida.setIcon(cargarPartidaBotonP);
     }//GEN-LAST:event_cargarPartidaMousePressed
 
     private void cargarPartidaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarPartidaMouseReleased
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonCargar.png"));
-        cargarPartida.setIcon(II);
+        ImageIcon cargarPartidaBoton = new ImageIcon(getClass().getResource("/res/Menu/botonCargar.png"));
+        cargarPartida.setIcon(cargarPartidaBoton);
     }//GEN-LAST:event_cargarPartidaMouseReleased
 
     private void confirmarTrucoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMousePressed
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonTrucosPulsado.png"));
-        cargarPartida.setIcon(II);
+        ImageIcon TrucoBotonP = new ImageIcon(getClass().getResource("/res/Menu/botonTrucosPulsado.png"));
+        confirmarTruco.setIcon(TrucoBotonP);
     }//GEN-LAST:event_confirmarTrucoMousePressed
 
     private void confirmarTrucoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMouseReleased
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonTrucos.png"));
-        confirmarTruco.setIcon(II);
+        ImageIcon TrucoBoton = new ImageIcon(getClass().getResource("/res/Menu/botonTrucos.png"));
+        confirmarTruco.setIcon(TrucoBoton);
     }//GEN-LAST:event_confirmarTrucoMouseReleased
 
     private void rankingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankingMousePressed
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonRankingsPulsado.png"));
-        ranking.setIcon(II);
+        ImageIcon rankingBotonP = new ImageIcon(getClass().getResource("/res/Menu/botonRankingsPulsado.png"));
+        ranking.setIcon(rankingBotonP);
     }//GEN-LAST:event_rankingMousePressed
 
     private void rankingMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankingMouseReleased
-        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonRankings.png"));
-        ranking.setIcon(II);
+        ImageIcon rankingBoton = new ImageIcon(getClass().getResource("/res/Menu/botonRankings.png"));
+        ranking.setIcon(rankingBoton);
     }//GEN-LAST:event_rankingMouseReleased
 
     /**
