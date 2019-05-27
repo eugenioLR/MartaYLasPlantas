@@ -9,29 +9,28 @@ package MartaYLasPlantas.Plantas;
  *
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class Cereza extends Planta{
+public class Cereza extends Planta {
 
-    
+    private static int coste = 50;
+
     /**
-     * Constructor de Cereza
-     * {@inheritDoc}
+     * Constructor de Cereza {@inheritDoc}
      */
     public Cereza(int turno) {
         super(2, 10, turno);
     }
-    
+
     /**
      * Constuctor de Cereza Cargar partida
+     *
      * @param salud
-     * @param turno 
+     * @param turno
      */
     public Cereza(int salud, int turno) {
         super(salud, 10, turno);
     }
-    
-    private static int coste = 50;
-    
+
     public static int getCoste() {
         return coste;
-    }       
+    }
 }

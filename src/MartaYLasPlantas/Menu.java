@@ -302,7 +302,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void confirmarTrucoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMousePressed
         ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonTrucosPulsado.png"));
-        confirmarTruco.setIcon(II);
+        cargarPartida.setIcon(II);
     }//GEN-LAST:event_confirmarTrucoMousePressed
 
     private void confirmarTrucoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMouseReleased

@@ -27,6 +27,7 @@ public class Ejecutars {
         pg.jugar();
         int reply = JOptionPane.showConfirmDialog(null, "Volver al menu", "yoot",  JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
+            pg.setMagia(50);
             manu.dispose();
             pg.dispose();
             main(args);

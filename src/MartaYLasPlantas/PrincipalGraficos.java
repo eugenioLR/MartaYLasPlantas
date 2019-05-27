@@ -332,12 +332,12 @@ public class PrincipalGraficos extends JFrame {
                         Object[] opcionesComando = {"Ejecutar", "Saltar Turno", "Guardar y salir"};
 
                         JComboBox boxPlanta = new JComboBox();
-                        boxPlanta.addItem("LANZAGUISANTES");
-                        boxPlanta.addItem("GIRASOL");
-                        boxPlanta.addItem("CEREZA");
-                        boxPlanta.addItem("NUEZ");
-                        boxPlanta.addItem("MINA-PATATA");
-                        boxPlanta.addItem("BOMBA");
+                        boxPlanta.addItem("(50) LANZAGUISANTES");
+                        boxPlanta.addItem("(20) GIRASOL");
+                        boxPlanta.addItem("(50) CEREZA");
+                        boxPlanta.addItem("(50) NUEZ");
+                        boxPlanta.addItem("(25) MINA-PATATA");
+                        boxPlanta.addItem("(200) BOMBA");
 
                         JComboBox boxX = new JComboBox();
                         for (int i = 1; i <= 9; i++) {
@@ -390,7 +390,7 @@ public class PrincipalGraficos extends JFrame {
                         }
                         if (!saltaTurno) {
                             switch ((String) boxPlanta.getSelectedItem()) {
-                                case "GIRASOL":
+                                case "(20) GIRASOL":
                                     if (magia < Girasol.getCoste()) {
                                         throw new ExcepcionPlanta("Magia insuficiente.");
                                     } else if (!puedePlantar) {
@@ -400,7 +400,7 @@ public class PrincipalGraficos extends JFrame {
                                         magia -= Girasol.getCoste();
                                     }
                                     break;
-                                case "LANZAGUISANTES":
+                                case "(50) LANZAGUISANTES":
                                     if (magia < Lanzadora.getCoste()) {
                                         throw new ExcepcionPlanta("Magia insuficiente.");
                                     } else if (!puedePlantar) {
@@ -410,7 +410,7 @@ public class PrincipalGraficos extends JFrame {
                                         magia -= Lanzadora.getCoste();
                                     }
                                     break;
-                                case "CEREZA":
+                                case "(50) CEREZA":
                                     if (magia < Cereza.getCoste()) {
                                         throw new ExcepcionPlanta("Magia insuficiente.");
                                     } else if (!puedePlantar) {
@@ -420,7 +420,7 @@ public class PrincipalGraficos extends JFrame {
                                         magia -= Cereza.getCoste();
                                     }
                                     break;
-                                case "NUEZ":
+                                case "(50) NUEZ":
                                     if (magia < Nuez.getCoste()) {
                                         throw new ExcepcionPlanta("Magia insuficiente.");
                                     } else if (!puedePlantar) {
@@ -430,7 +430,7 @@ public class PrincipalGraficos extends JFrame {
                                         magia -= Nuez.getCoste();
                                     }
                                     break;
-                                case "MINA-PATATA":
+                                case "(25) MINA-PATATA":
 
                                     if (magia < MinaPatata.getCoste()) {
                                         throw new ExcepcionPlanta("Magia insuficiente.");
@@ -441,7 +441,7 @@ public class PrincipalGraficos extends JFrame {
                                         magia -= MinaPatata.getCoste();
                                     }
                                     break;
-                                case "BOMBA":
+                                case "(200) BOMBA":
                                     if (magia < 200) {
                                         throw new ExcepcionPlanta("Magia insuficiente.");
                                     } else {
@@ -846,6 +846,10 @@ public class PrincipalGraficos extends JFrame {
     public static void setJugador(Jugador jugador) {
         PrincipalGraficos.jugador = jugador;
 
+    }
+
+    public void setMagia(int magia) {
+        PrincipalGraficos.magia = magia;
     }
 
 }
