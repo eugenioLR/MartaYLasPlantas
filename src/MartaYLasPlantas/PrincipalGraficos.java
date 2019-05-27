@@ -42,7 +42,7 @@ public class PrincipalGraficos extends JFrame {
             veganosMultiples, veganoProteico, veganoZombie, veganoGolem, veganoEsqueloide, hierbaM,
             hierbaM2, grava, veganosMultiplesM, zombieVegano, zombieVeganoCubo, zombieVeganoProteico, zombiesVeganosMultiples, fondo;
     private static boolean secret, minecraft, magos, zombies, partidaCagada = false;
-    private int ajusteVegano = 16, ajusteVert = 200, ajusteHorz = 476;
+    private int ajusteVegano = 16, ajusteVert = 195, ajusteHorz = 469;
 
     public PrincipalGraficos(Tablero tablero) {
 

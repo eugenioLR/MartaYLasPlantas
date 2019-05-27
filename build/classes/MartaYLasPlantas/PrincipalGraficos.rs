@@ -1,3 +1,0 @@
-MartaYLasPlantas.ExcepcionPlanta
-MartaYLasPlantas.ExcepcionJuego
-MartaYLasPlantas.PrincipalGraficos
