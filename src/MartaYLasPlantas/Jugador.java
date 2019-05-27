@@ -150,9 +150,10 @@ public class Jugador {
             int reply = JOptionPane.showConfirmDialog(null, "crear ficha", "Guardar Partida", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
                     jugadorAux.crearFicha();
+                    jugadores.put(dni, jugadorAux);
             }
         }
-        jugadores.put(dni, jugadorAux);
+        
 
         return jugadorAux;
     }
