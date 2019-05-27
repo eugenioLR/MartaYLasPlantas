@@ -307,13 +307,13 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cargarPartidaMouseReleased
 
     private void confirmarTrucoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMousePressed
-        ImageIcon TrucoBotonP = new ImageIcon(getClass().getResource("/res/Menu/botonTrucosPulsado.png"));
-        confirmarTruco.setIcon(TrucoBotonP);
+        ImageIcon TrucoBotons = new ImageIcon(getClass().getResource("/res/Menu/botonTrucosPulsado.png"));
+        confirmarTruco.setIcon(TrucoBotons);
     }//GEN-LAST:event_confirmarTrucoMousePressed
 
     private void confirmarTrucoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMouseReleased
-        ImageIcon TrucoBoton = new ImageIcon(getClass().getResource("/res/Menu/botonTrucos.png"));
-        confirmarTruco.setIcon(TrucoBoton);
+        ImageIcon TrucoBotonLibre = new ImageIcon(getClass().getResource("/res/Menu/botonTrucos"));
+        confirmarTruco.setIcon(TrucoBotonLibre);
     }//GEN-LAST:event_confirmarTrucoMouseReleased
 
     private void rankingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankingMousePressed

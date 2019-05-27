@@ -32,7 +32,6 @@ public class PrincipalGraficos extends JFrame {
     private static int vegQuedan;
     private static int vegFinal = 0;
     private static int turnosSinVeganos;
-    private static long[] puntuacion;
     private static long puntuacionPartida;
     private static PrincipalGraficos panelJuego;
     private static Jugador jugador;
@@ -43,7 +42,7 @@ public class PrincipalGraficos extends JFrame {
             veganosMultiples, veganoProteico, veganoZombie, veganoGolem, veganoEsqueloide, hierbaM,
             hierbaM2, grava, veganosMultiplesM, zombieVegano, zombieVeganoCubo, zombieVeganoProteico, zombiesVeganosMultiples, fondo;
     private static boolean secret, minecraft, magos, zombies, partidaCagada = false;
-    private int ajusteVegano = 16, ajusteVert = 170, ajusteHorz = 476;
+    private int ajusteVegano = 16, ajusteVert = 200, ajusteHorz = 476;
 
     public PrincipalGraficos(Tablero tablero) {
 
@@ -355,7 +354,6 @@ public class PrincipalGraficos extends JFrame {
                         JPanel titulo = new JPanel();
                         JPanel panelComando = new JPanel();
                         JTextField textField = new JTextField(10);
-                        //panelComando.add(textField);
                         titulo.add(new JLabel("magia: " + magia + " turno: " + tablero.getContador()));
                         panelComando.add(new JLabel("Planta"));
                         panelComando.add(boxPlanta);
@@ -381,7 +379,7 @@ public class PrincipalGraficos extends JFrame {
                                     JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
                                     guardarPartida();
                                 } else {
-                                    JOptionPane.showMessageDialog(null, "Perdona, pero no tienes ficha.");
+                                    JOptionPane.showMessageDialog(null, "No existe ficha de usuario. Imposible guardar");
                                 }
 
                             default:

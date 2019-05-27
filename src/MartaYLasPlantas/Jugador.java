@@ -133,7 +133,7 @@ public class Jugador {
         Jugador.jugadores = jugadores;
     }
 
-    public static Jugador registrarse(String dni) throws FileNotFoundException {
+   public static Jugador registrarse(String dni) throws FileNotFoundException {
         Jugador jugadorAux;
         String nombre = "";
         leerJugadores();
@@ -142,9 +142,10 @@ public class Jugador {
             jugadorAux = jugadores.get(dni);
         } else {
             // añadimos al jugador.
-            while ("".equals(nombre)) {
+            do{
                 nombre = JOptionPane.showInputDialog("Nombre: ");
-            }
+                System.out.println(nombre);
+            }while (nombre == null || nombre.equals(""));
             jugadorAux = new Jugador(dni, nombre, true);
             int reply = JOptionPane.showConfirmDialog(null, "crear ficha", "Guardar Partida", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
