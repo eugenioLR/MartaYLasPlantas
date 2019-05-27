@@ -376,13 +376,14 @@ public class PrincipalGraficos extends JFrame {
                                 saltaTurno = true;
                                 break;
                             case 2:
-                                //if (Jugador.existeJugador(jugador.getDni())) {
+                                HashMap<String, Jugador> jugadores = Jugador.getJugadores();
+                                if (jugadores.containsKey(jugador.getDni())) {
                                     JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
                                     guardarPartida();
-                                //} else {
-                                   // JOptionPane.showMessageDialog(null, "Perdona, pero no tienes ficha.");
-                                //}
-                                
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Perdona, pero no tienes ficha.");
+                                }
+
                             default:
                                 System.exit(0);
                         }
@@ -520,7 +521,6 @@ public class PrincipalGraficos extends JFrame {
             JOptionPane.showMessageDialog(null, "Has ganado.\n"
                     + "¡¡Enhorabuena!!\nPuntuacion: " + puntuacionPartida);
         }
-        jugador.crearFicha();
     }
 
     /**

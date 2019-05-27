@@ -135,21 +135,24 @@ public class Jugador {
 
     public static Jugador registrarse(String dni) throws FileNotFoundException {
         Jugador jugadorAux;
+        String nombre = "";
         leerJugadores();
         //String dni = JOptionPane.showInputDialog("DNI: ");
         if (jugadores.containsKey(dni)) {
             jugadorAux = jugadores.get(dni);
         } else {
             // añadimos al jugador.
-            String nombre = JOptionPane.showInputDialog("Nombre: ");
+            while ("".equals(nombre)) {
+                nombre = JOptionPane.showInputDialog("Nombre: ");
+            }
             jugadorAux = new Jugador(dni, nombre, true);
             int reply = JOptionPane.showConfirmDialog(null, "crear ficha", "Guardar Partida", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
-                jugadorAux.crearFicha();
+                    jugadorAux.crearFicha();
             }
-
-            jugadores.put(dni, jugadorAux);
         }
+        jugadores.put(dni, jugadorAux);
+
         return jugadorAux;
     }
 
@@ -157,7 +160,7 @@ public class Jugador {
         return jugadores.containsKey(dni);
     }
 
-    public static void leerJugadores(){
+    public static void leerJugadores() {
         try {
             FileReader reader = new FileReader("jugadores.dat");
             BufferedReader breader = new BufferedReader(reader);

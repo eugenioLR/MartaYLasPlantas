@@ -20,15 +20,15 @@ public class Ejecutars {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        Menu manu = new Menu();
-        manu.setSize(new Dimension(557,450));
+        Menu menu = new Menu();
+        menu.setSize(new Dimension(557,450));
         pg = new PrincipalGraficos(new Tablero(5, 9));
-        manu.setVisible(true);
+        menu.setVisible(true);
         pg.jugar();
-        int reply = JOptionPane.showConfirmDialog(null, "Volver al menu", "yoot",  JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "Volver al menu", "Volver",  JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             pg.setMagia(50);
-            manu.dispose();
+            menu.dispose();
             pg.dispose();
             main(args);
         }else{
