@@ -475,7 +475,7 @@ public class PrincipalGraficos extends JFrame {
                 jugando = tablero.actualiza();
                 tablero.setVegQuedan(vegQuedan);
                 this.repaint();
-                Thread.sleep(200);
+                Thread.sleep(500);
 
             }
 
