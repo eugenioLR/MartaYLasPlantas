@@ -192,7 +192,6 @@ public class Menu extends javax.swing.JFrame {
         Jugador.leerJugadores();
         String dni = dniTexto.getText();
         HashMap<String, Jugador> jugadores = Jugador.getJugadores();
-        System.out.println(dni);
         try {
             if (dni != null) {
                 if (Jugador.existeJugador(dni)) {

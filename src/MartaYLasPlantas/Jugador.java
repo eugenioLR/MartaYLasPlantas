@@ -190,9 +190,7 @@ public class Jugador {
                         tokens = linea.split(" ");
                         for (int j = 0; j < 4; j++) {
                             pts[j] = Integer.parseInt(tokens[j + 1]);
-                            System.out.print(pts[j]);
                         }
-                        System.out.println();
                         break;
                     case 5:
                         jugadorAux = new Jugador(dni, nombre, false);
@@ -200,7 +198,6 @@ public class Jugador {
                         jugadorAux.setPartidasPerdidas(ptdsPerdidas);
                         jugadorAux.setPuntuacion(pts);
                         jugadores.put(dni, jugadorAux);
-                        System.out.println(jugadores.get(dni).getPuntuacion()[0]);
                         //se reinician los arrays para evitar errores
                         pts = new long[4];
                         ptdsPerdidas = new int[4];
@@ -329,7 +326,6 @@ public class Jugador {
         int i = 0;
         for (Object valor : jugadores.values().toArray()) {
             arrJugadores[i] = (Jugador) valor;
-            System.out.println(arrJugadores[i].getNombre() + arrJugadores[i].getPuntuacion()[dificultad - 1]);
             i++;
         }
 
@@ -339,7 +335,6 @@ public class Jugador {
         while (!ordenado) {
             ordenado = true;
             for (int j = 0; j < arrJugadores.length - 1; j++) {
-                System.out.println(j);
                 if (arrJugadores[j].getPuntuacion()[dificultad - 1]
                         < arrJugadores[j + 1].getPuntuacion()[dificultad - 1]) {
                     jugadorAux = arrJugadores[j];
@@ -348,10 +343,6 @@ public class Jugador {
                     ordenado = false;
                 }
             }
-        }
-        System.out.println(dificultad - 1);
-        for (Jugador j : arrJugadores) {
-            System.out.print(j.puntuacion[dificultad - 1]);
         }
         return arrJugadores;
     }

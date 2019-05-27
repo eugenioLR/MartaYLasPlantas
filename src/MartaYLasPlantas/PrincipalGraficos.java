@@ -368,7 +368,6 @@ public class PrincipalGraficos extends JFrame {
                         int opcionComando = JOptionPane.showOptionDialog(null, global, "A PLANTAR",
                                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                                 null, opcionesComando, null);
-                        System.out.println(opcionComando);
                         switch (opcionComando) {
                             case 0:
                                 break;
@@ -597,7 +596,6 @@ public class PrincipalGraficos extends JFrame {
                             throw new ExcepcionJuego();
                         }
                         for (int j = 0; j < alto; j++) {
-                            System.out.println(tokens[j + 1]);
                             hayCortacesped[j] = Boolean.parseBoolean(tokens[j + 1]);
                         }
                         tablero.setCortacesped(hayCortacesped);
@@ -615,7 +613,6 @@ public class PrincipalGraficos extends JFrame {
                     //lineas 8-12: tablero
                     default:
                         strCasillas = linea.split(";");
-                        System.out.println(linea);
                         for (int j = 0; j < strCasillas.length; j++) {
                             tokens = strCasillas[j].split(",");
                             for (int k = 0; k < tokens.length; k++) {
