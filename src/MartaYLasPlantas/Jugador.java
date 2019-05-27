@@ -144,7 +144,6 @@ public class Jugador {
             // añadimos al jugador.
             do{
                 nombre = JOptionPane.showInputDialog("Nombre: ");
-                System.out.println(nombre);
             }while (nombre == null || nombre.equals(""));
             jugadorAux = new Jugador(dni, nombre, true);
             int reply = JOptionPane.showConfirmDialog(null, "crear ficha", "Guardar Partida", JOptionPane.YES_NO_OPTION);

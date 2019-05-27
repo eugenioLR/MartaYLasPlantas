@@ -40,7 +40,8 @@ public class PrincipalGraficos extends JFrame {
     private BufferedImage hierba1, hierba2, cereza, lanzadora, girasol, girasolMagia, minaPatata,
             minaPatataEnt, nuez, veganoComun, veganoCubo, cortacesped, cortacesped2, cemento,
             veganosMultiples, veganoProteico, veganoZombie, veganoGolem, veganoEsqueloide, hierbaM,
-            hierbaM2, grava, veganosMultiplesM, zombieVegano, zombieVeganoCubo, zombieVeganoProteico, zombiesVeganosMultiples, fondo;
+            hierbaM2, grava, veganosMultiplesM, zombieVegano, zombieVeganoCubo, zombieVeganoProteico, 
+            zombiesVeganosMultiples, fondo, fondoMine;
     private static boolean secret, minecraft, magos, zombies, partidaCagada = false;
     private int ajusteVegano = 16, ajusteVert = 195, ajusteHorz = 469;
 
@@ -97,6 +98,7 @@ public class PrincipalGraficos extends JFrame {
         try {
             // habrá que explicarlo de algún modo :D
             fondo = read(getClass().getClassLoader().getResource("res/xombi.png"));
+            fondoMine = read(getClass().getClassLoader().getResource("res/xombiMinecraft.png"));
             hierba1 = read(getClass().getClassLoader().getResource("res/Hierba.png"));
             hierba2 = read(getClass().getClassLoader().getResource("res/Hierba2.png"));
             cereza = read(getClass().getClassLoader().getResource("res/Cereza.png"));
@@ -139,7 +141,11 @@ public class PrincipalGraficos extends JFrame {
         Entidad ent;
         i = ajusteVert;
         cCesped = 0;
-        g2D.drawImage(fondo, 0, 32, this);
+        if (minecraft) {
+            g2D.drawImage(fondoMine, 0, 32, this);
+        } else {
+            g2D.drawImage(fondo, 0, 32, this);
+        }
         for (Casilla[] fila : tablero.getTerreno()) {
             j = ajusteHorz;
             if (minecraft) {
