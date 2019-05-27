@@ -177,7 +177,7 @@ public class Menu extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Ejecutars.tableroVisible();
+            Ejecutar.tableroVisible();
             this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Introduce un DNI para empezar.");
@@ -196,7 +196,7 @@ public class Menu extends javax.swing.JFrame {
                     PrincipalGraficos.cargarPartida(jugador);
                     PrincipalGraficos.setPartidaCagada(true);
                     PrincipalGraficos.setJugador(jugador);
-                    Ejecutars.tableroVisible();
+                    Ejecutar.tableroVisible();
                     this.setVisible(false);
                 }
             }
@@ -312,7 +312,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmarTrucoMousePressed
 
     private void confirmarTrucoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMouseReleased
-        ImageIcon TrucoBotonLibre = new ImageIcon(getClass().getResource("/res/Menu/botonTrucos"));
+        ImageIcon TrucoBotonLibre = new ImageIcon(getClass().getResource("/res/Menu/botonTrucos.png"));
         confirmarTruco.setIcon(TrucoBotonLibre);
     }//GEN-LAST:event_confirmarTrucoMouseReleased
 

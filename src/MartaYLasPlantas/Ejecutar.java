@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 /**
  * @author EDGENP: Eugenio Lorente Darius Tamas
  */
-public class Ejecutars {
+public class Ejecutar {
 
     private static PrincipalGraficos pg;
 
