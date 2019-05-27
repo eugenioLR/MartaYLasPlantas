@@ -6,16 +6,14 @@
 package MartaYLasPlantas;
 
 import java.awt.GridLayout;
-import java.awt.event.InputMethodListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 /**
  * @author EDGENP: Eugenio Lorente Darius Tamas
@@ -39,14 +37,14 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         secreto = new javax.swing.JTextField();
-        confirmarTruco = new javax.swing.JButton();
         dniTexto = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         cargarPartida = new javax.swing.JLabel();
         empezar = new javax.swing.JLabel();
         ranking = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        confirmarTruco = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -61,17 +59,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(secreto);
-        secreto.setBounds(290, 290, 90, 14);
-
-        confirmarTruco.setBackground(new java.awt.Color(124, 105, 89));
-        confirmarTruco.setForeground(new java.awt.Color(124, 105, 89));
-        confirmarTruco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmarTrucoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(confirmarTruco);
-        confirmarTruco.setBounds(390, 290, 20, 20);
+        secreto.setBounds(290, 290, 80, 16);
 
         dniTexto.setBackground(new java.awt.Color(124, 105, 89));
         dniTexto.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
@@ -100,14 +88,16 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(66, 157, 412, 0);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/TumbaDesarrolladores.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(100, 220, 60, 90);
-
         cargarPartida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/botonCargar.png"))); // NOI18N
         cargarPartida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cargarPartidaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cargarPartidaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                cargarPartidaMouseReleased(evt);
             }
         });
         getContentPane().add(cargarPartida);
@@ -118,6 +108,12 @@ public class Menu extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 empezarMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                empezarMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                empezarMouseReleased(evt);
+            }
         });
         getContentPane().add(empezar);
         empezar.setBounds(430, 240, 100, 60);
@@ -127,13 +123,38 @@ public class Menu extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 rankingMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                rankingMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                rankingMouseReleased(evt);
+            }
         });
         getContentPane().add(ranking);
         ranking.setBounds(40, 330, 60, 40);
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/menuAjustado.png"))); // NOI18N
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(1, -4, 556, 420);
+        confirmarTruco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/botonTrucos.png"))); // NOI18N
+        confirmarTruco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmarTrucoMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                confirmarTrucoMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                confirmarTrucoMouseReleased(evt);
+            }
+        });
+        getContentPane().add(confirmarTruco);
+        confirmarTruco.setBounds(380, 280, 30, 30);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/TumbaDesarrolladores.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(100, 220, 70, 80);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/Menu/menuAjustado.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(1, -4, 560, 420);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -141,37 +162,6 @@ public class Menu extends javax.swing.JFrame {
     private void dniTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniTextoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dniTextoActionPerformed
-
-    private void confirmarTrucoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarTrucoActionPerformed
-
-        ArrayList<String> trucos = new ArrayList<>();
-        trucos.add("minecraft");
-        trucos.add("magia");
-        trucos.add("casimiro");
-        trucos.add("veganos");
-
-        if (trucos.contains(secreto.getText())) {
-            JOptionPane.showMessageDialog(null, "codigo aceptado");
-        } else {
-            JOptionPane.showMessageDialog(null, "Codigo rechazado");
-        }
-
-        switch (secreto.getText()) {
-            case "minecraft":
-                PrincipalGraficos.setMinecraft(true);
-                break;
-            case "magia":
-                PrincipalGraficos.setMagos(true);
-                break;
-            case "casimiro":
-                PrincipalGraficos.setSecret(true);
-                break;
-            case "veganos":
-                PrincipalGraficos.setVeganos(true);
-                break;
-        }
-        secreto.setText("");
-    }//GEN-LAST:event_confirmarTrucoActionPerformed
 
     private void secretoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secretoActionPerformed
         // TODO add your handling code here:
@@ -189,6 +179,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_empezarMouseClicked
 
     private void cargarPartidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarPartidaMouseClicked
+
         Jugador.leerJugadores();
         String dni = dniTexto.getText();
         HashMap<String, Jugador> jugadores = Jugador.getJugadores();
@@ -258,6 +249,77 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rankingMouseClicked
 
+    private void confirmarTrucoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMouseClicked
+
+        ArrayList<String> trucos = new ArrayList<>();
+        trucos.add("minecraft");
+        trucos.add("magia");
+        trucos.add("casimiro");
+        trucos.add("veganos");
+
+        if (trucos.contains(secreto.getText())) {
+            JOptionPane.showMessageDialog(null, "codigo aceptado");
+        } else {
+            JOptionPane.showMessageDialog(null, "Codigo rechazado");
+        }
+
+        switch (secreto.getText()) {
+            case "minecraft":
+                PrincipalGraficos.setMinecraft(true);
+                break;
+            case "magia":
+                PrincipalGraficos.setMagos(true);
+                break;
+            case "casimiro":
+                PrincipalGraficos.setSecret(true);
+                break;
+            case "veganos":
+                PrincipalGraficos.setVeganos(true);
+                break;
+        }
+        secreto.setText("");
+    }//GEN-LAST:event_confirmarTrucoMouseClicked
+
+    private void empezarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezarMousePressed
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonComenzarPulsado.png"));
+        empezar.setIcon(II);
+    }//GEN-LAST:event_empezarMousePressed
+
+    private void empezarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezarMouseReleased
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonComenzar.png"));
+        empezar.setIcon(II);
+    }//GEN-LAST:event_empezarMouseReleased
+
+    private void cargarPartidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarPartidaMousePressed
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonCargarPulsado.png"));
+        cargarPartida.setIcon(II);
+    }//GEN-LAST:event_cargarPartidaMousePressed
+
+    private void cargarPartidaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarPartidaMouseReleased
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonCargar.png"));
+        cargarPartida.setIcon(II);
+    }//GEN-LAST:event_cargarPartidaMouseReleased
+
+    private void confirmarTrucoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMousePressed
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonTrucosPulsado.png"));
+        confirmarTruco.setIcon(II);
+    }//GEN-LAST:event_confirmarTrucoMousePressed
+
+    private void confirmarTrucoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMouseReleased
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonTrucos.png"));
+        confirmarTruco.setIcon(II);
+    }//GEN-LAST:event_confirmarTrucoMouseReleased
+
+    private void rankingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankingMousePressed
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonRankingsPulsado.png"));
+        ranking.setIcon(II);
+    }//GEN-LAST:event_rankingMousePressed
+
+    private void rankingMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankingMouseReleased
+        ImageIcon II = new ImageIcon(getClass().getResource("/res/Menu/botonRankings.png"));
+        ranking.setIcon(II);
+    }//GEN-LAST:event_rankingMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -297,11 +359,11 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cargarPartida;
-    private javax.swing.JButton confirmarTruco;
+    private javax.swing.JLabel confirmarTruco;
     private javax.swing.JTextField dniTexto;
     private javax.swing.JLabel empezar;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel ranking;
     private javax.swing.JTextField secreto;

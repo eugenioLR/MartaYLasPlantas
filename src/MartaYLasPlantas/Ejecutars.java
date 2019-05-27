@@ -6,6 +6,7 @@
 package MartaYLasPlantas;
 
 import java.awt.Dimension;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +19,7 @@ public class Ejecutars {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Menu manu = new Menu();
         manu.setSize(new Dimension(557,450));
         pg = new PrincipalGraficos(new Tablero(5, 9));

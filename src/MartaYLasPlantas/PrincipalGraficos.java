@@ -259,7 +259,7 @@ public class PrincipalGraficos extends JFrame {
 
     }
 
-    public void jugar() {
+    public void jugar() throws IOException {
         boolean comprobando, saltaTurno;
         while (!this.isVisible()) {
             System.out.print("");
@@ -661,8 +661,8 @@ public class PrincipalGraficos extends JFrame {
         return true;
     }
 
-    public void guardarPartida() {
-        try {
+    public void guardarPartida() throws IOException {
+
             FileWriter nuevaPartida;
             BufferedWriter bwriter;
             
@@ -739,18 +739,14 @@ public class PrincipalGraficos extends JFrame {
                 bwriter.newLine();
             }
             bwriter.close();
-
-        } catch (IOException ioe) {
-            Logger.getLogger(PrincipalTerminal.class
-                    .getName()).log(Level.SEVERE, null, ioe);
-        }
+        
     }
 
     /**
      * Genera veganos en el tablero dependiendo del turno en el que estemos y la
      * dificultad
      */
-    public static void generarVeganos() {
+    public static void generarVeganos() {   
         // contadores
         int contador = 30 - tablero.getContador();
         int descanso;
@@ -833,6 +829,14 @@ public class PrincipalGraficos extends JFrame {
                 }
             }
         }
+    }
+    
+    /**
+     *
+     * @param cantidad Incrementa la magia global del juego.
+     */
+    public static void incrementarMagia(int cantidad) {
+        magia += cantidad;
     }
 
     /**
