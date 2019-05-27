@@ -133,7 +133,7 @@ public class Jugador {
         Jugador.jugadores = jugadores;
     }
 
-    public static Jugador registrarse(String dni) {
+    public static Jugador registrarse(String dni) throws FileNotFoundException {
         Jugador jugadorAux;
         leerJugadores();
         //String dni = JOptionPane.showInputDialog("DNI: ");
@@ -157,7 +157,7 @@ public class Jugador {
         return jugadores.containsKey(dni);
     }
 
-    public static void leerJugadores() {
+    public static void leerJugadores(){
         try {
             FileReader reader = new FileReader("jugadores.dat");
             BufferedReader breader = new BufferedReader(reader);

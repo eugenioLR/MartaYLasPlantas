@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -170,7 +172,11 @@ public class Menu extends javax.swing.JFrame {
 
     private void empezarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empezarMouseClicked
         if (!dniTexto.getText().equals("DNI:")) {
-            PrincipalGraficos.setJugador(Jugador.registrarse(dniTexto.getText()));
+            try {
+                PrincipalGraficos.setJugador(Jugador.registrarse(dniTexto.getText()));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Ejecutars.tableroVisible();
             this.setVisible(false);
         } else {
@@ -296,8 +302,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cargarPartidaMousePressed
 
     private void cargarPartidaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarPartidaMouseReleased
-        ImageIcon cargarPartidaBoton = new ImageIcon(getClass().getResource("/res/Menu/botonCargar.png"));
-        cargarPartida.setIcon(cargarPartidaBoton);
+        ImageIcon cargarPartidaB = new ImageIcon(getClass().getResource("/res/Menu/botonCargar.png"));
+        cargarPartida.setIcon(cargarPartidaB);
     }//GEN-LAST:event_cargarPartidaMouseReleased
 
     private void confirmarTrucoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarTrucoMousePressed

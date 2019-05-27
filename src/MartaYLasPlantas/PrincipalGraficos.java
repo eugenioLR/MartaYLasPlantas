@@ -320,11 +320,12 @@ public class PrincipalGraficos extends JFrame {
             String[] tokens;
             int x, y;
             while (jugando) {
+                magia += 5;
                 repaint();
                 comprobando = true;
                 while (comprobando) {
-                    magia += 5;
                     try {
+
                         puedePlantar = true;
                         comprobando = false;
                         saltaTurno = false;
@@ -375,8 +376,13 @@ public class PrincipalGraficos extends JFrame {
                                 saltaTurno = true;
                                 break;
                             case 2:
-                                guardarPartida();
-                                JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
+                                //if (Jugador.existeJugador(jugador.getDni())) {
+                                    JOptionPane.showMessageDialog(null, "Partida guardada con exito.");
+                                    guardarPartida();
+                                //} else {
+                                   // JOptionPane.showMessageDialog(null, "Perdona, pero no tienes ficha.");
+                                //}
+                                
                             default:
                                 System.exit(0);
                         }
@@ -494,13 +500,13 @@ public class PrincipalGraficos extends JFrame {
                 }
             }
         }
-        int indice[];
         if (pierdes) {
 
             int partidasPerdidas[] = jugador.getPartidasPerdidas();
             partidasPerdidas[dificultad - 1]++;
             jugador.setPartidasPerdidas(partidasPerdidas);
-            JOptionPane.showMessageDialog(null, "Perdona profe >w<");
+            JOptionPane.showMessageDialog(null, "Has perdido. \n"
+                    + " más suerte la próxima vez.");
 
         } else {
             int partidasGanadas[] = jugador.getPartidasGanadas();
@@ -670,7 +676,7 @@ public class PrincipalGraficos extends JFrame {
         new File("partidas").mkdir();
         File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
 
-        if (!archivoPartida.exists()) {
+        if (!archivoPartida.exists() && Jugador.existeJugador(jugador.getDni())) {
             archivoPartida.createNewFile();
         }
         nuevaPartida = new FileWriter(archivoPartida);
