@@ -109,16 +109,16 @@ public class PrincipalGraficos extends JFrame {
             nuez = read(getClass().getClassLoader().getResource("res/Nuez.png"));
             veganoComun = read(getClass().getClassLoader().getResource("res/Zombie.png"));
             zombieVegano = read(getClass().getClassLoader().getResource("res/ZombieVegano.png"));
-            zombieVeganoCubo = read(getClass().getClassLoader().getResource("res/ZombieCuboVegano.png"));
             zombieVeganoProteico = read(getClass().getClassLoader().getResource("res/ZombieProteicoVegano.png"));
             zombiesVeganosMultiples = read(getClass().getClassLoader().getResource("res/Zombie++Vegano.png"));
             veganoProteico = read(getClass().getClassLoader().getResource("res/ZombieProteico.png"));
-            veganoCubo = read(getClass().getClassLoader().getResource("res/ZombieCubo.png"));
             veganosMultiples = read(getClass().getClassLoader().getResource("res/Zombie++.png"));
+            veganoCubo = read(getClass().getClassLoader().getResource("res/zombieCubo.png"));
+            veganoGolem = read(getClass().getClassLoader().getResource("res/zombieCuboMinecraft.png"));
+            zombieVeganoCubo = read(getClass().getClassLoader().getResource("res/zombieCuboVegano.png"));
             cortacesped = read(getClass().getClassLoader().getResource("res/cortacesped.png"));
             cortacesped2 = read(getClass().getClassLoader().getResource("res/cortacespedOjos.png"));
             veganoZombie = read(getClass().getClassLoader().getResource("res/ZombieMinecraft.png"));
-            veganoGolem = read(getClass().getClassLoader().getResource("res/ZombieCuboMinecraft.png"));
             veganoEsqueloide = read(getClass().getClassLoader().getResource("res/ZombieProteicoMinecraft.png"));
             hierbaM = read(getClass().getClassLoader().getResource("res/HierbaMinecraft.png"));
             hierbaM2 = read(getClass().getClassLoader().getResource("res/Hierba2Minecraft.png"));
@@ -663,90 +663,90 @@ public class PrincipalGraficos extends JFrame {
 
     public void guardarPartida() throws IOException {
 
-            FileWriter nuevaPartida;
-            BufferedWriter bwriter;
-            
-            //crear/sobreescribir "Marta.sav"
-            new File("partidas").mkdir();
-            File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
-            
-            if (!archivoPartida.exists()) {
-                archivoPartida.createNewFile();
-            }
-            nuevaPartida = new FileWriter(archivoPartida);
-            bwriter = new BufferedWriter(nuevaPartida);
+        FileWriter nuevaPartida;
+        BufferedWriter bwriter;
 
-            //linea 1: DNI
-            bwriter.write(jugador.getDni());
-            bwriter.newLine();
+        //crear/sobreescribir "Marta.sav"
+        new File("partidas").mkdir();
+        File archivoPartida = new File("partidas/" + jugador.getNombre() + ".sav");
 
-            //linea 2: nombre
-            bwriter.write(jugador.getNombre());
-            bwriter.newLine();
+        if (!archivoPartida.exists()) {
+            archivoPartida.createNewFile();
+        }
+        nuevaPartida = new FileWriter(archivoPartida);
+        bwriter = new BufferedWriter(nuevaPartida);
 
-            //linea 3: magia
-            bwriter.write("magia " + magia);
-            bwriter.newLine();
+        //linea 1: DNI
+        bwriter.write(jugador.getDni());
+        bwriter.newLine();
 
-            //linea 4: turno
-            bwriter.write("turno " + tablero.getContador());
-            bwriter.newLine();
+        //linea 2: nombre
+        bwriter.write(jugador.getNombre());
+        bwriter.newLine();
 
-            //linea 5: dificultad
-            bwriter.write("dificultad " + dificultad);
-            bwriter.newLine();
+        //linea 3: magia
+        bwriter.write("magia " + magia);
+        bwriter.newLine();
 
-            //linea 6: cortacesped
-            bwriter.write("cortacesped ");
-            for (boolean cortacesped : tablero.getCortacesped()) {
-                bwriter.write(String.valueOf(cortacesped) + " ");
-            }
-            bwriter.newLine();
+        //linea 4: turno
+        bwriter.write("turno " + tablero.getContador());
+        bwriter.newLine();
 
-            //linea 7: veganos restantes
-            bwriter.write("VeganosQuedan " + vegQuedan);
-            bwriter.newLine();
+        //linea 5: dificultad
+        bwriter.write("dificultad " + dificultad);
+        bwriter.newLine();
 
-            //lineas 8-12: tablero
-            for (Casilla[] fila : tablero.getTerreno()) {
-                for (Casilla casilla : fila) {
-                    for (Entidad entidad : casilla.getEntidades()) {
-                        if (entidad != null) {
-                            if (entidad instanceof Cereza) {
-                                bwriter.write("C ");
-                            } else if (entidad instanceof Girasol) {
-                                bwriter.write("G ");
-                            } else if (entidad instanceof Lanzadora) {
-                                bwriter.write("L ");
-                            } else if (entidad instanceof MinaPatata) {
-                                bwriter.write("MP ");
-                            } else if (entidad instanceof Nuez) {
-                                bwriter.write("N ");
-                            } else if (entidad instanceof VeganoComun) {
-                                bwriter.write("V ");
-                            } else if (entidad instanceof VeganoCasco) {
-                                bwriter.write("VC ");
-                            } else if (entidad instanceof VeganoProteico) {
-                                bwriter.write("VP ");
-                            }
-                            bwriter.write(entidad.getSalud() + " ");
-                            bwriter.write(entidad.getTurno() + "");
-                            bwriter.write(",");
+        //linea 6: cortacesped
+        bwriter.write("cortacesped ");
+        for (boolean cortacesped : tablero.getCortacesped()) {
+            bwriter.write(String.valueOf(cortacesped) + " ");
+        }
+        bwriter.newLine();
+
+        //linea 7: veganos restantes
+        bwriter.write("VeganosQuedan " + vegQuedan);
+        bwriter.newLine();
+
+        //lineas 8-12: tablero
+        for (Casilla[] fila : tablero.getTerreno()) {
+            for (Casilla casilla : fila) {
+                for (Entidad entidad : casilla.getEntidades()) {
+                    if (entidad != null) {
+                        if (entidad instanceof Cereza) {
+                            bwriter.write("C ");
+                        } else if (entidad instanceof Girasol) {
+                            bwriter.write("G ");
+                        } else if (entidad instanceof Lanzadora) {
+                            bwriter.write("L ");
+                        } else if (entidad instanceof MinaPatata) {
+                            bwriter.write("MP ");
+                        } else if (entidad instanceof Nuez) {
+                            bwriter.write("N ");
+                        } else if (entidad instanceof VeganoComun) {
+                            bwriter.write("V ");
+                        } else if (entidad instanceof VeganoCasco) {
+                            bwriter.write("VC ");
+                        } else if (entidad instanceof VeganoProteico) {
+                            bwriter.write("VP ");
                         }
+                        bwriter.write(entidad.getSalud() + " ");
+                        bwriter.write(entidad.getTurno() + "");
+                        bwriter.write(",");
                     }
-                    bwriter.write(";");
                 }
-                bwriter.newLine();
+                bwriter.write(";");
             }
-            bwriter.close();
-        
+            bwriter.newLine();
+        }
+        bwriter.close();
+
     }
 
     /**
      * Genera veganos en el tablero dependiendo del turno en el que estemos y la
      * dificultad
      */
-    public static void generarVeganos() {   
+    public static void generarVeganos() {
         // contadores
         int contador = 30 - tablero.getContador();
         int descanso;
@@ -830,7 +830,7 @@ public class PrincipalGraficos extends JFrame {
             }
         }
     }
-    
+
     /**
      *
      * @param cantidad Incrementa la magia global del juego.

@@ -7,6 +7,7 @@ package MartaYLasPlantas;
 
 import MartaYLasPlantas.Veganos.*;
 import MartaYLasPlantas.Plantas.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -284,22 +285,22 @@ public class Tablero {
      * @param y
      */
     public void Bomba(int x, int y) {
-        int veganos = 0;
-        int plantas = 0;
+            int veganos = 0;
+            int plantas = 0;
+            
+            for (int i = 0; i < terreno[y][x].getEntidades().size(); i++) {
+                if (terreno[y][x].getEntidades().get(i) instanceof Vegano) {
+                    veganos++;
+                } else if (terreno[y][x].getEntidades().get(i) instanceof Planta) {
+                    plantas++;
+                }
 
-        for (int i = 0; i < terreno[y][x].getEntidades().size(); i++) {
-            if (terreno[y][x].getEntidades().get(i) instanceof Vegano) {
-                veganos++;
-            } else if (terreno[y][x].getEntidades().get(i) instanceof Planta) {
-                plantas++;
             }
-
-        }
-        if (veganos == 0 && plantas == 0) {
-            System.out.println("Nada ha sido eliminado con esa bomba.");
-        } else {
-            System.out.println("Se han eliminado " + veganos + " veganos y " + plantas + " plantas");
-        }
+            if (veganos == 0 && plantas == 0) {
+                JOptionPane.showMessageDialog(null, "Nada ha sido eliminado con esa bomba.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Se han eliminado " + veganos + " veganos y " + plantas + " plantas");
+            }
         terreno[y][x].getEntidades().clear();
     }
 }
